@@ -1,0 +1,126 @@
+
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+
+
+
+<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h4 class="title">"
+          
+          "	</h4>
+					<ul class="breadcrumb-list">
+
+						<li>
+							<span><i class="fas fa-chevron-right"></i> </span>
+						</li>
+				
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
+	<!-- Footer Area Start -->
+	<footer class="footer" id="footer">
+			<div class="subscribe-area">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="subscribe-box">
+
+
+
+	<!-- SignIn Area Start -->
+
+						<div class="header-area">
+<h5 class="btn btn-fill btn-warning">{{mssg}}</h5>
+                            <h5 class="title">Current Profile Details</h5>
+
+                            <p class="sub-title">Email to receive paypal payments is <h5 class="btn btn-fill btn-info">{{user.email}}</h5>                             
+                            </p>
+                                                                   {% if user.update_count is not 0 %}
+                                                                							<form role="form" method="POST" action="{% url 'users:profile' %}">
+							    {% csrf_token %}
+
+                                <div class="col-lg-6 col-8 d-flex align-self-center">
+                                    <div class="form-area">           
+                                        <input type="email"  class="input-field" name="email" id="email" placeholder="paypal-email" required autofocus>									
+                                    </div>
+                                </div>
+           				
+						
+
+
+
+
+				
+								<div class="form-group">
+									<button type="submit" class="mybtn1">Update</button>
+								</div>
+							</form>   
+                                       {% endif %}
+
+                            
+                            							<p class="sub-title">Number to deposit & receive mpesa payments is <h5 class="btn btn-fill btn-info">{{user.phone_number}}</h5>                  
+                            							           
+                            </p>
+                                       
+                                       
+                                       {% if user.update_count is not 0 %}
+                                       							<form role="form" method="POST" action="{% url 'users:profile' %}">
+							    {% csrf_token %}
+
+        
+                                <div class="col-lg-6 col-8 d-flex align-self-center">
+                                    <div class="form-area">                   
+                                        <input type="number" class="input-field" name="phone_number" class="form-control" max="300000000000"  min="100000000"  id="phone_number" placeholder="mpesa-phone_number" required>
+                                        
+                                    </div>
+                  
+                                </div>
+				
+						
+
+
+				
+								<div class="form-group">
+									<button type="submit" class="mybtn1">Update</button>
+								</div>
+							</form>
+                                       {% endif %} 
+                                       
+                                       
+                                       
+                                       
+ 
+
+						</div> 
+			
+
+
+
+
+							</div>
+							
+							
+
+				
+	
+
+
+
+							</div>							
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+	</footer> 
+
+
+{% endblock content %}

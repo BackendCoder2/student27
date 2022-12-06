@@ -1,0 +1,907 @@
+{% extends "layouts/base.html" %}
+<!-- Static assets -->
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+
+{% block content %}
+    <!-- Banner Section start -->
+    <section class="banner-section">
+        <div class="overlay">
+            <div class="shape-area">
+                <img src="{% static  'winza/img/coin-2.png' %}" class="obj-1" alt="image">
+                <img src="{% static  'winza/img/winner-cup.png' %}" class="obj-2" alt="image">
+            </div>
+            <div class="banner-content">
+                <div class="container">
+                    <div class="content-shape">
+                        <img src="{% static  'winza/img/coin-1.png' %}" class="obj-1" alt="image">
+                        <img src="{% static  'winza/img/coin-3.png' %}" class="obj-2" alt="image">
+                        <img src="{% static  'winza/img/coin-3.png' %}" class="obj-3" alt="image">
+                        <img src="{% static  'winza/img/coin-4.png' %}" class="obj-4" alt="image">
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-10">
+                            <div class="main-content">
+                                <div class="top-area section-text">
+                                    <h4 class="sub-title">Bet &amp; Win Today!</h4>
+                                    <h1 class="title">Winzangu Sports Bets &amp Gaming</h1>
+                                    <p class="xlr">The fastest, easiest way to bet on sports.NBA, Tennis &amp; Soccer,
+                                        Choose on which team to bet and win</p>
+                                </div>
+                                <div class="bottom-area">
+                                    <span class="btn-border">
+                                        {% if not user.is_authenticated %}
+                                        <button type="button" class="cmn-btn reg" data-bs-toggle="modal" data-bs-target="#loginMod">
+                                            Get Started Now
+                                        </button>
+                                        {% endif %}
+                                        {% if user.is_authenticated %}
+                                        <a href="{% url 'rgames:sports' %}">
+                                        <button type="button" class="cmn-btn reg">
+                                            Play Now
+                                        </button>  
+                                        </a>
+                                        {% endif %}                                      
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="counter-section">
+            <div class="container">
+                <div class="row cus-mar">
+                    <div class="col-xl-4 col-md-6">
+                        <div class="single-area d-flex align-items-center">
+                            <div class="img-area">
+                                <img src="{% static  'winza/img/counter-icon-1.png' %}" alt="image">
+                            </div>
+                            <div class="text-area">
+                                <h3 class="m-none"><span>€</span><span class="counter">1,304,941</span></h3>
+                                <p>Paid Out Prize in Total</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-6">
+                        <div class="single-area d-flex align-items-center">
+                            <div class="img-area">
+                                <img src="{% static  'winza/img/counter-icon-2.png' %}" alt="image">
+                            </div>
+                            <div class="text-area">
+                                <h3 class="m-none"><span class="counter">76,752</span></h3>
+                                <p>Winners</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-6">
+                        <div class="single-area d-flex align-items-center">
+                            <div class="img-area">
+                                <img src="{% static  'winza/img/counter-icon-3.png' %}" alt="image">
+                            </div>
+                            <div class="text-area">
+                                <h3 class="m-none"><span class="counter">4,392</span></h3>
+                                <p>Players online</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Banner Section end -->
+
+    <!-- About Winzangu start -->
+    <section class="about-Winzangu">
+        <div class="overlay pt-120 pb-120">
+            <div class="shape-area">
+                <img src="{% static  'winza/img/crypto-fanus-1.png' %}" class="obj-1" alt="image">
+                <img src="{% static  'winza/img/crypto-fanus-2.png' %}" class="obj-2" alt="image">
+            </div>
+            <div class="container">
+                <div class="row d-flex align-items-end">
+                    <div class="col-lg-6">
+                        <div class="image-area d-rtl left-side">
+                            <img src="{% static  'winza/img/about-Winzangu-image.png' %}" alt="images" class="max-un">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="section-text">
+                            <h5 class="sub-title">A Next-Level Sports Betting</h5>
+                            <h2 class="title">A Revolution in Online Betting</h2>
+                            <p>Winzangu is a user-friendly, decentralised, peer-to-peer betting platform.</p>
+                        </div>
+                        <div class="row cus-mar">
+                            <div class="col-sm-6 col-6">
+                                <div class="single-item">
+                                    <img src="/static/winza/img/about-icon-1.png" alt="images">
+                                    <h5>Peer-to-peer</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-6">
+                                <div class="single-item">
+                                    <img src="/static/winza/img/about-icon-2.png" alt="images">
+                                    <h5>No limits</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-6">
+                                <div class="single-item">
+                                    <img src="{% static  'winza/img/about-icon-3.png' %}" alt="images">
+                                    <h5>Decentralised</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-6">
+                                <div class="single-item">
+                                    <img src="{% static  'winza/img/about-icon-4.png' %}" alt="images">
+                                    <h5>Community-powered</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Winzangu end -->
+
+    <!-- How it Works start -->
+    <section class="how-it-works">
+        <div class="overlay pt-120">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="section-header text-center">
+                            <h5 class="sub-title">Get to Know</h5>
+                            <h2 class="title">How Winzangu Works?</h2>
+                            <p>Our platform has been designed from the ground up to be tailored to the unique form of
+                                betting and settlement offered by the blockchain. Follow these simple steps and make
+                                profits!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-content">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-lg-5">
+                            <ul class="nav" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <h5 class="nav-link active" id="sport-tab" data-bs-toggle="tab" data-bs-target="#sport" role="tab" aria-controls="sport" aria-selected="true">
+                                        <span class="image-area">
+                                            <img src="{% static  'winza/img/how-works-icon-1.png' %}" alt="icon">
+                                        </span>
+                                        Choose a sport
+                                    </h5>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <h5 class="nav-link" id="match-tab" data-bs-toggle="tab" data-bs-target="#match" role="tab" aria-controls="match" aria-selected="false">
+                                        <span class="image-area">
+                                            <img src="{% static  'winza/img/how-works-icon-2.png' %}" alt="icon">
+                                        </span>
+                                        Choose a match
+                                    </h5>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <h5 class="nav-link" id="team-tab" data-bs-toggle="tab" data-bs-target="#team" role="tab" aria-controls="team" aria-selected="false">
+                                        <span class="image-area">
+                                            <img src="{% static  'winza/img/how-works-icon-3.png' %}" alt="icon">
+                                        </span>
+                                        Choose your team
+                                    </h5>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <h5 class="nav-link" id="odds-tab" data-bs-toggle="tab" data-bs-target="#odds" role="tab" aria-controls="odds" aria-selected="false">
+                                        <span class="image-area">
+                                            <img src="{% static  'winza/img/how-works-icon-4.png' %}" alt="icon">
+                                        </span>
+                                        Choose your odds
+                                    </h5>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <h5 class="nav-link" id="amount-tab" data-bs-toggle="tab" data-bs-target="#amount" role="tab" aria-controls="amount" aria-selected="false">
+                                        <span class="image-area">
+                                            <img src="{% static  'winza/img/how-works-icon-5.png' %}" alt="icon">
+                                        </span>
+                                        Choose your amount
+                                    </h5>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="sport" role="tabpanel" aria-labelledby="sport-tab">
+                                    <h4>Select a Sport</h4>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/process-img-1.png' %}" alt="image">
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="match" role="tabpanel" aria-labelledby="match-tab">
+                                    <h4>Select a Match</h4>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/process-img-2.png' %}" alt="image">
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="team" role="tabpanel" aria-labelledby="team-tab">
+                                    <h4>Select a Team</h4>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/process-img-3.png' %}" alt="image">
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="odds" role="tabpanel" aria-labelledby="odds-tab">
+                                    <h4>Select Odds</h4>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/process-img-4.png' %}" alt="image">
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="amount" role="tabpanel" aria-labelledby="amount-tab">
+                                    <h4>Select Bet Amount </h4>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/process-img-5.png' %}" alt="image">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- How it Works end -->
+
+    <!-- Bet This Game start -->
+    <section class="bet-this-game">
+        <div class="overlay pt-120 pb-120">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="section-header text-center">
+                            <h5 class="sub-title">Sports Escrow Bets Peer 2 Peer</h5>
+                            <h2 class="title">Bets in This Game</h2>
+                            <p>Use the power of Winzangu Bets Fast, Anonymous, Secured, Automatic, Trustworthy</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row cus-mar">
+                    <div class="col-lg-6">
+                        <div class="single-area">
+                            <div class="head-area d-flex align-items-center">
+                                <span class="mdr cmn-btn">Pick Winner</span>
+                                <p>Mar 23, 2022,3:45PM EDT</p>
+                            </div>
+                            <div class="main-content">
+                                <div class="team-single">
+                                    <h4>Arsenal</h4>
+                                    <span class="mdr">Home</span>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/team-logo-1.png' %}" alt="image">
+                                    </div>
+                                </div>
+                                <div class="mid-area text-center">
+                                    <div class="countdown d-flex align-items-center justify-content-center">
+                                        <h4>
+                                            <span class="hours">17</span><span class="ref">h</span><span class="seperator">:</span>
+                                        </h4>
+                                        <h4>
+                                            <span class="minutes">18</span><span class="ref">m</span><span class="seperator">:</span>
+                                        </h4>
+                                        <h4>
+                                            <span class="seconds">01</span><span class="ref">s</span>
+                                        </h4>
+                                    </div>
+                                    <h6>Division- Belarus</h6>
+                                </div>
+                                <div class="team-single">
+                                    <h4>Volna</h4>
+                                    <span class="mdr">Away</span>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/team-logo-2.png' %}" alt="image">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom-item">
+                                <button type="button" class="cmn-btn firstTeam" data-bs-toggle="modal" data-bs-target="#betpop-up">Eagle will win</button>
+                                <button type="button" class="cmn-btn draw" data-bs-toggle="modal" data-bs-target="#betpop-up">Draw</button>
+                                <button type="button" class="cmn-btn lastTeam" data-bs-toggle="modal" data-bs-target="#betpop-up">Paeek will win</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="single-area">
+                            <div class="head-area d-flex align-items-center">
+                                <span class="mdr cmn-btn">Pick Winner</span>
+                                <p>Mar 23, 2022,3:45PM EDT</p>
+                            </div>
+                            <div class="main-content">
+                                <div class="team-single">
+                                    <h4>Apollon</h4>
+                                    <span class="mdr">Home</span>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/team-logo-3.png' %}" alt="image">
+                                    </div>
+                                </div>
+                                <div class="mid-area text-center">
+                                    <div class="countdown d-flex align-items-center justify-content-center">
+                                        <h4>
+                                            <span class="hours">17</span><span class="ref">h</span><span class="seperator">:</span>
+                                        </h4>
+                                        <h4>
+                                            <span class="minutes">18</span><span class="ref">m</span><span class="seperator">:</span>
+                                        </h4>
+                                        <h4>
+                                            <span class="seconds">01</span><span class="ref">s</span>
+                                        </h4>
+                                    </div>
+                                    <h6>Division (Cyprus)</h6>
+                                </div>
+                                <div class="team-single">
+                                    <h4>Paeek</h4>
+                                    <span class="mdr">Away</span>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/team-logo-4.png' %}" alt="image">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom-item">
+                                <button type="button" class="cmn-btn firstTeam" data-bs-toggle="modal" data-bs-target="#betpop-up">Eagle will win</button>
+                                <button type="button" class="cmn-btn draw" data-bs-toggle="modal" data-bs-target="#betpop-up">Draw</button>
+                                <button type="button" class="cmn-btn lastTeam" data-bs-toggle="modal" data-bs-target="#betpop-up">Paeek will win</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="single-area">
+                            <div class="head-area d-flex align-items-center">
+                                <span class="mdr cmn-btn">Pick Winner</span>
+                                <p>Mar 23, 2022,3:45PM EDT</p>
+                            </div>
+                            <div class="main-content">
+                                <div class="team-single">
+                                    <h4>Raufoss</h4>
+                                    <span class="mdr">Home</span>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/team-logo-5.png' %}" alt="image">
+                                    </div>
+                                </div>
+                                <div class="mid-area text-center">
+                                    <div class="countdown d-flex align-items-center justify-content-center">
+                                        <h4>
+                                            <span class="hours">17</span><span class="ref">h</span><span class="seperator">:</span>
+                                        </h4>
+                                        <h4>
+                                            <span class="minutes">18</span><span class="ref">m</span><span class="seperator">:</span>
+                                        </h4>
+                                        <h4>
+                                            <span class="seconds">01</span><span class="ref">s</span>
+                                        </h4>
+                                    </div>
+                                    <h6>Division (Norway)</h6>
+                                </div>
+                                <div class="team-single">
+                                    <h4>Åsane</h4>
+                                    <span class="mdr">Away</span>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/team-logo-6.png' %}" alt="image">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom-item">
+                                <button type="button" class="cmn-btn firstTeam" data-bs-toggle="modal" data-bs-target="#betpop-up">Eagle will win</button>
+                                <button type="button" class="cmn-btn draw" data-bs-toggle="modal" data-bs-target="#betpop-up">Draw</button>
+                                <button type="button" class="cmn-btn lastTeam" data-bs-toggle="modal" data-bs-target="#betpop-up">Paeek will win</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="single-area">
+                            <div class="head-area d-flex align-items-center">
+                                <span class="mdr cmn-btn">Pick Winner</span>
+                                <p>Mar 23, 2022,3:45PM EDT</p>
+                            </div>
+                            <div class="main-content">
+                                <div class="team-single">
+                                    <h4>Lida</h4>
+                                    <span class="mdr">Home</span>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/team-logo-6.png' %}" alt="image">
+                                    </div>
+                                </div>
+                                <div class="mid-area text-center">
+                                    <div class="countdown d-flex align-items-center justify-content-center">
+                                        <h4>
+                                            <span class="hours">17</span><span class="ref">h</span><span class="seperator">:</span>
+                                        </h4>
+                                        <h4>
+                                            <span class="minutes">18</span><span class="ref">m</span><span class="seperator">:</span>
+                                        </h4>
+                                        <h4>
+                                            <span class="seconds">01</span><span class="ref">s</span>
+                                        </h4>
+                                    </div>
+                                    <h6>Division (Cyprus)</h6>
+                                </div>
+                                <div class="team-single">
+                                    <h4>Paeek</h4>
+                                    <span class="mdr">Away</span>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/team-logo-7.png' %}" alt="image">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom-item">
+                                <button type="button" class="cmn-btn firstTeam" data-bs-toggle="modal" data-bs-target="#betpop-up">Eagle will win</button>
+                                <button type="button" class="cmn-btn draw" data-bs-toggle="modal" data-bs-target="#betpop-up">Draw</button>
+                                <button type="button" class="cmn-btn lastTeam" data-bs-toggle="modal" data-bs-target="#betpop-up">Paeek will win</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="single-area">
+                            <div class="head-area d-flex align-items-center">
+                                <span class="mdr cmn-btn">Pick Winner</span>
+                                <p>Mar 23, 2022,3:45PM EDT</p>
+                            </div>
+                            <div class="main-content">
+                                <div class="team-single">
+                                    <h4>Sūduva</h4>
+                                    <span class="mdr">Home</span>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/team-logo-8.png' %}" alt="image">
+                                    </div>
+                                </div>
+                                <div class="mid-area text-center">
+                                    <div class="countdown d-flex align-items-center justify-content-center">
+                                        <h4>
+                                            <span class="hours">17</span><span class="ref">h</span><span class="seperator">:</span>
+                                        </h4>
+                                        <h4>
+                                            <span class="minutes">18</span><span class="ref">m</span><span class="seperator">:</span>
+                                        </h4>
+                                        <h4>
+                                            <span class="seconds">01</span><span class="ref">s</span>
+                                        </h4>
+                                    </div>
+                                    <h6>Division- Belarus</h6>
+                                </div>
+                                <div class="team-single">
+                                    <h4>Dainava</h4>
+                                    <span class="mdr">Away</span>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/team-logo-9.png' %}" alt="image">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom-item">
+                                <button type="button" class="cmn-btn firstTeam" data-bs-toggle="modal" data-bs-target="#betpop-up">Eagle will win</button>
+                                <button type="button" class="cmn-btn draw" data-bs-toggle="modal" data-bs-target="#betpop-up">Draw</button>
+                                <button type="button" class="cmn-btn lastTeam" data-bs-toggle="modal" data-bs-target="#betpop-up">Paeek will win</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="single-area">
+                            <div class="head-area d-flex align-items-center">
+                                <span class="mdr cmn-btn">Pick Winner</span>
+                                <p>Mar 23, 2022,3:45PM EDT</p>
+                            </div>
+                            <div class="main-content">
+                                <div class="team-single">
+                                    <h4>Eagle</h4>
+                                    <span class="mdr">Home</span>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/team-logo-10.png' %}" alt="image">
+                                    </div>
+                                </div>
+                                <div class="mid-area text-center">
+                                    <div class="countdown d-flex align-items-center justify-content-center">
+                                        <h4>
+                                            <span class="hours">17</span><span class="ref">h</span><span class="seperator">:</span>
+                                        </h4>
+                                        <h4>
+                                            <span class="minutes">18</span><span class="ref">m</span><span class="seperator">:</span>
+                                        </h4>
+                                        <h4>
+                                            <span class="seconds">01</span><span class="ref">s</span>
+                                        </h4>
+                                    </div>
+                                    <h6>Division- Belarus</h6>
+                                </div>
+                                <div class="team-single">
+                                    <h4>Paeek</h4>
+                                    <span class="mdr">Away</span>
+                                    <div class="img-area">
+                                        <img src="{% static  'winza/img/team-logo-11.png' %}" alt="image">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottom-item">
+                                <button type="button" class="cmn-btn firstTeam" data-bs-toggle="modal" data-bs-target="#betpop-up">Eagle will win</button>
+                                <button type="button" class="cmn-btn draw" data-bs-toggle="modal" data-bs-target="#betpop-up">Draw</button>
+                                <button type="button" class="cmn-btn lastTeam" data-bs-toggle="modal" data-bs-target="#betpop-up">Paeek will win</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 d-flex justify-content-center">
+                        <div class="bottom-area mt-60">
+                            <span class="btn-border">
+                                <a href="{% url 'rgames:sports' %}" class="cmn-btn">Browse More</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Bet This Game end -->
+
+   
+    <!-- Amazing Features start -->
+    <section class="amazing-features">
+        <div class="overlay pt-120">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="section-header text-center">
+                            <h5 class="sub-title">Leading the Crypto bets escrow services</h5>
+                            <h2 class="title">An Exhaustive list of Amazing Features</h2>
+                            <p>Winzangu is the most advanced sports crypto beting platform and highest stakes across
+                                multiple bookmakers and exchanges.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="features-carousel slick-initialized slick-slider"><button type="button" class="slick-prev pull-left slick-arrow" style=""></button><div class="slick-list draggable"><div class="slick-track" style="opacity: 1; width: 4536px; transform: translate3d(-1296px, 0px, 0px);"><div class="slick-slide slick-cloned" data-slick-index="-4" id="" aria-hidden="true" tabindex="-1" style="width: 324px;"><div><div class="single-slide" style="width: 100%; display: inline-block;">
+                        <div class="slide-content">
+                            <div class="icon-area">
+                                <img src="{% static  'winza/img/amazing-features-icon-2.png' %}" alt="icon">
+                            </div>
+                            <h5>Transparency</h5>
+                        </div>
+                    </div></div></div><div class="slick-slide slick-cloned" data-slick-index="-3" id="" aria-hidden="true" tabindex="-1" style="width: 324px;"><div><div class="single-slide" style="width: 100%; display: inline-block;">
+                        <div class="slide-content">
+                            <div class="icon-area">
+                                <img src="{% static  'winza/img/amazing-features-icon-3.png' %}" alt="icon">
+                            </div>
+                            <h5>Low Commissions</h5>
+                        </div>
+                    </div></div></div><div class="slick-slide slick-cloned" data-slick-index="-2" id="" aria-hidden="true" tabindex="-1" style="width: 324px;"><div><div class="single-slide" style="width: 100%; display: inline-block;">
+                        <div class="slide-content">
+                            <div class="icon-area">
+                                <img src="{% static  'winza/img/amazing-features-icon-4.png' %}" alt="icon">
+                            </div>
+                            <h5>Player is king</h5>
+                        </div>
+                    </div></div></div><div class="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabindex="-1" style="width: 324px;"><div><div class="single-slide" style="width: 100%; display: inline-block;">
+                        <div class="slide-content">
+                            <div class="icon-area">
+                                <img src="{% static  'winza/img/amazing-features-icon-3' %}" alt="icon">
+                            </div>
+                            <h5>Low Commissions</h5>
+                        </div>
+                    </div></div></div><div class="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" style="width: 324px;"><div><div class="single-slide" style="width: 100%; display: inline-block;">
+                        <div class="slide-content">
+                            <div class="icon-area">
+                                <img src="{% static  'winza/img/amazing-features-icon-1.png' %}" alt="icon">
+                            </div>
+                            <h5>Safety</h5>
+                        </div>
+                    </div></div></div><div class="slick-slide slick-active" data-slick-index="1" aria-hidden="false" style="width: 324px;"><div><div class="single-slide" style="width: 100%; display: inline-block;">
+                        <div class="slide-content">
+                            <div class="icon-area">
+                                <img src="{% static  'winza/img/amazing-features-icon-2.png' %}" alt="icon">
+                            </div>
+                            <h5>Transparency</h5>
+                        </div>
+                    </div></div></div><div class="slick-slide slick-active" data-slick-index="2" aria-hidden="false" style="width: 324px;"><div><div class="single-slide" style="width: 100%; display: inline-block;">
+                        <div class="slide-content">
+                            <div class="icon-area">
+                                <img src="{% static  'winza/img/amazing-features-icon-3.png' %}" alt="icon">
+                            </div>
+                            <h5>Low Commissions</h5>
+                        </div>
+                    </div></div></div><div class="slick-slide slick-active" data-slick-index="3" aria-hidden="false" style="width: 324px;"><div><div class="single-slide" style="width: 100%; display: inline-block;">
+                        <div class="slide-content">
+                            <div class="icon-area">
+                                <img src="{% static  'winza/img/amazing-features-icon-4.png' %}" alt="icon">
+                            </div>
+                            <h5>Player is king</h5>
+                        </div>
+                    </div></div></div><div class="slick-slide" data-slick-index="4" aria-hidden="true" tabindex="-1" style="width: 324px;"><div><div class="single-slide" style="width: 100%; display: inline-block;">
+                        <div class="slide-content">
+                            <div class="icon-area">
+                                <img src="{% static  'winza/img/amazing-features-icon-3.png' %}" alt="icon">
+                            </div>
+                            <h5>Low Commissions</h5>
+                        </div>
+                    </div></div></div><div class="slick-slide slick-cloned" data-slick-index="5" id="" aria-hidden="true" tabindex="-1" style="width: 324px;"><div><div class="single-slide" style="width: 100%; display: inline-block;">
+                        <div class="slide-content">
+                            <div class="icon-area">
+                                <img src="{% static  'winza/img/amazing-features-icon-1.png' %}" alt="icon">
+                            </div>
+                            <h5>Safety</h5>
+                        </div>
+                    </div></div></div><div class="slick-slide slick-cloned" data-slick-index="6" id="" aria-hidden="true" tabindex="-1" style="width: 324px;"><div><div class="single-slide" style="width: 100%; display: inline-block;">
+                        <div class="slide-content">
+                            <div class="icon-area">
+                                <img src="{% static  'winza/img/amazing-features-icon-2.png' %}" alt="icon">
+                            </div>
+                            <h5>Transparency</h5>
+                        </div>
+                    </div></div></div><div class="slick-slide slick-cloned" data-slick-index="7" id="" aria-hidden="true" tabindex="-1" style="width: 324px;"><div><div class="single-slide" style="width: 100%; display: inline-block;">
+                        <div class="slide-content">
+                            <div class="icon-area">
+                                <img src="{% static  'winza/img/amazing-features-icon-3.png' %}" alt="icon">
+                            </div>
+                            <h5>Low Commissions</h5>
+                        </div>
+                    </div></div></div><div class="slick-slide slick-cloned" data-slick-index="8" id="" aria-hidden="true" tabindex="-1" style="width: 324px;"><div><div class="single-slide" style="width: 100%; display: inline-block;">
+                        <div class="slide-content">
+                            <div class="icon-area">
+                                <img src="{% static  'winza/img/amazing-features-icon-4.png' %}" alt="icon">
+                            </div>
+                            <h5>Player is king</h5>
+                        </div>
+                    </div></div></div><div class="slick-slide slick-cloned" data-slick-index="9" id="" aria-hidden="true" tabindex="-1" style="width: 324px;"><div><div class="single-slide" style="width: 100%; display: inline-block;">
+                        <div class="slide-content">
+                            <div class="icon-area">
+                                <img src="{% static  'winza/img/amazing-features-icon-3.png' %}" alt="icon">
+                            </div>
+                            <h5>Low Commissions</h5>
+                        </div>
+                    </div></div></div></div></div><button type="button" class="slick-next pull-right slick-arrow" style=""></button></div>
+            </div>
+        </div>
+    </section>
+    <!-- Amazing Features end -->
+
+    <!-- More Features start -->
+    <section class="more-features">
+        <div class="overlay pt-120 pb-120">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 order-lg-0 order-1">
+                        <div class="img-area">
+                            <img src="{% static  'winza/img/more-features-image.png' %}" alt="image">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="section-header">
+                            <h5 class="sub-title">A new betting world</h5>
+                            <h2 class="title">Bets on future currencies prices between users</h2>
+                            <p>Cutting out bookmakers, opens a new betting experience for players.</p>
+                        </div>
+                        <div class="content-area">
+                            <div class="single-item">
+                                <div class="image-area">
+                                    <img src="{% static  'winza/img/more-features-icon-1.png' %}" alt="image">
+                                </div>
+                                <div class="text-area">
+                                    <h5>Pool Bets</h5>
+                                    <p>Players bet on their predicted outcomes and all stakes go into a single pool.
+                                        Winners share the pool. The odds are dynamic and depend on the number of
+                                        participants and the amounts they wagered.</p>
+                                </div>
+                            </div>
+                            <div class="single-item">
+                                <div class="image-area">
+                                    <img src="{% static  'winza/img/more-features-icon-2.png' %}" alt="image">
+                                </div>
+                                <div class="text-area">
+                                    <h5>Head to head betting</h5>
+                                    <p>The purest form of peer-to-peer betting. One player opens the bet and defines the
+                                        odds and another player matches the bet. Players are not bound by unfavourable,
+                                        centrally-defined odds.</p>
+                                </div>
+                            </div>
+                            <div class="single-item">
+                                <div class="image-area">
+                                    <img src="{% static  'winza/img/more-features-icon-3.png' %}" alt="image">
+                                </div>
+                                <div class="text-area">
+                                    <h5>Multi- Player Bets</h5>
+                                    <p>High rollers can wager large amounts by offering bets that can be partially
+                                        matched by multiple players. Similar to head-to-head bets, the odds are defined
+                                        by the player who opens the bet.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- More Features end -->
+
+    <!-- FAQs In start -->
+    <section class="faqs-section">
+        <div class="overlay pt-120">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-7">
+                        <div class="section-header text-center">
+                            <h5 class="sub-title">Frequently Asked Questions</h5>
+                            <h2 class="title">If you have questions we have answer</h2>
+                            <p>Answers for our most popular questions about sportsbetting, crypto, and Winzangu</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row faq-bg d-flex justify-content-center">
+                    <div class="col-xl-10">
+                        <div class="faq-box mt-60 mb-60">
+                            <div class="accordion" id="accordionFaqs">
+                                <div class="accordion-item">
+                                    <h5 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                            I want to play at Winzangu, What do i need to do?
+                                        </button>
+                                    </h5>
+                                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionFaqs">
+                                        <div class="accordion-body">
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                                since the 1500s, when an unknown printer took a galley of type and
+                                                scrambled it to make a type specimen book.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h5 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            How fast do I get paid once I win a bet?
+                                        </button>
+                                    </h5>
+                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionFaqs">
+                                        <div class="accordion-body">
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                                since the 1500s, when an unknown printer took a galley of type and
+                                                scrambled it to make a type specimen book.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h5 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            What are the commissions I have to pay?
+                                        </button>
+                                    </h5>
+                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionFaqs">
+                                        <div class="accordion-body">
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                                since the 1500s, when an unknown printer took a galley of type and
+                                                scrambled it to make a type specimen book.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h5 class="accordion-header" id="headingFour">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                            Can I set the odds for any bet I want?
+                                        </button>
+                                    </h5>
+                                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionFaqs">
+                                        <div class="accordion-body">
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                                since the 1500s, when an unknown printer took a galley of type and
+                                                scrambled it to make a type specimen book.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h5 class="accordion-header" id="headingFive">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                            What kind of Escrow do you provide?
+                                        </button>
+                                    </h5>
+                                    <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionFaqs">
+                                        <div class="accordion-body">
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                                since the 1500s, when an unknown printer took a galley of type and
+                                                scrambled it to make a type specimen book.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h5 class="accordion-header" id="headingsix">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesix" aria-expanded="false" aria-controls="collapsesix">
+                                            What makes us unique?
+                                        </button>
+                                    </h5>
+                                    <div id="collapsesix" class="accordion-collapse collapse" aria-labelledby="headingsix" data-bs-parent="#accordionFaqs">
+                                        <div class="accordion-body">
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                                since the 1500s, when an unknown printer took a galley of type and
+                                                scrambled it to make a type specimen book.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h5 class="accordion-header" id="headingsaven">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsesaven" aria-expanded="false" aria-controls="collapsesaven">
+                                            Is the Escrow payment secured?
+                                        </button>
+                                    </h5>
+                                    <div id="collapsesaven" class="accordion-collapse collapse" aria-labelledby="headingsaven" data-bs-parent="#accordionFaqs">
+                                        <div class="accordion-body">
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                                since the 1500s, when an unknown printer took a galley of type and
+                                                scrambled it to make a type specimen book.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h5 class="accordion-header" id="headingeight">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseeight" aria-expanded="false" aria-controls="collapseeight">
+                                            How do I deposit/transfer money to my transactions?
+                                        </button>
+                                    </h5>
+                                    <div id="collapseeight" class="accordion-collapse collapse" aria-labelledby="headingeight" data-bs-parent="#accordionFaqs">
+                                        <div class="accordion-body">
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                                since the 1500s, when an unknown printer took a galley of type and
+                                                scrambled it to make a type specimen book.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h5 class="accordion-header" id="headingNine">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNight" aria-expanded="false" aria-controls="collapseNight">
+                                            How do I withdraw money from my Winzangu Bets account?
+                                        </button>
+                                    </h5>
+                                    <div id="collapseNight" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#accordionFaqs">
+                                        <div class="accordion-body">
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                                since the 1500s, when an unknown printer took a galley of type and
+                                                scrambled it to make a type specimen book.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- FAQs In end -->
+
+    <!-- Affilliate start -->
+    <section class="affilliate-section">
+        <div class="overlay pt-120">
+            <div class="container">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-lg-5 order-lg-0 order-1">
+                        <div class="img-area d-rtl">
+                            <img src="/static/winza/img/affilliate-image.png" alt="image" class="max-un">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="section-text">
+                            <h5 class="sub-title">Join forces with Winzangu</h5>
+                            <h2 class="title">Earn As Our Affilliate</h2>
+                            <p>Join the program and gain up to 50% revshare! Are you an experienced affiliate, and would
+                                like to set up your own rules? We are happy to get to know your offer. Partner with us
+                                and earn as your referrals start playing!</p>
+                        </div>
+                        <div class="bottom-area">
+                            <div class="btn-border d-inline-block">
+                                <a href="{% url 'home:affiliate' %}" class="cmn-btn">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Affilliate end -->
+
+   {% endblock content %}

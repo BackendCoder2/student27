@@ -1,0 +1,79 @@
+{% extends "elayouts/base.html" %}
+{% load static %}
+
+
+{% block content %}
+      
+      
+<div class="site-content" id="content">
+				<div class="container">
+<div class="content-area">
+
+<div class="hp-page site-main"><div class="hp-row">
+
+
+<div class="hp-page__content hp-col-sm-8 hp-col-xs-12">
+
+
+
+	<h1 class="hp-page__title">Received Orders</h1>
+
+
+
+
+
+<table class="hp-orders hp-table hp-block"><tbody>
+{% for j in jobs %}
+
+
+<tr class="hp-order hp-order--edit-block"><td class="hp-order__number">
+	<a href="/task/{{ j.id }}" class="hp-link">
+		<i class="hp-icon fas fa-edit"></i>
+		<span>{{ j.sub_category }}</span>
+	</a>
+</td>
+<td class="hp-order__status hp-status hp-status--wc-pending">
+	<span>{{ j.ttype }}</span>
+</td>
+<td class="hp-order__total">
+	<span>{{ j.title }}</span>
+</td>
+<td class="hp-order__total">
+	<span>{{ j.price }}</span>
+</td>
+<td class="hp-order__status hp-status hp-status--wc-completed">
+	<span>{{ j.status }}</span>
+	</td>
+<td class="hp-order__created-date">
+	<time>04/26/2022</time>
+</td>
+
+<td class="hp-order__created-date">
+	<time>{{ j.start_date }}</time>
+</td>
+
+<td class="hp-order__created-date">
+	<time>{{ j.end_date }}</time>
+</td>
+<td class="hp-order__actions hp-order__actions--primary"></td>
+
+</tr>
+
+{% endfor %}
+</tbody>
+
+</table>
+
+
+
+
+<nav class="hp-pagination">
+	</nav>
+</div></div></div></div>				</div>
+			</div>
+		</div>
+      
+      
+      
+
+{% endblock content %}
