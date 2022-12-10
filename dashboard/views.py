@@ -1,12 +1,12 @@
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from .models import Job, Submission
-from paypal.models import UserFund
+#from paypal.models import UserFund
 from django.views.decorators.csrf import csrf_exempt
 #import boto3
 import os
 import pathlib
-from authentication.models import Profile
+#from authentication.models import Profile
 from django.contrib.auth.decorators import login_required
 
 
@@ -27,6 +27,10 @@ def post_job(request):
         Job(user=request.user, title=request.POST["title"], description=request.POST["description"], price=float(request.POST["price"]), quantity=int(request.POST["quantity"])).save()
         return redirect("/")
     return render(request, "dashboard/post-job.html")
+    
+    
+    
+    
 
 @login_required(login_url="/auth/login/")
 def view_task(request, task_id):
@@ -85,10 +89,10 @@ def employer_dashboard(request):
 @login_required(login_url="/auth/login/")
 def review_submission(request, submission_id):
     submission = Submission.objects.get(id=submission_id)
-    profile = Profile.objects.get(user=submission.user)
+   # profile = Profile.objects.get(user=submission.user)
     return render(request, "dashboard/submission.html", {
         "submission": submission,
-        "profile": profile
+       # "profile": profile
     })
 
 @login_required(login_url="/auth/login/")
@@ -130,12 +134,6 @@ def employer_submission_success(request, submission_id):
     employer_fund.save()
 
     return redirect("/employer-dashboard/")
-    
-    
-    
-    
-    
-    
     
     
     
