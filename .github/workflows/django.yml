@@ -28,3 +28,22 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test
+    
+          
+
+  deploy:
+    runs-on: ubuntu-latest
+    name: build
+    
+    steps:
+      - name: Deploy Eltask APP
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{secrets.SSH_HOST}}
+          key: ${{secrets.SSH_KEY}}
+          username: ${{ secrets.SSH_USER }}
+
+          script: |
+            cd /var/www/admin
+            git pull origin master
+            
