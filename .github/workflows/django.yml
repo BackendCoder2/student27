@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
+  ctest:
 
     runs-on: ubuntu-latest
     strategy:
@@ -31,9 +31,130 @@ jobs:
     
           
 
+
+
+
+  build:
+    runs-on: self-hosted
+    needs: ctest
+    name: build
+
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Create Vitrual_Env & Install Dependencies
+      run: |
+        # sudo -H pip3 install --upgrade pip 
+        # sudo -H pip3 install virtualenv
+        # sudo -H pip3 install tree ##FIXIT
+
+        mkdir -p ~/eltask
+        cd ~/eltask
+
+        # virtualenv env
+        source env/bin/activate
+
+
+        cd ~/app/deploy/eltask/eltask
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+
+
+    - name: Create ENV VAR
+      run: |
+        mkdir -p ~/eltask
+        mkdir -p ~/eltask/src
+        touch ~/eltask/.env
+        cp ~/eltask/.env  ~/app/deploy/eltask/eltask
+
+
+    - name: Create Migrations Backup Directories
+      run: |  
+        mkdir -p ~/eltask/migrations/dashboard/migrations
+        mkdir -p ~/eltask/migrations/users/migrations
+        mkdir -p ~/eltask/migrations/home/migrations
+
+        cd ~/eltask/migrations
+        tree
+
+
+    - name: RSYNC Backup Migrations To Workin Directory
+      run: |
+        rsync -a --delete ~/eltask/migrations/dashboard/migrations ~/app/deploy/eltask/eltask/account
+        rsync -a --delete ~/eltask/migrations/users/migrations ~/app/deploy/eltask/eltask/users
+        rsync -a --delete ~/eltask/migrations/home/migrations ~/app/deploy/eltask/eltask/home
+
+        
+    - name: COLLECTSTATIC
+      run: |
+        cd ~/app/deploy/eltask/eltask                
+        python manage.py collectstatic
+
+    - name: MAKEMIGRATIONS
+      run: |
+        cd ~/app/deploy/eltask/eltask 
+        python manage.py makemigrations
+        python manage.py makemigrations users
+        python manage.py makemigrations home
+        python manage.py makemigrations dashboard
+    ## All
+    - name: APP-MIGRATE
+      run: |
+        cd ~/app/deploy/eltask/eltask        
+        python manage.py migrate
+        
+    ## dashboard
+    - name: MIGRATE-dashboard
+      run: |
+        cd ~/app/deploy/eltask/eltask        
+        python manage.py migrate dashboard
+
+    - name: Rsync Workin Directory to Backup Migrations-daru_wheel
+      run: |
+        rsync -a --delete ~/app/deploy/eltask/eltask/daru_wheel/migrations ~/eltask/migrations/dashboard
+        cd ~/eltask/migrations/dashboard
+        tree
+
+    ## users
+    - name: MIGRATE-users
+      run: |
+        cd ~/app/deploy/eltask/eltask        
+        python manage.py migrate users
+
+    - name: Rsync Workin Directory to Backup Migrations-users
+      run: |
+        rsync -a --delete ~/app/deploy/eltask/eltask/users/migrations ~/eltask/migrations/users
+        cd ~/eltask/migrations/users
+        tree    
+    ## home
+    - name: MIGRATE-home
+      run: |
+        cd ~/app/deploy/eltask/eltask        
+        python manage.py migrate home
+
+    - name: Rsync Workin Directory to Backup Migrations-home
+      run: |
+        rsync -a --delete ~/app/deploy/eltask/eltask/home/migrations ~/eltask/migrations/home
+        cd ~/eltask/migrations/home
+        tree  
+
+    - name: Backup Migrations_Updated
+      run: |
+        cd ~/eltask/migrations
+        tree
+
+
+
+
   deploy:
     runs-on: ubuntu-latest
-    name: build
+    needs: build    
+    name: deploy
     
     steps:
       - name: Deploy Eltask APP
