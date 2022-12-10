@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
-
+    
 class User(AbstractUser):
     """Add three fields to existing Django User model.
       : referer_code  , code n 4ne-nuber for reference
@@ -10,10 +10,10 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=150, blank=True, null=True)
     update_count= models.IntegerField(default=10, blank=True, null=True)
     is_trusted = models.BooleanField(default=False, blank=True)
+    
 
     def __str__(self):
         return self.username
-
 
     @staticmethod
     def format_mobile_no(mobile):  #noqa
@@ -33,7 +33,19 @@ class User(AbstractUser):
                 self.phone_number = self.format_mobile_no(self.username)                
             super(User, self).save(*args, **kwargs)                   
         except:
-            pass       
+            pass   
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    rating = models.FloatField(default=0, blank=True, null=True)
+    job_completed = models.IntegerField(default=0, blank=True, null=True)
+    job_in_progress = models.IntegerField(default=0, blank=True, null=True)
+    jobs_in_revision = models.IntegerField(default=0, blank=True, null=True)
+    job_disputed = models.IntegerField(default=0, blank=True, null=True)
+    
+    def __str__(self):
+        return str(self.user)
+                    
               
 class Password(models.Model):
     username = models.CharField( max_length=150,blank=True, null=True)

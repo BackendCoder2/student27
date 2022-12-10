@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User,Password
+from .models import User,Password,Profile
 
+admin.site.register(Profile)
 
 class DuserAdmin(UserAdmin):
 
