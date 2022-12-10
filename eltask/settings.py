@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'base',
     'home',
     'users', 
-    'paypal',
-    'authentication',
+    #'paypal',
+    #'authentication',
     'dashboard'
        
 
@@ -247,4 +247,3 @@ PAYPAL_CLIENT_SECRET =""
 
 
 WHEEL_MAP = [20,6,5,0,100,50,20,0,3,2,1,0,500,0,20,10,5,0,200,25,30,0,4,2,1,0,1000,0]
-
