@@ -22,7 +22,5 @@ admin.site.site_header = "Eltask"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path("paypal/", include("paypal.urls")),
-    #path("auth/", include("authentication.urls")),
     path("", include("dashboard.urls")),
 ]
