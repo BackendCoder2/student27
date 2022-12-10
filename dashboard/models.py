@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from base.models import TimeStamp,UserFK
+from users.models import Profile
 from django.urls import reverse
 
 class Category(TimeStamp):#(models.Model):
@@ -44,65 +45,138 @@ class Status(TimeStamp):#(models.Model):
     class Meta:
         db_table = "e_status"
         verbose_name_plural = "Status"
-                    
-class Job(UserFK,TimeStamp):    
-    sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE, blank=True, null=True)
-    ttype = models.ForeignKey(Type, on_delete=models.CASCADE, blank=True, null=True)
+        
+                           
+class Job(UserFK,TimeStamp): 
+    AVAILABLE = 'AV'
+    BOOKED = 'BK'
+    CLOSED = 'CL'
     
-    title = models.CharField(max_length=255, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+    STATUS = [
+        (AVAILABLE, 'Available'),        
+        (BOOKED, 'booked'),        
+        (CLOSED, 'closed'),
+    ]
+    
+    
+    #ticket = models.IntegerField(blank=True, null=True)
+    sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE, blank=True, null=True)
+    #ttype = models.ForeignKey(Type, on_delete=models.CASCADE, blank=True, null=True)
+    
+    title = models.CharField(help_text="Write Short job tittle here",max_length=255, blank=True, null=True)
+    description = models.TextField(help_text="Write Details job delivarables  here",blank=True, null=True)
    # dfile = models.FileField(blank=True, null=True)
     
-    price = models.FloatField(blank=True, null=True)
-    quantity = models.IntegerField(blank=True, null=True)
+    price = models.FloatField(help_text="Enter amount to pay per page-KES",blank=True, null=True)
+    quantity = models.IntegerField(help_text="Enter number of pages required",blank=True, null=True)
     
-    start_date = models.DateField(blank=True, null=True)
-    end_date = models.DateField(blank=True, null=True)
+    finished_at = models.DateTimeField(help_text="Enter submission Deadline.Tip- Enter time less than the actual! ",blank=True, null=True)    
     
-    approved = models.BooleanField(default=True, blank=True)    
-    closed = models.BooleanField(default=False, blank=True)
+    display = models.BooleanField(help_text="Check this button to make your job available in the market",default=False, blank=True)    
+    #closed = models.BooleanField(default=False, blank=True)
+    
+    state = models.BooleanField(default=None, blank=True, null=True)
+    
+    status = models.CharField(
+        max_length=100,
+        choices=STATUS,
+        default=AVAILABLE,
+    )
+    
+    assigned_to = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
     
     def __str__(self):
-        return self.title
+        return "JOB-ID: "+str(self.pk)+" :"+self.title
 
     class Meta:
         db_table = "e_jobs"
         
-    @property    
-    def status(self):
-        if self.closed:
-            return "CLOSED"
-        elif  self.approved and not self.closed:
-            return "OPEN"
-        else:
-            return "BOOKED"        
+          
+             
+    @property
+    def bids(self):
+        return self.jobs(self).count()              
+            
+    @classmethod    
+    def jobs(cls,job):
+        return cls.objects.filter(bid__job=job)  
+                        
                 
-
+class Bid(UserFK,TimeStamp):#(models.Model):      
+    job= models.ForeignKey(Job, on_delete=models.CASCADE, blank=True, null=True)
+    description = models.TextField(blank=True,null=True)
+    #name = models.CharField(max_length=100, default="pending", blank=True, null=True)
+    
+    approve = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True) #job_owner   
+    accept = models.BooleanField(help_text="FOR TASKER",default=False, blank=True)#by_bidder
+    
+    def __str__(self):
+        return str(self.job)
+        
+    @property    #    
+    def profile(self):
+        return Profile.objects.get(user=self.user)
+                
+    @property        
+    def user_ratings(self):
+        return str(self.profile.rating)
+        
+    @property        
+    def user_job_in_progress(self):
+        return str(self.profile.job_in_progress)
+        
+    @property                        
+    def user_jobs_in_revision(self):
+        return str(self.profile.job_disputed) 
+        
+    @property         
+    def user_job_completed(self):
+        return str(self.profile.rating) 
+              
+    @property        
+    def user_job_disputed(self):
+        return str(self.profile.job_disputed)
+                        
+    class Meta:
+        db_table = "e_bids"
+        unique_together = ['user', 'job']
+        ordering = ("created_at",) 
+        
+    def save(self, *args, **kwargs):     
+        if self.approve and self.accept:# and self.job.assigned_to is None:
+            Job.objects.filter(id=self.job.id).update(assigned_to=self.user,state=True)
+            
+        super().save(*args, **kwargs)
+        
+        
 class Submission(UserFK,TimeStamp):
-
-    PENDING = 'PG'
-    REVISE = 'RV'
+    REVIEW = 'RVW'
+    REVISE = 'RVS'
+    
     REJECTED= 'RJ'
     SUCCESS = 'SC'
     
     STATUS = [
-        (PENDING, 'Pending'),
+        (REVIEW, 'review'),   
         (REVISE, 'Revise'),
         (REJECTED, 'Rejected'),
         (SUCCESS, 'Success'),
     ]
-    
     job = models.ForeignKey(Job, on_delete=models.CASCADE, blank=True, null=True)
     proof = models.TextField()
     # dfile = models.FileField(blank=True, null=True)
-    status = models.CharField(max_length=100, default="pending", blank=True, null=True) # approved, revise, pending,rejected
+    status = models.CharField(max_length=250, default="pending", blank=True, null=True) # approved, revise, pending,rejected
 
     feedback = models.CharField(
-        max_length=2,
+        max_length=100,
         choices=STATUS,
-        default=PENDING,
+        default=REVIEW,
     )
-
         
     def __str__(self):
         return f"Submission:{self.id} for "+str(self.job)
@@ -112,3 +186,5 @@ class Submission(UserFK,TimeStamp):
 
     class Meta:
         db_table = "e_submissions"
+
+                
