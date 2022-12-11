@@ -51,7 +51,7 @@ jobs:
                       mkdir -p ~/eltask
             cd ~/eltask
      
-            source env/bin/activate
+            source venv/bin/activate
             
             
             cd ~/eltask/src
