@@ -41,16 +41,14 @@ jobs:
     needs: build    
     name: deploy
     
+    
     steps:
-      - name: Deploy Eltask actions-runner
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: ${{secrets.DIGITAL_OCEAN_IP}}
-          password: ${{secrets.DIGITAL_OCEAN_PAS}}
-          username: ${{ secrets.DIGITAL_OCEAN_USER }}
-
-
-          script: |
-            cd /var/www/admin
-            git pull origin master
-            
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v0.1.6
+      with:
+        host: ${{ secrets.DIGITAL_OCEAN_IP }}
+        username: ${{ secrets.DIGITAL_OCEAN_USER }}
+        password: ${{ secrets.DIGITAL_OCEAN_PAS }}
+        script: |
+          cd /var/www/admin
+          git pull origin master        
