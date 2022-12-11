@@ -46,8 +46,9 @@ jobs:
         uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{secrets.DIGITAL_OCEAN_IP}}
-          key: ${{secrets.DIGITAL_OCEAN_KEY}}
+          password: ${{secrets.DIGITAL_OCEAN_PAS}}
           username: ${{ secrets.DIGITAL_OCEAN_USER }}
+
 
           script: |
             cd /var/www/admin
