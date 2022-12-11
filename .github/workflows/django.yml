@@ -60,7 +60,7 @@ jobs:
         source env/bin/activate
 
 
-        cd ~/app/deploy/eltask/eltask
+        cd ~/actions-runner/deploy/eltask/eltask
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
 
@@ -70,7 +70,7 @@ jobs:
         mkdir -p ~/eltask
         mkdir -p ~/eltask/src
         touch ~/eltask/.env
-        cp ~/eltask/.env  ~/app/deploy/eltask/eltask
+        cp ~/eltask/.env  ~/actions-runner/deploy/eltask/eltask
 
 
     - name: Create Migrations Backup Directories
@@ -85,61 +85,62 @@ jobs:
 
     - name: RSYNC Backup Migrations To Workin Directory
       run: |
-        rsync -a --delete ~/eltask/migrations/dashboard/migrations ~/app/deploy/eltask/eltask/account
-        rsync -a --delete ~/eltask/migrations/users/migrations ~/app/deploy/eltask/eltask/users
-        rsync -a --delete ~/eltask/migrations/home/migrations ~/app/deploy/eltask/eltask/home
+        rsync -a --delete ~/eltask/migrations/dashboard/migrations ~/actions-runner/deploy/eltask/eltask/account
+        rsync -a --delete ~/eltask/migrations/users/migrations ~/actions-runner/deploy/eltask/eltask/users
+        rsync -a --delete ~/eltask/migrations/home/migrations ~/actions-runner/deploy/eltask/eltask/home
+        
 
         
     - name: COLLECTSTATIC
       run: |
-        cd ~/app/deploy/eltask/eltask                
+        cd ~/actions-runner/deploy/eltask/eltask                
         python manage.py collectstatic
 
     - name: MAKEMIGRATIONS
       run: |
-        cd ~/app/deploy/eltask/eltask 
+        cd ~/actions-runner/deploy/eltask/eltask 
         python manage.py makemigrations
         python manage.py makemigrations users
         python manage.py makemigrations home
         python manage.py makemigrations dashboard
     ## All
-    - name: APP-MIGRATE
+    - name: actions-runner-MIGRATE
       run: |
-        cd ~/app/deploy/eltask/eltask        
+        cd ~/actions-runner/deploy/eltask/eltask        
         python manage.py migrate
         
     ## dashboard
     - name: MIGRATE-dashboard
       run: |
-        cd ~/app/deploy/eltask/eltask        
+        cd ~/actions-runner/deploy/eltask/eltask        
         python manage.py migrate dashboard
 
     - name: Rsync Workin Directory to Backup Migrations-daru_wheel
       run: |
-        rsync -a --delete ~/app/deploy/eltask/eltask/daru_wheel/migrations ~/eltask/migrations/dashboard
+        rsync -a --delete ~/actions-runner/deploy/eltask/eltask/daru_wheel/migrations ~/eltask/migrations/dashboard
         cd ~/eltask/migrations/dashboard
         tree
 
     ## users
     - name: MIGRATE-users
       run: |
-        cd ~/app/deploy/eltask/eltask        
+        cd ~/actions-runner/deploy/eltask/eltask        
         python manage.py migrate users
 
     - name: Rsync Workin Directory to Backup Migrations-users
       run: |
-        rsync -a --delete ~/app/deploy/eltask/eltask/users/migrations ~/eltask/migrations/users
+        rsync -a --delete ~/actions-runner/deploy/eltask/eltask/users/migrations ~/eltask/migrations/users
         cd ~/eltask/migrations/users
         tree    
     ## home
     - name: MIGRATE-home
       run: |
-        cd ~/app/deploy/eltask/eltask        
+        cd ~/actions-runner/deploy/eltask/eltask        
         python manage.py migrate home
 
     - name: Rsync Workin Directory to Backup Migrations-home
       run: |
-        rsync -a --delete ~/app/deploy/eltask/eltask/home/migrations ~/eltask/migrations/home
+        rsync -a --delete ~/actions-runner/deploy/eltask/eltask/home/migrations ~/eltask/migrations/home
         cd ~/eltask/migrations/home
         tree  
 
@@ -151,14 +152,15 @@ jobs:
 
 
 
+
   deploy:
     runs-on: ubuntu-latest
     needs: build    
     name: deploy
     
     steps:
-      - name: Deploy Eltask APP
-        uses: appleboy/ssh-action@v0.1.4
+      - name: Deploy Eltask actions-runner
+        uses: actions-runnerleboy/ssh-action@v0.1.4
         with:
           host: ${{secrets.DIGITAL_OCEAN_IP}}
           key: ${{secrets.DIGITAL_OCEAN_KEY}}
