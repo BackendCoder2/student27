@@ -43,7 +43,7 @@ jobs:
     
     steps:
       - name: Deploy Eltask actions-runner
-        uses: actions-runnerleboy/ssh-action@v0.1.4
+        uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{secrets.DIGITAL_OCEAN_IP}}
           key: ${{secrets.DIGITAL_OCEAN_KEY}}
