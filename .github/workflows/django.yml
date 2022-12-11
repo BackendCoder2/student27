@@ -48,7 +48,7 @@ jobs:
       with:
         host: ${{ secrets.DIGITAL_OCEAN_IP }}
         username: ${{ secrets.DIGITAL_OCEAN_USER }}
-        password: ${{ secrets.DIGITAL_OCEAN_PAS }}
+        key: ${{ secrets.DIGITAL_OCEAN_KEY }}
         script: |
           cd /var/www/admin
           git pull origin master        
