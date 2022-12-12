@@ -119,9 +119,7 @@ jobs:
 
           rsync -a --delete ~/eltask/src/home/migrations ~/eltask/migrations/home
           cd ~/eltask/migrations/home
-          tree  
-
-          
+          tree           
 
           #Backup Migrations_Updated
 
