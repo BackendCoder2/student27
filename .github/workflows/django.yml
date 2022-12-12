@@ -124,7 +124,7 @@ jobs:
 
           cd ~/eltask/migrations
           ls        
-          sudo shutdown -r now
+          #sudo shutdown -r now
         
                    
           
