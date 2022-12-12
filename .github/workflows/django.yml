@@ -48,16 +48,13 @@ jobs:
         key: ${{ secrets.DIGITAL_OCEAN_KEY }}
         script: |
           whoami
-                      mkdir -p ~/eltask
-            cd ~/eltask
-     
-            source venv/bin/activate
+          mkdir -p ~/eltask
+          cd ~/eltask
+          source venv/bin/activate
+          
+          cd ~/eltask/src
             
-            
-            cd ~/eltask/src
-            
-            git pull origin master
-            ls            
-            
-            
-            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          git pull origin master
+          ls  
+
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
