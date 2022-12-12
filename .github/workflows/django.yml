@@ -57,9 +57,7 @@ jobs:
             cd ~/eltask/src
             
             git pull origin master
-            cd ~/eltask/src/eltask
-            ls
-            
+            ls            
             
             
             if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
