@@ -57,4 +57,10 @@ jobs:
           git pull origin master
           ls  
 
+<<<<<<< HEAD
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+=======
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          
+          
+>>>>>>> 360e03d (Merge branch 'master' into dev)
