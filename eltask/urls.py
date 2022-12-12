@@ -17,10 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
-admin.site.site_header = "Eltask"
+admin.site.site_header = "AjiraPanel Admin"
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("", include("dashboard.urls")),
+    path('', admin.site.urls),
+    path("dashboard/", include("dashboard.urls")),
 ]
