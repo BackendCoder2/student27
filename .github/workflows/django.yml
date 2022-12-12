@@ -30,9 +30,6 @@ jobs:
         python manage.py test
     
           
-
-
-
   deploy:
     runs-on: ubuntu-latest
     needs: build    
@@ -55,6 +52,8 @@ jobs:
           cd ~/eltask/src
             
           git pull origin master
+
+          
           ls  
 
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
