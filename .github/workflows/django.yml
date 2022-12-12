@@ -55,7 +55,6 @@ jobs:
 
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           
-          
           #create Migrations Backup Directories
                     
           mkdir -p ~/eltask/migrations/dashboard/migrations
@@ -119,20 +118,14 @@ jobs:
 
           rsync -a --delete ~/eltask/src/home/migrations ~/eltask/migrations/home
           cd ~/eltask/migrations/home
-          tree  
-
-          
+          tree           
 
           #Backup Migrations_Updated
 
           cd ~/eltask/migrations
           ls        
         
-          
-          
-          
-          
-          
+                   
           
           
           
