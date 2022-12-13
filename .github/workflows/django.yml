@@ -69,7 +69,7 @@ jobs:
           
           #COLLECTSTATIC          
           cd ~/eltask/src 
-          python manage.py collectstatic
+          python manage.py collectstatic --noinput
           
           
           #MAKEMIGRATIONS
