@@ -155,7 +155,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 # The absolute path to the directory where collectstatic will collect static files for deployment.
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # The URL to use when referring to static files (where they will be served from)
 STATIC_URL = '/static/'
@@ -257,5 +257,3 @@ DJANGO_SETTINGS_MODULE = 'eltask.settings'
 PAYPAL_CLIENT_ID = ""
 PAYPAL_CLIENT_SECRET =""
 
-
-WHEEL_MAP = [20,6,5,0,100,50,20,0,3,2,1,0,500,0,20,10,5,0,200,25,30,0,4,2,1,0,1000,0]
