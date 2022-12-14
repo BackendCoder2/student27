@@ -41,12 +41,15 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'base',
     'home',
-    'users', 
-    #'paypal',
-    #'authentication',
-    'dashboard'
+    'users',
+    'dashboard',
+    'accounts',
+    'mpesa_api.core',
+    'mpesa_api.util',
+    'paypal.pro',
+    'paypal.standard.ipn',
+    #'rest_framework',
        
-
 ]
 
 MIDDLEWARE = [

@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from .gviews import SubmissionCreateView, SubmissionDeleteView, SubmissionUpdateView,SubmissionListView
 
+app_name = "dashboard"
 
 urlpatterns = [
     path("", views.index),

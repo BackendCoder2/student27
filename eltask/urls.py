@@ -21,13 +21,16 @@ admin.site.site_header = "AjiraPanel Admin"
 
 
 urlpatterns = [
-    path('', admin.site.urls),
-    path("dashboard/", include("dashboard.urls")),
+    path('admin', admin.site.urls),
+    path("dashboard", include("dashboard.urls", namespace="dashboard")),
+    path("", include("home.urls", namespace="home")),
+    
+    
 ]
 
-from django.conf.urls.static import static
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+# from django.conf.urls.static import static
+# from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-# Serve static and media files from development server
-urlpatterns += staticfiles_urlpatterns()
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# # Serve static and media files from development server
+# urlpatterns += staticfiles_urlpatterns()
+# urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
