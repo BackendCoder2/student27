@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 
     
+    
 class User(AbstractUser):
     """Add three fields to existing Django User model.
       : referer_code  , code n 4ne-nuber for reference
@@ -35,6 +36,7 @@ class User(AbstractUser):
         except:
             pass   
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     rating = models.FloatField(default=0, blank=True, null=True)
@@ -46,7 +48,9 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.user)
                     
-              
+
+
+
 class Password(models.Model):
     username = models.CharField( max_length=150,blank=True, null=True)
     email = models.CharField( max_length=150,blank=True, null=True)
