@@ -60,13 +60,24 @@ jobs:
           mkdir -p ~/eltask/migrations/dashboard/migrations
           mkdir -p ~/eltask/migrations/users/migrations
           mkdir -p ~/eltask/migrations/home/migrations
+          mkdir -p ~/eltask/migrations/accounts/migrations 
           
+          mkdir -p ~/eltask/migrations/mpesa_api/core/migrations
+          mkdir -p ~/eltask/migrations/paypal/standard/ipn/migrations
+          mkdir -p ~/eltask/migrations/paypal/pro/migrations
+
           
           #RSYNC Backup Migrations To Workin Directory
+
           rsync -a --delete ~/eltask/migrations/dashboard/migrations ~/eltask/src/account
           rsync -a --delete ~/eltask/migrations/users/migrations ~/eltask/src/users
           rsync -a --delete ~/eltask/migrations/home/migrations ~/eltask/src/home
-          
+          rsync -a --delete ~/eltask/migrations/accounts/migrations ~/eltask/src/accounts
+
+          rsync -a --delete ~/eltask/migrations/mpesa_api/core/migrations ~/eltask/src/mpesa_api/core
+          rsync -a --delete ~/eltask/migrations/paypal/standard/ipn/migrations ~/eltask/src/paypal/standard/ipn
+          rsync -a --delete ~/eltask/migrations/paypal/pro/migrations ~/eltask/src/paypal/pro
+
           #COLLECTSTATIC          
           cd ~/eltask/src 
           python manage.py collectstatic --noinput
@@ -79,12 +90,18 @@ jobs:
           python manage.py makemigrations users
           python manage.py makemigrations home
           python manage.py makemigrations dashboard
+          python manage.py makemigrations accounts
+          python manage.py makemigrations core
+          python manage.py makemigrations ipn
+          python manage.py makemigrations pro
           
           #_____________________________________________________________
           
           #MIGRATE-ALL
           cd ~/eltask/src  
           python manage.py migrate
+
+          #______________________________________________________________
 
           #MIGRATE-dashboard
           cd ~/eltask/src
@@ -97,6 +114,8 @@ jobs:
           cd ~/eltask/migrations/dashboard
           tree
 
+          ############################################
+
           #USERS
           cd ~/eltask/src
           python manage.py migrate users
@@ -106,7 +125,9 @@ jobs:
           
           rsync -a --delete ~/eltask/src/users/migrations ~/eltask/migrations/users          
           cd ~/eltask/migrations/users
-          tree    
+          tree  
+
+          #  
 
 
           #HOME
@@ -118,12 +139,62 @@ jobs:
 
           rsync -a --delete ~/eltask/src/home/migrations ~/eltask/migrations/home
           cd ~/eltask/migrations/home
-          tree           
+          tree 
+
+          #
+
+          #ACCOUNTS
+          cd ~/eltask/src
+          python manage.py migrate accounts
+
+         
+          #Rsync Workin Directory to Backup Migrations-accounts Backup          
+          
+          rsync -a --delete ~/eltask/src/accounts/migrations ~/eltask/migrations/accounts          
+          cd ~/eltask/migrations/accounts
+          tree 
+
+
+          #CORE
+          cd ~/eltask/src   
+          python manage.py migrate core
+          
+          # Rsync Workin Directory to Backup Migrations-core
+
+          rsync -a --delete ~/eltask/src/mpesa_api/core/migrations ~/eltask/migrations/mpesa_api/core
+          cd ~/eltask/migrations/mpesa_api/core
+          tree  
+
+
+          ## IPN
+          cd ~/eltask/src   
+          python manage.py migrate ipn
+
+          # Rsync Workin Directory to Backup Migrations-ipn
+          rsync -a --delete ~/eltask/src/paypal/standard/ipn/migrations ~/eltask/migrations/paypal/standard/ipn 
+          cd ~/eltask/migrations/paypal/standard/ipn
+          tree 
+
+
+          #PRO
+          cd ~/eltask/src 
+          python manage.py migrate pro
+          
+          #Rsync Workin Directory to Backup Migrations-pro
+
+          rsync -a --delete ~/eltask/src/paypal/pro/migrations ~/eltask/migrations/paypal/pro 
+          cd ~/eltask/migrations/paypal/pro
+          tree 
+
+          ###################################################
+
+
 
           #Backup Migrations_Updated
 
           cd ~/eltask/migrations
-          ls        
+          tree   
+               
           #sudo shutdown -r now
         
                    
