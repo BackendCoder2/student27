@@ -286,3 +286,5 @@ colorfield
 rest_framework
 paypalpayoutssdk
 paypalhttp
+certifi
+idna
