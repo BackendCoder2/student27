@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url="/users/login/")
 def index(request):
     jobs = Job.objects.all()
-    return render(request, "dashboard/index.html", {
+    return render(request, "dashboard/jobs.html", {
         "jobs": jobs
     })
 
