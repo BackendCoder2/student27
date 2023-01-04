@@ -9,6 +9,6 @@ urlpatterns = [
     path("contact-us", views.contact, name="contact"),
     path("affiliate", views.affiliate, name="affiliate"),
     path("faqs", views.faqs, name="faqs"),
-    path("dashboard", views.dashboard, name="dashboard"),
+    #path("dashboard", views.dashboard, name="dashboard"),
     
 ]

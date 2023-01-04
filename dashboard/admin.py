@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Category,SubCategory,Job,Submission,Status,Type,Bid
 #from users.models import User
-from .forms import JobForm
+from .forms import JobForm,BidForm
 
 admin.site.register(Category)
 admin.site.register(SubCategory)
@@ -98,9 +98,11 @@ class SubmissionAdmin(admin.ModelAdmin):
 admin.site.register(Submission, SubmissionAdmin)
 
 class BidAdmin(admin.ModelAdmin):
+    form = BidForm
     list_display = (
         "id",
         "user",
+        "bidder",
         "approve",
         "accept",
         "created_at",
@@ -129,12 +131,19 @@ class BidAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             qs = self.model._default_manager.get_queryset()
         else:
-            qs = self.model.objects.filter(job__user=request.user)  
-              
+            qs = self.model.objects.filter(job__user=request.user) | self.model.objects.filter(bidder=request.user)
+            
         ordering = self.get_ordering(request)
         if ordering:
             qs = qs.order_by(*ordering)
-        return qs   
+        return qs  
+        
+    def save_model(self, request, obj, form, change):
+        """
+        Given a model instance save it to the database.
+        """
+        obj.user=request.user#ADD
+        obj.save()        
             
 admin.site.register(Bid, BidAdmin)
 

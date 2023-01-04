@@ -38,13 +38,12 @@ def faqs(request):
     return render(request, 'home/faqs.html') 
    
           
-@login_required(login_url="/user/login")    
+@login_required(login_url="/users/login")    
 def dashboard(request):
     wallet=Account.objects.get(user=request.user)
-    trans=Transaction.objects.filter(account=wallet)[:10]
-    transr=trans[:5]
-    mine_users = User.objects.filter(referer_code=request.user.code)
-    context = {"user": request.user,"trans":trans,"transr":transr,"mine_users":mine_users}
+   # trans=Transaction.objects.filter(account=wallet)[:10]
+    #transr=trans[:5]
+    context = {"user": request.user,}
     
     return render(request, 'home/dashboard.html',context)    
         

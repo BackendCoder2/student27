@@ -3,6 +3,9 @@ from django.conf import settings
 from base.models import TimeStamp,UserFK
 from users.models import Profile
 from django.urls import reverse
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class Category(TimeStamp):#(models.Model):
     name = models.CharField(max_length=100, default="Others", blank=True, null=True) 
@@ -72,7 +75,7 @@ class Job(UserFK,TimeStamp):
     
     finished_at = models.DateTimeField(help_text="Enter submission Deadline.Tip- Enter time less than the actual! ",blank=True, null=True)    
     
-    display = models.BooleanField(help_text="Check this button to make your job available in the market",default=False, blank=True)    
+    display = models.BooleanField(help_text="Check this button to make your job available in the market/dashboard",default=False, blank=True)    
     #closed = models.BooleanField(default=False, blank=True)
     
     state = models.BooleanField(default=None, blank=True, null=True)
@@ -109,11 +112,12 @@ class Job(UserFK,TimeStamp):
                 
 class Bid(UserFK,TimeStamp):#(models.Model):      
     job= models.ForeignKey(Job, on_delete=models.CASCADE, blank=True, null=True)
+    bidder = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     description = models.TextField(blank=True,null=True)
     #name = models.CharField(max_length=100, default="pending", blank=True, null=True)
     
-    approve = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True) #job_owner   
-    accept = models.BooleanField(help_text="FOR TASKER",default=False, blank=True)#by_bidder
+    approve = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True,null=True) #job_owner   
+    accept = models.BooleanField(help_text="FOR TASKER",default=False, blank=True,null=True)#by_bidder
     
     def __str__(self):
         return str(self.job)
@@ -144,10 +148,20 @@ class Bid(UserFK,TimeStamp):#(models.Model):
                         
     class Meta:
         db_table = "e_bids"
-        unique_together = ['user', 'job']
+        #unique_together = ['user', 'job']
         ordering = ("created_at",) 
         
-    def save(self, *args, **kwargs):     
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.bidder=self.user            
+     
+        if self.accept and not self.approve:
+            self.accept=False
+ 
+                       
+            
+        #self.user=User.objects.get(id=self.bidder_id)    
+
         if self.approve and self.accept:# and self.job.assigned_to is None:
             Job.objects.filter(id=self.job.id).update(assigned_to=self.user,state=True)
             
