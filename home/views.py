@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .forms import  ContactUsForm
 from users.models import User
-from .models import UserStat
+from .models import UserStat,Index
 from accounts.models import  Transaction,Account
 from  datetime import date
 
@@ -27,7 +27,9 @@ def contact(request):
 
 
 def index(request,*args,**kwargs): 
-    return  render(request, 'home/index.html')
+    index=Index.objects.get(id=1)
+    context = {"user": request.user,"index":index}
+    return  render(request, 'home/index.html',context)
     
 
 
