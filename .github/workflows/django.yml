@@ -49,10 +49,11 @@ jobs:
           source venv/bin/activate
           
           cd ~/eltask/src
-          git stash
-          git stash drop
+          #git stash
+          #git stash drop
               
-          git pull origin master
+          #git pull origin master
+          git reset --hard origin/master
        
 
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
