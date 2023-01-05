@@ -31,3 +31,4 @@ class UserStatAdmin(admin.ModelAdmin):
 admin.site.register(UserStat, UserStatAdmin)
 
 admin.site.register(Index)
+

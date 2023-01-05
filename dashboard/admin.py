@@ -24,6 +24,7 @@ class JobAdmin(admin.ModelAdmin):
         "state",
         "display",
         "bids",
+        "assigned_to"
     )
 
     list_display_links = ("id","sub_category","title",)
@@ -35,6 +36,8 @@ class JobAdmin(admin.ModelAdmin):
         "display",
         "finished_at",
     )
+    
+    read_only = ("status","assigned_to") 
     
     def get_queryset(self, request):
         """

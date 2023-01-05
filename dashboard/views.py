@@ -1,9 +1,9 @@
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
-from .models import Job, Submission
+from .models import Job,Bid,Submission
 #from paypal.models import UserFund
 from django.views.decorators.csrf import csrf_exempt
-#import boto3
+
 import os
 import pathlib
 #from authentication.models import Profile
@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url="/users/login/")
 def index(request):
     jobs = Job.objects.all()
-    return render(request, "dashboard/jobs.html", {
+    return render(request, "dashboard/index.html", {
         "jobs": jobs
     })
 
@@ -136,4 +136,62 @@ def employer_submission_success(request, submission_id):
     return redirect("/employer-dashboard/")
     
     
+#-------------------------------------------------------------    
+from django.utils import timezone
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from .models import Job
+
+
+class JobListView(ListView):
+    #model = Job
+    queryset = Job.objects.filter(status='AV',display=True)
+    context_object_name = 'job_list'
+    #paginate_by = 100  # if pagination is desired
+    #template_name = 'das/job_list.html
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context    
+
+
+class JobDetailView(DetailView):
+    model = Job
+    context_object_name = 'job'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context   
+
+class BidListView(ListView):
+    #model = Bid
+    #queryset = Bid.objects.filter(job__user=self.request.user)
+    context_object_name = 'bid_list'
+    #paginate_by = 100  # if pagination is desired
+    #template_name = 'das/job_list.html
+    
+    def get_queryset(self):
+        return Bid.objects.filter(bidder=self.request.user) 
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context  
+
+
+class JobInProgressListView(ListView):
+
+    context_object_name = 'job_in_progress_list'
+    template_name = 'dashboard/jobs_in_progress.html'
+    
+    def get_queryset(self):
+        return Job.objects.filter(assigned_to=self.request.user) 
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context 
+
+

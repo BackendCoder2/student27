@@ -2,10 +2,13 @@ from django.urls import path
 from . import views
 from .gviews import SubmissionCreateView, SubmissionDeleteView, SubmissionUpdateView,SubmissionListView
 
+#-----------
+from .views import JobListView,JobDetailView,BidListView,JobInProgressListView
+
 app_name = "dashboard"
 
 urlpatterns = [
-    path("", views.index),
+    
     path("post-job/", views.post_job),
     path("task/<int:task_id>/", views.view_task),
     #path("api/upload/", views.file_upload_backend),
@@ -23,4 +26,16 @@ urlpatterns = [
     #path('submission/<int:pk>/', SubmissionUpdateView.as_view(), name='submission-update'),
     #path('submission/<int:pk>/delete/', SubmissionDeleteView.as_view(), name='submission-delete'),   
     #path('submission', SubmissionListView.as_view(), name='submission-list'), 
+    
+    #----------------
+    
+    path("", views.index),
+    path('job-list/', JobListView.as_view(), name='job-list'),
+    path('job-list/<int:pk>/', JobDetailView.as_view(), name='job-detail'),
+    path('bid-list/', BidListView.as_view(), name='bid-list'),
+    path('job-in-progress/', JobInProgressListView.as_view(), name='job-in-progress'),
+    
+    
    ]
+   
+

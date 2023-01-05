@@ -51,20 +51,25 @@ class Status(TimeStamp):#(models.Model):
         
                            
 class Job(UserFK,TimeStamp): 
+  
     AVAILABLE = 'AV'
-    BOOKED = 'BK'
+    PROGRESS = 'PR'
+    REVIEW = 'RW'
+    REVISION = 'RV'
     CLOSED = 'CL'
+
     
-    STATUS = [
-        (AVAILABLE, 'Available'),        
-        (BOOKED, 'booked'),        
+    STAGE = [
+        (AVAILABLE, 'available'),        
+        (PROGRESS, 'in-progress'),      
+        (REVIEW, 'in-review'),
+        (REVISION, 'in-revision'),
         (CLOSED, 'closed'),
     ]
     
     
     #ticket = models.IntegerField(blank=True, null=True)
     sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE, blank=True, null=True)
-    #ttype = models.ForeignKey(Type, on_delete=models.CASCADE, blank=True, null=True)
     
     title = models.CharField(help_text="Write Short job tittle here",max_length=255, blank=True, null=True)
     description = models.TextField(help_text="Write Details job delivarables  here",blank=True, null=True)
@@ -80,11 +85,12 @@ class Job(UserFK,TimeStamp):
     
     state = models.BooleanField(default=None, blank=True, null=True)
     
+    
     status = models.CharField(
         max_length=100,
-        choices=STATUS,
+        choices=STAGE,
         default=AVAILABLE,
-    )
+    )    
     
     assigned_to = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -103,8 +109,12 @@ class Job(UserFK,TimeStamp):
              
     @property
     def bids(self):
-        return self.jobs(self).count()              
-            
+        return self.jobs(self).count()    
+        
+    @property
+    def tprice(self):
+        return self.quantity*self.price    
+        
     @classmethod    
     def jobs(cls,job):
         return cls.objects.filter(bid__job=job)  
@@ -145,7 +155,10 @@ class Bid(UserFK,TimeStamp):#(models.Model):
     @property        
     def user_job_disputed(self):
         return str(self.profile.job_disputed)
-                        
+    @property        
+    def approved(self):
+        return self.approve  
+        
     class Meta:
         db_table = "e_bids"
         #unique_together = ['user', 'job']
@@ -153,7 +166,12 @@ class Bid(UserFK,TimeStamp):#(models.Model):
         
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.bidder=self.user            
+            self.bidder=self.user  
+            
+        print("STATUSSSS:",self.job.status)  
+        print("APPRD:",self.approved)
+        print("APPR:",self.approve)
+        print("ACCEPT:",self.accept)
      
         if self.accept and not self.approve:
             self.accept=False
