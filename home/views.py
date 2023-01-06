@@ -24,7 +24,7 @@ def contact(request):
 
 
 def index(request,*args,**kwargs): 
-    index=Index.objects.get(id=1)
+    index,_=Index.objects.get_or_create(id=1)
     context = {"user": request.user,"index":index}
     return  render(request, 'home/index.html',context)
 
