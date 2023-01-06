@@ -53,9 +53,12 @@ jobs:
           #git stash drop
           #git reset --hard origin/master
               
-          git branch -D  master
-          git fetch origin master
-          git checkout -b master origin/master
+          #git branch -D  master
+          #git fetch origin master
+          #git checkout -b master origin/master
+
+          git fetch
+          git reset --hard @{u}
 
           
        
