@@ -10,13 +10,6 @@ import pathlib
 from django.contrib.auth.decorators import login_required
 
 
-# Create your views here.
-@login_required(login_url="/users/login/")
-def index(request):
-    jobs = Job.objects.all()
-    return render(request, "dashboard/index.html", {
-        "jobs": jobs
-    })
 
 @login_required(login_url="/users/login/")
 def post_job(request):
@@ -143,55 +136,74 @@ from django.views.generic.detail import DetailView
 from .models import Job
 
 
+@login_required(login_url="/users/login/")
+def index(request):
+    jobs = Job.objects.all()
+    return render(request, "dashboard/new/index.html", {
+        "jobs": jobs
+    })
+
 class JobListView(ListView):
-    #model = Job
     queryset = Job.objects.filter(status='AV',display=True)
     context_object_name = 'job_list'
-    #paginate_by = 100  # if pagination is desired
-    #template_name = 'das/job_list.html
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['now'] = timezone.now()
-        return context    
-
+    template_name = 'dashboard/new/job_list.html'
 
 class JobDetailView(DetailView):
     model = Job
     context_object_name = 'job'
-
+    template_name = 'dashboard/new/job_detail.html'
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['now'] = timezone.now()
-        return context   
+        #context['now'] = timezone.now()        
+        print("CONTEST",context)     
+        return context 
 
-class BidListView(ListView):
-    #model = Bid
-    #queryset = Bid.objects.filter(job__user=self.request.user)
+class BidListView(ListView):   
     context_object_name = 'bid_list'
     #paginate_by = 100  # if pagination is desired
-    #template_name = 'das/job_list.html
+    template_name = 'dashboard/new/bid_list.html'   
     
+    #model = Bid
+    #queryset = Bid.objects.filter(job__id=1)
     def get_queryset(self):
-        return Bid.objects.filter(bidder=self.request.user) 
-        
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['now'] = timezone.now()
-        return context  
+        return Bid.objects.filter(bidder=self.request.user,job__status="AV") 
 
-
-class JobInProgressListView(ListView):
-
-    context_object_name = 'job_in_progress_list'
-    template_name = 'dashboard/jobs_in_progress.html'
-    
-    def get_queryset(self):
-        return Job.objects.filter(assigned_to=self.request.user) 
-        
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['now'] = timezone.now()
         return context 
 
+class JobInProgressListView(ListView):
 
+    context_object_name = 'job_in_progress_list'
+    template_name = 'dashboard/new/jobs_in_progress.html'
+    
+    def get_queryset(self):
+        return Job.objects.filter(assigned_to=self.request.user,status="PR") 
+
+class JobInReviewListView(ListView):
+
+    context_object_name = 'job_in_review_list'
+    template_name = 'dashboard/new/jobs_in_review.html'
+    
+    def get_queryset(self):
+        return Job.objects.filter(assigned_to=self.request.user,status="RW") 
+        
+class JobInRevisionListView(ListView):
+
+    context_object_name = 'job_in_revision_list'
+    template_name = 'dashboard/new/jobs_in_revision.html'
+    
+    def get_queryset(self):
+        return Job.objects.filter(assigned_to=self.request.user,status="RV")    
+        
+        
+class JobClosedListView(ListView):
+
+    context_object_name = 'job_closed_list'
+    template_name = 'dashboard/new/jobs_closed.html'
+    
+    def get_queryset(self):
+        return Job.objects.filter(assigned_to=self.request.user,status="CL")         
+        

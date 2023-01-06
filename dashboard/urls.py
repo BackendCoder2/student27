@@ -3,7 +3,7 @@ from . import views
 from .gviews import SubmissionCreateView, SubmissionDeleteView, SubmissionUpdateView,SubmissionListView
 
 #-----------
-from .views import JobListView,JobDetailView,BidListView,JobInProgressListView
+from .views import JobListView,JobDetailView,BidListView,JobInProgressListView,JobInReviewListView,JobInRevisionListView,JobClosedListView
 
 app_name = "dashboard"
 
@@ -35,7 +35,9 @@ urlpatterns = [
     path('bid-list/', BidListView.as_view(), name='bid-list'),
     path('job-in-progress/', JobInProgressListView.as_view(), name='job-in-progress'),
     
-    
+    path('job-in-review/', JobInReviewListView.as_view(), name='job-in-review'),    
+    path('jobs-in-revision/', JobInRevisionListView.as_view(), name='jobs-in-revision'),    
+    path('job-closed/', JobClosedListView.as_view(), name='job-closed'),
    ]
    
 

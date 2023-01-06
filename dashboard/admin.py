@@ -21,20 +21,28 @@ class JobAdmin(admin.ModelAdmin):
         "finished_at",
         #"sub_category__category__name",
         "status",
-        "state",
         "display",
         "bids",
-        "assigned_to"
+        "assigned_to",
+        #POST_WORK
+        "accepted",
+        "rejected",
+        "rejection_description",
+        "rejected_work_accepted"
     )
 
     list_display_links = ("id","sub_category","title",)
-    list_filter = ("sub_category__category__name","state","display")
+    list_filter = ("sub_category__category__name","status","display")
     search_fields = ('id',"sub_category__category__name","sub_category__name",)
     list_editable = (
-        "state",
-        #"status",
+        "status",
         "display",
         "finished_at",
+        #"accepted",
+        #"rejected",
+        #"rejection_description",
+        #"rejected_work_accepted"
+        
     )
     
     read_only = ("status","assigned_to") 
@@ -65,40 +73,6 @@ admin.site.register(Job, JobAdmin)
 
 
 
-class SubmissionAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "job",
-        "proof",
-        "status",
-        "feedback",
-
-    )
-
-    list_display_links = ("id","job")
-    list_filter = ("user","status","job__title","feedback")
-    search_fields = ("user","status","job__title","feedback")
-    list_editable = (
-        "status",
-        "feedback",
-    )
-    
-    def get_queryset(self, request):
-        """
-        Return a QuerySet of all model instances that can be edited by the
-        admin site. This is used by changelist_view.
-        """      
-        if request.user.is_superuser:
-            qs = self.model._default_manager.get_queryset()
-        else:                  
-            qs = self.model.objects.filter(job__user=request.user)  
-              
-        ordering = self.get_ordering(request)
-        if ordering:
-            qs = qs.order_by(*ordering)
-        return qs 
-              
-admin.site.register(Submission, SubmissionAdmin)
 
 class BidAdmin(admin.ModelAdmin):
     form = BidForm
@@ -150,5 +124,38 @@ class BidAdmin(admin.ModelAdmin):
             
 admin.site.register(Bid, BidAdmin)
 
+
+
+
+class SubmissionAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "job",
+        "proof",
+    )
+
+    list_display_links = ("id","job")
+    list_filter = ("user","job__title",)
+    search_fields = ("user","job__title")
+    list_editable = (
+        "proof",
+    )
+    
+    def get_queryset(self, request):
+        """
+        Return a QuerySet of all model instances that can be edited by the
+        admin site. This is used by changelist_view.
+        """      
+        if request.user.is_superuser:
+            qs = self.model._default_manager.get_queryset()
+        else:                  
+            qs = self.model.objects.filter(job__user=request.user)  
+              
+        ordering = self.get_ordering(request)
+        if ordering:
+            qs = qs.order_by(*ordering)
+        return qs 
+              
+admin.site.register(Submission, SubmissionAdmin)
 
 

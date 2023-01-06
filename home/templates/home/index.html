@@ -62,7 +62,7 @@
     <!-- ===============================================-->
     <main class="main" id="top">
       <nav class="navbar navbar-standard navbar-expand-lg fixed-top navbar-dark" data-navbar-darken-on-scroll="data-navbar-darken-on-scroll" style="background-image: none; transition: none 0s ease 0s;">
-        <div class="container"><a class="navbar-brand" href="#"><span class="text-white dark__text-white">AjiraPanel</span></a><button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarStandard" aria-controls="navbarStandard" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="container"><a class="navbar-brand" href="/"><span class="text-white dark__text-white">AjiraPanel</span></a><button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarStandard" aria-controls="navbarStandard" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
           <div class="collapse navbar-collapse scrollbar" id="navbarStandard">
             <ul class="navbar-nav" data-top-nav-dropdowns="data-top-nav-dropdowns">
               <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dashboards">Dashboard</a>
@@ -95,8 +95,7 @@
                 
                 {% if user.is_authenticated %}
                 <a  id="navbarDropdownLogin" href="#" role="button"  aria-haspopup="true" aria-expanded="false">Logged In as {{user.username}}</a>
-              
-                
+                              
                 {% endif %}   
              
                 <div class="dropdown-menu dropdown-caret dropdown-menu-end dropdown-menu-card" aria-labelledby="navbarDropdownLogin">
@@ -203,7 +202,7 @@
               <span class="typed-cursor" aria-hidden="true">|</span><br>{{index.message1}} </h1>
               <p class="lead text-white opacity-75">{{index.message2}}</p>
               {% if not user.is_authenticated %}
-              <a class="btn btn-outline-light border-2 rounded-pill btn-lg mt-4 fs-0 py-2" href="/user/register">Get started with Ajirapanel<svg class="svg-inline--fa fa-play fa-w-14 ms-2" data-fa-transform="shrink-6 down-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="play" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="" style="transform-origin: 0.4375em 0.5625em;"><g transform="translate(224 256)"><g transform="translate(0, 32)  scale(0.625, 0.625)  rotate(0 0 0)"><path fill="currentColor" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z" transform="translate(-224 -256)"></path></g></g></svg><!-- <span class="fas fa-play ms-2" data-fa-transform="shrink-6 down-1"></span> Font Awesome fontawesome.com -->
+              <a class="btn btn-outline-light border-2 rounded-pill btn-lg mt-4 fs-0 py-2" href="/users/register">Get started with Ajirapanel<svg class="svg-inline--fa fa-play fa-w-14 ms-2" data-fa-transform="shrink-6 down-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="play" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="" style="transform-origin: 0.4375em 0.5625em;"><g transform="translate(224 256)"><g transform="translate(0, 32)  scale(0.625, 0.625)  rotate(0 0 0)"><path fill="currentColor" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z" transform="translate(-224 -256)"></path></g></g></svg><!-- <span class="fas fa-play ms-2" data-fa-transform="shrink-6 down-1"></span> Font Awesome fontawesome.com -->
               </a>
               {% endif %}
               {% if  user.is_authenticated %}
@@ -387,21 +386,13 @@
           </div>
         </div>
         <hr>
-        <!-- <div class="d-flex justify-content-between">
-          <div class="d-flex align-items-start"><img class="me-2" src="/static/falco/left-arrow-from-left.svg" width="20" alt="">
-            <div class="flex-1">
-              <h5 class="fs-0">RTL Mode</h5>
-              <p class="fs--1 mb-0">Switch your language direction </p><a class="fs--1" href="https://prium.github.io/falcon/v3.14.0/documentation/customization/configuration.html">RTL Documentation</a>
-            </div>
-          </div>
-          <div class="form-check form-switch"><input class="form-check-input ms-0" id="mode-rtl" type="checkbox" data-theme-control="isRTL"></div>
-        </div> -->
+   
         <hr>
         <div class="d-flex justify-content-between">
           <div class="d-flex align-items-start"><img class="me-2" src="/static/falco/arrows-h.svg" width="20" alt="">
             <div class="flex-1">
               <h5 class="fs-0">Fluid Layout</h5>
-              <p class="fs--1 mb-0">Toggle container layout system </p><a class="fs--1" href="https://prium.github.io/falcon/v3.14.0/documentation/customization/configuration.html">Fluid Documentation</a>
+              <p class="fs--1 mb-0">Toggle container layout system </p><a class="fs--1" href="/"></a>
             </div>
           </div>
           <div class="form-check form-switch"><input class="form-check-input ms-0" id="mode-fluid" type="checkbox" data-theme-control="isFluid"></div>
@@ -422,7 +413,7 @@
         <hr>
         <h5 class="fs-0 d-flex align-items-center">Vertical Navbar Style</h5>
         <p class="fs--1 mb-0">Switch between styles for your vertical navbar </p>
-        <p> <a class="fs--1" href="https://prium.github.io/falcon/v3.14.0/modules/components/navs-and-tabs/vertical-navbar.html#navbar-styles">See Documentation</a></p>
+        <p> <a class="fs--1" href="/"></a></p>
         <div class="btn-group d-block w-100 btn-group-navbar-style">
           <div class="row gx-2">
             <div class="col-6"><input class="btn-check" id="navbar-style-transparent" type="radio" name="navbarStyle" value="transparent" data-theme-control="navbarStyle" checked="true"><label class="btn d-block w-100 btn-navbar-style fs--1" for="navbar-style-transparent"> <img class="img-fluid img-prototype" src="/static/falco/default.png" alt=""><span class="label-text"> Transparent</span></label></div>
