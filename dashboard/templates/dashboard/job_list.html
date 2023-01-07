@@ -2,58 +2,9 @@
 {% load static %}
 
 {% block content %}
-             <h1>Available-Jobs</h1>
-
-        
-        <table >
-        <tbody>
-        
-        
-        
-{% for j in job_list %}
 
 
-<tr><td >
-	<a href="/dashboard/job-list/{{ j.id }}" >
-	
-		<i ></i>
-		<span>{{ j.sub_category }}</span>
-	</a>
-</td>
-<td >
-	<span>{{ j.ttype }}</span>
-</td>
-<td>
-	<span>{{ j.title }}</span>
-</td>
-<td >
-	<span>{{ j.price }}</span>
-</td>
-<td>
-	<span>{{ j.status }}</span>
-	</td>
-<td >
-	<time>04/26/2022</time>
-</td>
 
-<td >
-	<time>{{ j.start_date }}</time>
-</td>
-
-<td >
-	<time>{{ j.end_date }}</time>
-</td>
-<td ></td>
-
-</tr>
-{% empty %}
-
-<li>No jobs yet.</li>
-
-{% endfor %}
-</tbody>
-
-</table>
 
 
 {% endblock content %}
