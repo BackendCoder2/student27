@@ -18,7 +18,8 @@ class DuserAdmin(UserAdmin):
         "is_active",
         "is_staff",
         "is_trusted",
-        "is_superuser"
+        "is_superuser",
+        "is_employer"
     )
 
     list_display_links = ("id","username")
@@ -31,7 +32,8 @@ class DuserAdmin(UserAdmin):
         "phone_number",        
         "email",
         "update_count",
-        "is_active"
+        "is_active",
+        "is_employer"
     )
     readonly_fields = ("password",)
 

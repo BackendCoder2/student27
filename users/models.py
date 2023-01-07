@@ -8,6 +8,7 @@ class User(AbstractUser):
 
     phone_number = models.CharField(max_length=150, blank=True, null=True)
     update_count= models.IntegerField(default=10, blank=True, null=True)
+    is_employer = models.BooleanField(default=False, blank=True, null=True)
     is_trusted = models.BooleanField(default=False, blank=True)
     
 
