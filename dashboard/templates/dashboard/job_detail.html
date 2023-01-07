@@ -10,4 +10,7 @@
         <p>Pay-Date: {{ now|date }}</p>
         
         
+        
+        {% if job.status == "AV" %}
          <h1>BID</h1>
+        {% endif %}
