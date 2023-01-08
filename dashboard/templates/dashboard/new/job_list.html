@@ -50,13 +50,12 @@
 
 
 			<div class="card mb-3">
-			  <div class="bg-holder d-none d-lg-block bg-card" style="background-image:url(../../assets/img/icons/spot-illustrations/corner-4.png);"></div>
+			  <div class="bg-holder d-none d-lg-block bg-card" style="background-image:url(/static/assets/img/icons/spot-illustrations/corner-4.png);"></div>
 			  <!--/.bg-holder-->
 			  <div class="card-body position-relative">
 				<div class="row">
 				  <div class="col-lg-8">
-					<h3>Tables</h3>
-					<p class="mb-0">Documentation and examples for opt-in styling of tables with Falcon.</p><a class="btn btn-link btn-sm ps-0 mt-2" href="https://getbootstrap.com/docs/5.2/content/tables/" target="_blank">Tables on Bootstrap<svg class="svg-inline--fa fa-chevron-right fa-w-10 ms-1 fs--2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"></path></svg><!-- <span class="fas fa-chevron-right ms-1 fs--2"></span> Font Awesome fontawesome.com --></a>
+					<h3>Available Tasks</h3>
 				  </div>
 				</div>
 			  </div>
@@ -81,12 +80,10 @@
 			  <div class="card-header border-bottom">
 				<div class="row flex-between-end">
 				  <div class="col-auto align-self-center">
-					<h5 class="mb-0" data-anchor="data-anchor" id="responsive-table">Responsive Table<a class="anchorjs-link " aria-label="Anchor" data-anchorjs-icon="#" href="https://prium.github.io/falcon/v3.14.0/modules/tables/basic-tables.html#responsive-table" style="padding-left: 0.375em;"></a></h5>
-					<p class="mb-0 pt-1 mt-2 mb-0">Use <code>.table-responsive</code> for horizontally scrolling tables.And use <code>.table-responsive{-sm|-md|-lg|-xl|-xxl} </code> as needed to create responsive tables up to a particular breakpoint</p>
+
+					
 				  </div>
-				  <div class="col-auto ms-auto">
-					<div class="nav nav-pills nav-pills-falcon flex-grow-1 mt-2" role="tablist"><button class="btn btn-sm active" data-bs-toggle="pill" data-bs-target="#dom-a0cc4f30-2a10-4ef8-ae2b-c45cded0cbf8" type="button" role="tab" aria-controls="dom-a0cc4f30-2a10-4ef8-ae2b-c45cded0cbf8" aria-selected="true" id="tab-dom-a0cc4f30-2a10-4ef8-ae2b-c45cded0cbf8">Preview</button><button class="btn btn-sm" data-bs-toggle="pill" data-bs-target="#dom-bea396d4-e235-400f-9632-21fd9ecc116c" type="button" role="tab" aria-controls="dom-bea396d4-e235-400f-9632-21fd9ecc116c" aria-selected="false" id="tab-dom-bea396d4-e235-400f-9632-21fd9ecc116c" tabindex="-1">Code</button></div>
-				  </div>
+				
 				</div>
 			  </div>
 			  <div class="card-body pt-0">
@@ -96,12 +93,13 @@
 					  <table class="table table-hover table-striped overflow-hidden">
 						<thead>
 						  <tr>
-							<th scope="col">Name</th>
-							<th scope="col">Email</th>
-							<th scope="col">Phone</th>
-							<th scope="col">Address</th>
-							<th scope="col">Status</th>
-							<th class="text-end" scope="col">Amount</th>
+							<th scope="col">Employer</th>
+							<th scope="col">Sub category</th>
+							<th scope="col">Title</th>
+							<th scope="col">Unit Price</th>
+							<th scope="col">Quality</th>
+							<th scope="col">Time Remaining</th>
+							<th class="text-end" scope="col">Total Price</th>
 						  </tr>
 						</thead>
 						<tbody>
@@ -110,82 +108,32 @@
 						  <tr class="align-middle">
 							<td class="text-nowrap">
 							  <div class="d-flex align-items-center">
-								<div class="avatar avatar-xl">
+								<!-- <div class="avatar avatar-xl">
 								  <img class="rounded-circle" src="./Falcon _ Dashboard &amp; Web App Template_files/4.jpg" alt="">
-								</div>
-								<div class="ms-2">Ricky Antony</div>
+								</div> -->
+								<div class="ms-2">{{ j.user}}</div>
 							  </div>
 							</td>
-							<td class="text-nowrap">ricky@example.com</td>
-							<td class="text-nowrap">(201) 200-1851</td>
-							<td class="text-nowrap">2392 Main Avenue, Penasauka</td>
-							<td><span class="badge badge rounded-pill d-block p-2 badge-soft-success">Completed<svg class="svg-inline--fa fa-check fa-w-16 ms-1" data-fa-transform="shrink-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g transform="translate(256 256)"><g transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span></td>
-							<td class="text-end">$99</td>
-						  </tr>
 
-
-						  <tr class="align-middle">
+							
 							<td class="text-nowrap">
-							  <div class="d-flex align-items-center">
-								<div class="avatar avatar-xl">
-								  <img class="rounded-circle" src="./Falcon _ Dashboard &amp; Web App Template_files/13.jpg" alt="">
-								</div>
-								<div class="ms-2">Emma Watson</div>
-							  </div>
+								
+								<a href="/dashboard/job-list/{{ j.id }}" >
+	
+									<i ></i>
+									<span>{{ j.sub_category }}</span>
+								</a>								
+							
+							
 							</td>
-							<td class="text-nowrap">emma@example.com</td>
-							<td class="text-nowrap">(212) 228-8403</td>
-							<td class="text-nowrap">2289 5th Avenue, New York</td>
-							<td><span class="badge badge rounded-pill d-block p-2 badge-soft-success">Completed<svg class="svg-inline--fa fa-check fa-w-16 ms-1" data-fa-transform="shrink-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g transform="translate(256 256)"><g transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span></td>
-							<td class="text-end">$199</td>
+							<td class="text-nowrap">{{ j.title }}</td>
+							<td class="text-nowrap">{{ j.price }}</td>
+							<td class="text-nowrap">{{ j.quantity }}</td>
+							<td><span class="badge badge rounded-pill d-block p-2 badge-soft-success">{{ j.finished_at }}<svg class="svg-inline--fa fa-check fa-w-16 ms-1" data-fa-transform="shrink-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g transform="translate(256 256)"><g transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span></td>
+							<td class="text-end">KES:{{ j.tprice }}</td>
 						  </tr>
-
-
-						  <tr class="align-middle">
-							<td class="text-nowrap">
-							  <div class="d-flex align-items-center">
-								<div class="avatar avatar-xl">
-								  <div class="avatar-name rounded-circle"><span>RA</span></div>
-								</div>
-								<div class="ms-2">Rowen Atkinson</div>
-							  </div>
-							</td>
-							<td class="text-nowrap">rown@example.com</td>
-							<td class="text-nowrap">(201) 200-1851</td>
-							<td class="text-nowrap">112 Bostwick Avenue, Jersey City</td>
-							<td><span class="badge badge rounded-pill d-block p-2 badge-soft-primary">Processing<svg class="svg-inline--fa fa-redo fa-w-16 ms-1" data-fa-transform="shrink-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="redo" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g transform="translate(256 256)"><g transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M500.33 0h-47.41a12 12 0 0 0-12 12.57l4 82.76A247.42 247.42 0 0 0 256 8C119.34 8 7.9 119.53 8 256.19 8.1 393.07 119.1 504 256 504a247.1 247.1 0 0 0 166.18-63.91 12 12 0 0 0 .48-17.43l-34-34a12 12 0 0 0-16.38-.55A176 176 0 1 1 402.1 157.8l-101.53-4.87a12 12 0 0 0-12.57 12v47.41a12 12 0 0 0 12 12h200.33a12 12 0 0 0 12-12V12a12 12 0 0 0-12-12z" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="ms-1 fas fa-redo" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span></td>
-							<td class="text-end">$755</td>
-						  </tr>
-						  <tr class="align-middle">
-							<td class="text-nowrap">
-							  <div class="d-flex align-items-center">
-								<div class="avatar avatar-xl">
-								  <img class="rounded-circle" src="./Falcon _ Dashboard &amp; Web App Template_files/2.jpg" alt="">
-								</div>
-								<div class="ms-2">Antony Hopkins</div>
-							  </div>
-							</td>
-							<td class="text-nowrap">antony@example.com</td>
-							<td class="text-nowrap">(901) 324-3127</td>
-							<td class="text-nowrap">3448 Ile De France St #242</td>
-							<td><span class="badge badge rounded-pill d-block p-2 badge-soft-secondary">On Hold<svg class="svg-inline--fa fa-ban fa-w-16 ms-1" data-fa-transform="shrink-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ban" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g transform="translate(256 256)"><g transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="ms-1 fas fa-ban" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span></td>
-							<td class="text-end">$50</td>
-						  </tr>
-						  <tr class="align-middle">
-							<td class="text-nowrap">
-							  <div class="d-flex align-items-center">
-								<div class="avatar avatar-xl">
-								  <img class="rounded-circle" src="./Falcon _ Dashboard &amp; Web App Template_files/3.jpg" alt="">
-								</div>
-								<div class="ms-2">Jennifer Schramm</div>
-							  </div>
-							</td>
-							<td class="text-nowrap">jennifer@example.com</td>
-							<td class="text-nowrap">(828) 382-9631</td>
-							<td class="text-nowrap">659 Hannah Street, Charlotte</td>
-							<td><span class="badge badge rounded-pill d-block p-2 badge-soft-warning">Pending<svg class="svg-inline--fa fa-stream fa-w-16 ms-1" data-fa-transform="shrink-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="stream" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g transform="translate(256 256)"><g transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M16 128h416c8.84 0 16-7.16 16-16V48c0-8.84-7.16-16-16-16H16C7.16 32 0 39.16 0 48v64c0 8.84 7.16 16 16 16zm480 80H80c-8.84 0-16 7.16-16 16v64c0 8.84 7.16 16 16 16h416c8.84 0 16-7.16 16-16v-64c0-8.84-7.16-16-16-16zm-64 176H16c-8.84 0-16 7.16-16 16v64c0 8.84 7.16 16 16 16h416c8.84 0 16-7.16 16-16v-64c0-8.84-7.16-16-16-16z" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="ms-1 fas fa-stream" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span></td>
-							<td class="text-end">$150</td>
-						  </tr>
+						  {% endfor %}  
+				
 						</tbody>
 					  </table>
 					</div>
