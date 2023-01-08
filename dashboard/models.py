@@ -4,7 +4,7 @@ from base.models import TimeStamp,UserFK
 from users.models import Profile
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-
+from django.utils import timezone
 User = get_user_model()
 
 CC=["PR",'RW','RV']
@@ -119,7 +119,9 @@ class Job(UserFK,TimeStamp):
 
     @property
     def time_remaining(self):
-        return self.finished_at-datetime.now()   
+        now=self.finished_at-timezone.now()
+   
+        return now	   
     class Meta:
         db_table = "e_jobs"                  
              
