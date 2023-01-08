@@ -117,6 +117,9 @@ class Job(UserFK,TimeStamp):
     def __str__(self):
         return "JOB-ID: "+str(self.pk)+" :"+self.title
 
+    @property
+    def time_remaining(self):
+        return self.finished_at-datetime.now()   
     class Meta:
         db_table = "e_jobs"                  
              

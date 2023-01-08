@@ -19,7 +19,7 @@ class JobAdmin(admin.ModelAdmin):
         "sub_category",
         "title",
         "finished_at",
-        #"sub_category__category__name",
+        "time_remaining",
         "status",
         "display",
         "bids",
