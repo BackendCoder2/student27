@@ -9,10 +9,10 @@
 
    
     <link href="/static/falco/topa.css" rel="stylesheet" id="user-style-default">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://prium.github.io/falcon/v3.14.0/assets/img/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://prium.github.io/falcon/v3.14.0/assets/img/favicons/favicon-16x16.png">
-    <link rel="shortcut icon" type="image/x-icon" href="https://prium.github.io/falcon/v3.14.0/assets/img/favicons/favicon.ico">
-    <link rel="manifest" href="https://prium.github.io/falcon/v3.14.0/assets/img/favicons/manifest.json">
+    <link rel="icon" type="image/png" sizes="32x32" href="/falcon/v3.14.0/assets/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/falcon/v3.14.0/assets/img/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/falcon/v3.14.0/assets/img/favicons/favicon.ico">
+    <link rel="manifest" href="/falcon/v3.14.0/assets/img/favicons/manifest.json">
     <meta name="msapplication-TileImage" content="../assets/img/favicons/mstile-150x150.png">
     <meta name="theme-color" content="#ffffff">
     <script src="/static/falco/config.js"></script>
@@ -65,10 +65,22 @@
         <div class="container"><a class="navbar-brand" href="/"><span class="text-white dark__text-white">AjiraPanel</span></a><button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarStandard" aria-controls="navbarStandard" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
           <div class="collapse navbar-collapse scrollbar" id="navbarStandard">
             <ul class="navbar-nav" data-top-nav-dropdowns="data-top-nav-dropdowns">
-              <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dashboards">Dashboard</a>
+              <li class="nav-item dropdown"><a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dashboards">Dashboard</a>
                 <div class="dropdown-menu dropdown-caret dropdown-menu-card border-0 mt-0" aria-labelledby="dashboards">
                   <div class="bg-white dark__bg-1000 rounded-3 py-2">
+
+                    {% if not user.is_authenticated %}
+                    <a class="dropdown-item link-600 fw-medium" href="{% url 'users:login' %}">Work Dashboard</a>
+                    {% endif %}
+                    
+                    {% if user.is_authenticated %}
                     <a class="dropdown-item link-600 fw-medium" href="/dashboard">Work Dashboard</a>
+                                
+                    {% endif %}   
+                 
+
+
+                    
 
                  
                   </div>
@@ -158,24 +170,41 @@
                   <p class="fs--1 text-600 mb-0">Have an account? <a href="/users/login">Login</a></p>
                 </div>
               </div>
-              <form>
-                <div class="mb-3"><input class="form-control" type="text" autocomplete="on" placeholder="Name"></div>
-                <div class="mb-3"><input class="form-control" type="email" autocomplete="on" placeholder="Email address"></div>
+              <form role="form" method="POST" action="{% url 'users:register' %}"></form>
+              {% csrf_token %}
+
+              {% if field.errors %}
+              <span class="text-danger">{{ field.errors|join:'<br />' }}</span>
+          {% endif %}
+
+                <div class="mb-3"><input class="form-control" type="text" name="username" id="username" autocomplete="on" placeholder="Name"></div>
+
+                <div class="mb-3"><input class="form-control" type="email" name="email" id="email" autocomplete="on" placeholder="Email address"></div>
                 <div class="row gx-2">
-                  <div class="mb-3 col-sm-6"><input class="form-control" type="password" autocomplete="on" placeholder="Password"></div>
-                  <div class="mb-3 col-sm-6"><input class="form-control" type="password" autocomplete="on" placeholder="Confirm Password"></div>
+                  <div class="mb-3 col-sm-6"><input class="form-control" type="password" name="password1" id="password1"  autocomplete="on" placeholder="Password"></div>
+                  <div class="mb-3 col-sm-6"><input class="form-control" type="password" name="password2" id="password2" autocomplete="on" placeholder="Confirm Password"></div>
                 </div>
-                <div class="form-check"><input class="form-check-input" type="checkbox" id="modal-register-checkbox"><label class="form-label" for="modal-register-checkbox">I accept the <a href="#">terms </a>and <a href="#">privacy policy</a></label></div>
+
+
+
+                <div class="position-relative mt-4">
+                  <hr>
+                  <div class="divider-content-center">Register As</div>
+                </div>
+                <div class="row g-2 mt-2">
+                  <div class="col-sm-6"><a class="btn btn-outline-google-plus btn-sm d-block w-100" href="/falcon/v3.14.0/pages/authentication/simple/register.html#"><svg class="svg-inline--fa fa-google-plus-g fa-w-20 me-2" data-fa-transform="grow-8" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google-plus-g" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg="" style="transform-origin: 0.625em 0.5em;"><g transform="translate(320 256)"><g transform="translate(0, 0)  scale(1.5, 1.5)  rotate(0 0 0)"><path fill="currentColor" 
+                    transform="translate(-320 -256)"></path></g></g></svg><!-- <span class="fab fa-google-plus-g me-2" data-fa-transform="grow-8"></span> Font Awesome fontawesome.com --> Employer</a></div>
+                  <div class="col-sm-6"><a class="btn btn-outline-facebook btn-sm d-block w-100" href="/falcon/v3.14.0/pages/authentication/simple/register.html#"><svg class="svg-inline--fa fa-facebook-square fa-w-14 me-2" data-fa-transform="grow-8" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-square" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="" style="transform-origin: 0.4375em 0.5em;"><g transform="translate(224 256)"><g transform="translate(0, 0)  scale(1.5, 1.5)  rotate(0 0 0)"><path fill="currentColor" 
+                    transform="translate(-224 -256)"></path></g></g></svg><!-- <span class="fab fa-facebook-square me-2" data-fa-transform="grow-8"></span> Font Awesome fontawesome.com --> Writter</a></div>
+                </div>
+
+
+                
+                <div class="form-check"><input class="form-check-input" type="checkbox" id="basic-register-checkbox"><label class="form-label" for="basic-register-checkbox">I accept the <a href="/">terms </a>and <a href="/">privacy policy</a></label></div>
                 <div class="mb-3"><button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Register</button></div>
               </form>
-              <div class="position-relative mt-4">
-                <hr>
-                <div class="divider-content-center">or register with</div>
-              </div>
-              <div class="row g-2 mt-2">
-                <div class="col-sm-6"><a class="btn btn-outline-google-plus btn-sm d-block w-100" href="#"><svg class="svg-inline--fa fa-google-plus-g fa-w-20 me-2" data-fa-transform="grow-8" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google-plus-g" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg="" style="transform-origin: 0.625em 0.5em;"><g transform="translate(320 256)"><g transform="translate(0, 0)  scale(1.5, 1.5)  rotate(0 0 0)"><path fill="currentColor" d="M386.061 228.496c1.834 9.692 3.143 19.384 3.143 31.956C389.204 370.205 315.599 448 204.8 448c-106.084 0-192-85.915-192-192s85.916-192 192-192c51.864 0 95.083 18.859 128.611 50.292l-52.126 50.03c-14.145-13.621-39.028-29.599-76.485-29.599-65.484 0-118.92 54.221-118.92 121.277 0 67.056 53.436 121.277 118.92 121.277 75.961 0 104.513-54.745 108.965-82.773H204.8v-66.009h181.261zm185.406 6.437V179.2h-56.001v55.733h-55.733v56.001h55.733v55.733h56.001v-55.733H627.2v-56.001h-55.733z" transform="translate(-320 -256)"></path></g></g></svg><!-- <span class="fab fa-google-plus-g me-2" data-fa-transform="grow-8"></span> Font Awesome fontawesome.com --> google</a></div>
-                <div class="col-sm-6"><a class="btn btn-outline-facebook btn-sm d-block w-100" href="#"><svg class="svg-inline--fa fa-facebook-square fa-w-14 me-2" data-fa-transform="grow-8" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-square" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="" style="transform-origin: 0.4375em 0.5em;"><g transform="translate(224 256)"><g transform="translate(0, 0)  scale(1.5, 1.5)  rotate(0 0 0)"><path fill="currentColor" d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h137.25V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.27c-30.81 0-40.42 19.12-40.42 38.73V256h68.78l-11 71.69h-57.78V480H400a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48z" transform="translate(-224 -256)"></path></g></g></svg><!-- <span class="fab fa-facebook-square me-2" data-fa-transform="grow-8"></span> Font Awesome fontawesome.com --> facebook</a></div>
-              </div>
+              
+              
             </div>
           </div>
         </div>
