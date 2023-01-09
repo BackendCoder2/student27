@@ -350,7 +350,7 @@
               </div>
               <div class="card mt-3">
                 <div class="card-header bg-light">
-                  <h5><svg class="svg-inline--fa fa-envelope fa-w-16 me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg><!-- <span class="fas fa-envelope me-2"></span> Font Awesome fontawesome.com --><span>Received a broken TV</span></h5>
+                  <h5><svg class="svg-inline--fa fa-envelope fa-w-16 me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg><!-- <span class="fas fa-envelope me-2"></span> Detailed-Job-description --><span>Task Details</span></h5>
                 </div>
                 <div class="card-body">
                   <div class="d-md-flex d-xl-inline-block d-xxl-flex align-items-center justify-content-between mb-x1">
@@ -358,17 +358,17 @@
                       <div class="avatar avatar-2xl">
                         <img class="rounded-circle" src="./Falcon _ Dashboard &amp; Web App Template_files/1-thumb.png" alt="">
                       </div>
-                      <p class="mb-0"><a class="fw-semi-bold mb-0 text-800" href="https://prium.github.io/falcon/v3.14.0/app/support-desk/contact-details.html">Emma Waston</a><span class="fs--2 text-800 fw-normal mx-2">via email</span><a class="mb-0 fs--1 d-block text-500" href="mailto:emma@watson.com">emma@watson.com</a></p>
+                      <p class="mb-0"><a class="fw-semi-bold mb-0 text-800" href="https://prium.github.io/falcon/v3.14.0/app/support-desk/contact-details.html">{{ job.user}}</a><span class="fs--2 text-800 fw-normal mx-2">Employer</span><a class="mb-0 fs--1 d-block text-500" href="mailto:emma@watson.com">{{ job.user.email}}</a></p>
                     </div>
-                    <p class="mb-0 fs--2 fs-sm--1 fw-semi-bold mt-2 mt-md-0 mt-xl-2 mt-xxl-0 ms-5">01 March, 2020<span class="mx-1">|</span><span class="fst-italic">8:40 AM (1 Day ago)</span><svg class="svg-inline--fa fa-star fa-w-18 ms-2 text-warning" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path></svg><!-- <span class="fas fa-star ms-2 text-warning"></span> Font Awesome fontawesome.com --></p>
+                    <p class="mb-0 fs--2 fs-sm--1 fw-semi-bold mt-2 mt-md-0 mt-xl-2 mt-xxl-0 ms-5">Time Remaining<span class="mx-1">|</span><span class="fst-italic">{{ job.time_remaining}}</span><svg class="svg-inline--fa fa-star fa-w-18 ms-2 text-warning" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path></svg><!-- <span class="fas fa-star ms-2 text-warning"></span> Font Awesome fontawesome.com --></p>
                   </div>
                   <div>
-                    <h6 class="mb-3 fw-semi-bold text-1000">Improve in A purposed Manner</h6>
-                    <p>Hi</p>
-                    <p>The television I ordered from your site was delivered with a cracked screen. I need some help with a refund or a replacement.</p>
-                    <p>Here is the order number FD07062010</p>
+                    <h6 class="mb-3 fw-semi-bold text-1000">{{ job.title }}</h6>
+                    <p>Hello,Below is describtion </p>
+                    <p>{{ job.description }}.</p>
+                    
                     <p class="mb-0">Thanks</p>
-                    <p class="mb-0">Emma Watson</p>
+                    <p class="mb-0">{{ job.user}}</p>
                     <div class="p-x1 bg-light rounded-3 mt-3">
                       <div class="d-inline-flex flex-column">
                         <div class="border p-2 rounded-3 d-flex bg-white dark__bg-1000 fs--1 mb-2"><svg class="svg-inline--fa fa-image fa-w-16 fs-1" aria-hidden="true" focusable="false" data-prefix="far" data-icon="image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 336H54a6 6 0 0 1-6-6V118a6 6 0 0 1 6-6h404a6 6 0 0 1 6 6v276a6 6 0 0 1-6 6zM128 152c-22.091 0-40 17.909-40 40s17.909 40 40 40 40-17.909 40-40-17.909-40-40-40zM96 352h320v-80l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L192 304l-39.515-39.515c-4.686-4.686-12.284-4.686-16.971 0L96 304v48z"></path></svg><!-- <span class="fs-1 far fa-image"></span> Font Awesome fontawesome.com --><span class="ms-2 me-3">broken_tv_solve.jpg (873kb)</span><a class="text-300 ms-auto" href="https://prium.github.io/falcon/v3.14.0/app/support-desk/tickets-preview.html#!" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Download" data-bs-original-title="Download"><svg class="svg-inline--fa fa-arrow-down fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"></path></svg><!-- <span class="fas fa-arrow-down"></span> Font Awesome fontawesome.com --></a></div>
@@ -502,40 +502,13 @@
                 <div class="col-md-6 col-xl-12">
                   <div class="card">
                     <div class="card-header bg-light">
-                      <h6 class="mb-0">Properties</h6>
+                      <h6 class="mb-0">Bid</h6>
                     </div>
                     <div class="card-body">
                       <form>
-                        <div class="mb-2 mt-n2"><label class="mb-1">Type</label><select class="form-select form-select-sm">
-                            <option>None</option>
-                            <option>Question</option>
-                            <option>Incident</option>
-                            <option>Problem</option>
-                            <option>Feature Request</option>
-                            <option>Refund</option>
-                          </select></div>
-                        <div class="mb-2"><label class="mb-1 mt-2">Status</label><select class="form-select form-select-sm">
-                            <option>None</option>
-                            <option>Recent</option>
-                            <option>Overdue</option>
-                            <option>Closed</option>
-                            <option>Remaining</option>
-                            <option>Responded</option>
-                          </select></div>
-                        <div class="mb-2"><label class="mb-1 mt-2">Priority</label><select class="form-select form-select-sm">
-                            <option>None</option>
-                            <option>Urgent</option>
-                            <option>High</option>
-                            <option>Medium</option>
-                            <option>Low</option>
-                          </select></div>
-                        <div class="mb-2"><label class="mb-1 mt-2">Agent</label><select class="form-select form-select-sm">
-                            <option>None</option>
-                            <option>Anindya</option>
-                            <option>Nowrin</option>
-                            <option>Khalid</option>
-                          </select></div>
-                        <div><label class="mb-1 mt-2">Tags</label><select class="form-select form-select-sm">
+                
+    
+                        <div><label class="mb-1 mt-2">message</label><select class="form-select form-select-sm">
                             <option>None</option>
                             <option>Sales</option>
                             <option>Request</option>
@@ -545,7 +518,7 @@
                           </select></div>
                       </form>
                     </div>
-                    <div class="card-footer border-top border-200 py-x1"><button class="btn btn-primary w-100">Update</button></div>
+                    <div class="card-footer border-top border-200 py-x1"><button class="btn btn-primary w-100">BID</button></div>
                   </div>
                 </div>
                 <div class="col-md-6 col-xl-12">
@@ -633,9 +606,8 @@
           <footer class="footer">
             <div class="row g-0 justify-content-between fs--1 mt-4 mb-3">
               <div class="col-12 col-sm-auto text-center">
-                <p class="mb-0 text-600">Thank you for creating with Falcon <span class="d-none d-sm-inline-block">| </span><br class="d-sm-none"> 2022 © <a href="https://themewagon.com/">Themewagon</a></p>
-              </div>
-              <div class="col-12 col-sm-auto text-center">
+                <p class="mb-0 text-600">AjiraPanel <span class="d-none d-sm-inline-block">| </span><br class="d-sm-none"> 2023 © <a href="https://themewagon.com/">|</a></p>
+              </div>i
                 <p class="mb-0 text-600">v3.14.0</p>
               </div>
             </div>

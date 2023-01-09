@@ -72,19 +72,39 @@
                   <div class="col-auto">
                     <h5>Log in</h5>
                   </div>
-                  <div class="col-auto fs--1 text-600"><span class="mb-0 undefined">or</span> <span><a href="#">Create an account</a></span></div>
+                  <div class="col-auto fs--1 text-600"><span class="mb-0 undefined">or</span> <span><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Create an account</a></span></div>
                 </div>
-                <form>
-                  <div class="mb-3"><input class="form-control" type="text" placeholder="Email address"></div>
-                  <div class="mb-3"><input class="form-control" type="password" placeholder="Password"></div>
-                  <div class="row flex-between-center">
-                    <div class="col-auto">
-                      <div class="form-check mb-0"><input class="form-check-input" type="checkbox" id="basic-checkbox" checked="checked"><label class="form-check-label mb-0" for="basic-checkbox">Remember me</label></div>
-                    </div>
-                    <div class="col-auto"><a class="fs--1" href="#">Forgot Password?</a></div>
-                  </div>
-                  <div class="mb-3"><button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Log in</button></div>
-                </form>
+                
+                
+               <form role="form" method="POST" action="{% url 'users:login' %}">
+                       {% csrf_token %}
+                       
+                       {% if form.errors %}
+                       <p class="fs--1">{{form.errors}}</p>
+                       
+                       {% endif %}
+                        <div class="mb-3">
+                        <input class="form-control"  type="text" name="username" id="username" placeholder="Email address" required autofocus>
+                        
+                        </div>
+                        
+                        <div class="mb-3">
+                        
+                        <input class="form-control" type="password" name="password" id="password" placeholder="Password" required>
+                        </div>
+                        <div class="row flex-between-center">
+                          <div class="col-auto">
+                            <div class="form-check mb-0"><input class="form-check-input" type="checkbox" id="modal-checkbox"><label class="form-check-label mb-0" for="modal-checkbox">Remember me</label></div>
+                          </div>
+                          <div class="col-auto"><a class="fs--1" href="{% url 'users:password_reset' %}">Forgot Password?</a></div>
+                        </div>
+                        <div class="mb-3"><button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Log in</button></div>
+                      </form> 
+                              
+                
+                
+    
+                
                 <div class="position-relative mt-4">
                   <hr>
                  

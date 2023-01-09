@@ -95,7 +95,8 @@
                 
                 {% if user.is_authenticated %}
                 <a  id="navbarDropdownLogin" href="#" role="button"  aria-haspopup="true" aria-expanded="false">Logged In as {{user.username}}</a>
-                              
+                
+                        <a  id="navbarDropdownLogin" href="{% url 'users:logout' %}" role="button"  aria-haspopup="true" aria-expanded="false">Logout</a>      
                 {% endif %}   
              
                 <div class="dropdown-menu dropdown-caret dropdown-menu-end dropdown-menu-card" aria-labelledby="navbarDropdownLogin">
@@ -106,7 +107,7 @@
                           <h5 class="mb-0">Log in</h5>
                         </div>
                         <div class="col-auto">
-                          <p class="fs--1 text-600 mb-0">or <a href="/users/register">Create an account</a></p>
+                          <p class="fs--1 text-600 mb-0">Or    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Create an account</a></p>
                         </div>
                       </div>
                       <form role="form" method="POST" action="{% url 'users:login' %}">
@@ -140,13 +141,7 @@
                   </div>
                 </div>
               </li>
-              {% if not user.is_authenticated %}
-              <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Register</a></li>
-              {% endif %}
-              
-              {% if user.is_authenticated %}
-              
-              {% endif %}              
+             
             </ul>
           </div>
         </div>
