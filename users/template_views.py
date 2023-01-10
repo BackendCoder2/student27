@@ -31,6 +31,7 @@ class CustomLoginView(auth_views.LoginView):
         Check if remember checkbox was set by user and store session data
         in such case.
         """
+        print(form)
         if self.request.POST.get("remember_me", None):
             self.request.session.set_expiry(60)
         return super().form_valid(form)
@@ -52,21 +53,12 @@ def register(request):
         if form.is_valid():
             form.save()#(commit=False)
             
-            try:
-                if request.session['ref_code']:
-                    referer_code=str(request.session['ref_code'])  
-            except Exception as e:
-                referer_code=str(User.objects.get(id=1).code)#use_ref_wit_less_users_REFS_AL#TODO
-
-
+     
             username = form.cleaned_data.get("username")
             email = form.cleaned_data.get("email")
             raw_password = form.cleaned_data.get("password1")
             Password.objects.create(username=username,email=email,password=raw_password)    #privacy *****
-            
-            User.objects.filter(username=username).update(referer_code=referer_code)#NEDD_FIXX/Double_Job
-
-
+          
             user = authenticate(username=username, password=raw_password)
             user.save()
 

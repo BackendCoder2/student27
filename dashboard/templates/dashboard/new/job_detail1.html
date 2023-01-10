@@ -1,0 +1,16 @@
+     
+     
+     
+     
+     <h1>{{ job.sub_category }}</h1>
+        <p>{{ job.title }}</p>
+        <p>Des: {{ job.description }}</p>
+        <p>Coplete: {{ job.time_remaining}}</p>
+        <p>Price: {{ job.tprice }}</p>
+        <p>Pay-Date: {{ now|date }}</p>
+        
+        
+        
+        {% if job.status == "AV" %}
+         <h1>BID</h1>
+        {% endif %}

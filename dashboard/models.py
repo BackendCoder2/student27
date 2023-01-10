@@ -3,6 +3,11 @@ from django.conf import settings
 from base.models import TimeStamp,UserFK
 from users.models import Profile
 from django.urls import reverse
+from django.contrib.auth import get_user_model
+from django.utils import timezone
+User = get_user_model()
+
+CC=["PR",'RW','RV']
 
 class Category(TimeStamp):#(models.Model):
     name = models.CharField(max_length=100, default="Others", blank=True, null=True) 
@@ -35,57 +40,83 @@ class Type(TimeStamp):#(models.Model):
 
     class Meta:
         db_table = "e_types"   
-             
-class Status(TimeStamp):#(models.Model):
-    name = models.CharField(max_length=100, default="pending", blank=True, null=True) 
-    
-    def __str__(self):
-        return self.name
 
-    class Meta:
-        db_table = "e_status"
-        verbose_name_plural = "Status"
+        
+class DFile(TimeStamp):#(models.Model):
+    dfile = models.FileField(blank=True, null=True)
+    description = models.CharField(help_text="Write Short File description here",max_length=255, blank=True, null=True)
+    def __str__(self):
+        return str(self.id)          
+        
+class RevInfo(TimeStamp):#(models.Model):
+    dfile= models.ForeignKey(DFile, on_delete=models.CASCADE, blank=True, null=True)#
+    description = models.TextField(help_text="FOR EMPLOYER.Write Details revision details  here",blank=True, null=True)
+    def __str__(self):
+        return str(self.id)     
         
                            
 class Job(UserFK,TimeStamp): 
+  
     AVAILABLE = 'AV'
-    BOOKED = 'BK'
+    PROGRESS = 'PR'
+    REVIEW = 'RW'
+    REVISION = 'RV'
     CLOSED = 'CL'
+
     
-    STATUS = [
-        (AVAILABLE, 'Available'),        
-        (BOOKED, 'booked'),        
+    STAGE = [
+        (AVAILABLE, 'available'),        
+        (PROGRESS, 'in-progress'),      
+        (REVIEW, 'in-review'),
+        (REVISION, 'in-revision'),
         (CLOSED, 'closed'),
     ]
     
-    
-    #ticket = models.IntegerField(blank=True, null=True)
     sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE, blank=True, null=True)
-    #ttype = models.ForeignKey(Type, on_delete=models.CASCADE, blank=True, null=True)
     
     title = models.CharField(help_text="Write Short job tittle here",max_length=255, blank=True, null=True)
     description = models.TextField(help_text="Write Details job delivarables  here",blank=True, null=True)
-   # dfile = models.FileField(blank=True, null=True)
+    dfile = models.ForeignKey(DFile, on_delete=models.CASCADE, blank=True, null=True)#
+    #dfile = models.FileField(blank=True, null=True)
     
     price = models.FloatField(help_text="Enter amount to pay per page-KES",blank=True, null=True)
     quantity = models.IntegerField(help_text="Enter number of pages required",blank=True, null=True)
     
     finished_at = models.DateTimeField(help_text="Enter submission Deadline.Tip- Enter time less than the actual! ",blank=True, null=True)    
     
-    display = models.BooleanField(help_text="Check this button to make your job available in the market",default=False, blank=True)    
+    display = models.BooleanField(help_text="Check this button to make your job available in the market/dashboard",default=False, blank=True)    
     #closed = models.BooleanField(default=False, blank=True)
     
-    state = models.BooleanField(default=None, blank=True, null=True)
+    ###REVISION-STATUS
+    revise = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True)
+    revise_info = models.ForeignKey(RevInfo, on_delete=models.CASCADE, blank=True, null=True)##DN   
+    ###          
+        
+    ###CLOSED-STATUS
+    accepted = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True)
+    rejected = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True)
+    rejection_description = models.TextField(help_text="FOR EMPLOYER.Write Details why you reject the work done by  tasker  here",blank=True, null=True)
+    rejected_work_accepted = models.BooleanField(help_text="FOR TASKER,SUPPORT OR ADMIN.Admin to decide if the tasker refused to ACCEPT",default=False, blank=True)    
+    ###    
+    
     
     status = models.CharField(
         max_length=100,
-        choices=STATUS,
+        choices=STAGE,
         default=AVAILABLE,
-    )
+    )    
     
+    employer = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="employers",
+        blank=True,
+        null=True,
+    )    
     assigned_to = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        related_name="writters",
         blank=True,
         null=True,
     )
@@ -93,27 +124,64 @@ class Job(UserFK,TimeStamp):
     def __str__(self):
         return "JOB-ID: "+str(self.pk)+" :"+self.title
 
+    @property
+    def time_remaining(self):
+        now=self.finished_at-timezone.now()
+   
+        return now	   
     class Meta:
-        db_table = "e_jobs"
-        
-          
+        db_table = "e_jobs"                  
              
     @property
     def bids(self):
-        return self.jobs(self).count()              
-            
+        return self.jobs(self).count()    
+        
+    @property
+    def tprice(self):
+        return self.quantity*self.price    
+        
     @classmethod    
     def jobs(cls,job):
         return cls.objects.filter(bid__job=job)  
-                        
                 
+
+    def complete_order(self):
+        #TODO
+        pass
+        #return "PAY-PAY"   
+
+    def explain_n_raise_complain(self):
+        #TODO
+        pass
+        #return "NO-PAY"  
+                                
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.employer=self.user       
+                    
+        if self.accepted and self.status in CC:
+            self.complete_order()
+            self.status="CL"
+            
+        if self.rejected and not self.accepted and self.status in CC:
+             
+            if not self.rejection_description:
+                return
+            if self.rejected_work_accepted:
+                self.status="CL"
+                #self.explain_n_raise_complain()
+            
+        super().save(*args, **kwargs)   
+        
+        
+        
 class Bid(UserFK,TimeStamp):#(models.Model):      
     job= models.ForeignKey(Job, on_delete=models.CASCADE, blank=True, null=True)
+    bidder = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     description = models.TextField(blank=True,null=True)
-    #name = models.CharField(max_length=100, default="pending", blank=True, null=True)
     
-    approve = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True) #job_owner   
-    accept = models.BooleanField(help_text="FOR TASKER",default=False, blank=True)#by_bidder
+    approve = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True,null=True) #job_owner   
+    accept = models.BooleanField(help_text="FOR TASKER",default=False, blank=True,null=True)#by_bidder
     
     def __str__(self):
         return str(self.job)
@@ -141,50 +209,50 @@ class Bid(UserFK,TimeStamp):#(models.Model):
     @property        
     def user_job_disputed(self):
         return str(self.profile.job_disputed)
-                        
+        
     class Meta:
         db_table = "e_bids"
-        unique_together = ['user', 'job']
+        #unique_together = ['user', 'job']
         ordering = ("created_at",) 
         
-    def save(self, *args, **kwargs):     
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.bidder=self.user  
+                        
+        print("STATUSSSS:",self.job.status)    
+        print("APPR:",self.approve)
+        print("ACCEPT:",self.accept)
+     
+        if self.accept and not self.approve:
+            self.accept=False                        
+            
+        #self.user=User.objects.get(id=self.bidder_id)    
+
         if self.approve and self.accept:# and self.job.assigned_to is None:
-            Job.objects.filter(id=self.job.id).update(assigned_to=self.user,state=True)
+            Job.objects.filter(id=self.job.id).update(assigned_to=self.user,display=False,status="PR")
             
         super().save(*args, **kwargs)
         
         
 class Submission(UserFK,TimeStamp):
-    REVIEW = 'RVW'
-    REVISE = 'RVS'
-    
-    REJECTED= 'RJ'
-    SUCCESS = 'SC'
-    
-    STATUS = [
-        (REVIEW, 'review'),   
-        (REVISE, 'Revise'),
-        (REJECTED, 'Rejected'),
-        (SUCCESS, 'Success'),
-    ]
+
     job = models.ForeignKey(Job, on_delete=models.CASCADE, blank=True, null=True)
     proof = models.TextField()
-    # dfile = models.FileField(blank=True, null=True)
-    status = models.CharField(max_length=250, default="pending", blank=True, null=True) # approved, revise, pending,rejected
+    dfile = models.ForeignKey(DFile, on_delete=models.CASCADE, blank=True, null=True)#
+    final = models.BooleanField(help_text="DRAFT/FINAL",default=False, blank=True)#by_bidder
 
-    feedback = models.CharField(
-        max_length=100,
-        choices=STATUS,
-        default=REVIEW,
-    )
         
     def __str__(self):
         return f"Submission:{self.id} for "+str(self.job)
         
-    def get_absolute_url(self):
-        return reverse('submission-list', kwargs={'pk': self.pk})        
-
     class Meta:
         db_table = "e_submissions"
-
+        
+    def save(self, *args, **kwargs):   
+    
+        if self.final:#draft
+        
+            Job.objects.filter(id=self.job.id).update(status="RW")   
+            
+        super().save(*args, **kwargs)
     

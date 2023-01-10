@@ -49,10 +49,18 @@ jobs:
           source venv/bin/activate
           
           cd ~/eltask/src
-          git stash
-          git stash drop
+          #git stash
+          #git stash drop
+          #git reset --hard origin/master
               
-          git pull origin master
+          #git branch -D  master
+          #git fetch origin master
+          #git checkout -b master origin/master
+
+          git fetch origin master
+          git reset --hard origin/master
+
+          
        
 
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
@@ -88,7 +96,7 @@ jobs:
           #MAKEMIGRATIONS
           cd ~/eltask/src 
           
-          python manage.py makemigrations
+          python manage.py makemigrations --noinput
           python manage.py makemigrations users
           python manage.py makemigrations home
           python manage.py makemigrations dashboard

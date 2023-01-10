@@ -5,11 +5,10 @@ from django.conf import settings
     
     
 class User(AbstractUser):
-    """Add three fields to existing Django User model.
-      : referer_code  , code n 4ne-nuber for reference
-    """
+
     phone_number = models.CharField(max_length=150, blank=True, null=True)
     update_count= models.IntegerField(default=10, blank=True, null=True)
+    is_employer = models.BooleanField(default=False, blank=True, null=True)
     is_trusted = models.BooleanField(default=False, blank=True)
     
 

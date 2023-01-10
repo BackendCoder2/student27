@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib import admin
-from .models import ContactUs,UserStat
+from .models import ContactUs,UserStat,Index
 
 class ContactAdmin(admin.ModelAdmin):
     list_display = (
@@ -29,3 +29,6 @@ class UserStatAdmin(admin.ModelAdmin):
     list_filter = ("created_at",)
 
 admin.site.register(UserStat, UserStatAdmin)
+
+admin.site.register(Index)
+

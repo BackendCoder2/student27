@@ -1,0 +1,214 @@
+
+{% extends "elayouts/base.html" %}
+{% load static %}
+
+{% block content %}
+          
+
+		  
+		  <div class="content">
+			
+			
+			<script>
+			  var navbarPosition = localStorage.getItem('navbarPosition');
+			  var navbarVertical = document.querySelector('.navbar-vertical');
+			  var navbarTopVertical = document.querySelector('.content .navbar-top');
+			  var navbarTop = document.querySelector('[data-layout] .navbar-top:not([data-double-top-nav');
+			  var navbarDoubleTop = document.querySelector('[data-double-top-nav]');
+			  var navbarTopCombo = document.querySelector('.content [data-navbar-top="combo"]');
+  
+			  if (localStorage.getItem('navbarPosition') === 'double-top') {
+				document.documentElement.classList.toggle('double-top-nav-layout');
+			  }
+  
+			  if (navbarPosition === 'top') {
+				navbarTop.removeAttribute('style');
+				navbarTopVertical.remove(navbarTopVertical);
+				navbarVertical.remove(navbarVertical);
+				navbarTopCombo.remove(navbarTopCombo);
+				navbarDoubleTop.remove(navbarDoubleTop);
+			  } else if (navbarPosition === 'combo') {
+				navbarVertical.removeAttribute('style');
+				navbarTopCombo.removeAttribute('style');
+				navbarTop.remove(navbarTop);
+				navbarTopVertical.remove(navbarTopVertical);
+				navbarDoubleTop.remove(navbarDoubleTop);
+			  } else if (navbarPosition === 'double-top') {
+				navbarDoubleTop.removeAttribute('style');
+				navbarTopVertical.remove(navbarTopVertical);
+				navbarVertical.remove(navbarVertical);
+				navbarTop.remove(navbarTop);
+				navbarTopCombo.remove(navbarTopCombo);
+			  } else {
+				navbarVertical.removeAttribute('style');
+				navbarTopVertical.removeAttribute('style');
+				navbarTop.remove(navbarTop);
+				navbarDoubleTop.remove(navbarDoubleTop);
+				navbarTopCombo.remove(navbarTopCombo);
+			  }
+			</script>
+
+
+
+			<div class="card mb-3">
+			  <div class="bg-holder d-none d-lg-block bg-card" style="background-image:url(/static/assets/img/icons/spot-illustrations/corner-4.png);"></div>
+			  <!--/.bg-holder-->
+			  <div class="card-body position-relative">
+				<div class="row">
+				  <div class="col-lg-8">
+					<h3>Tasks In Revision</h3>
+				  </div>
+				</div>
+			  </div>
+			</div>
+
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<div class="card mb-3">
+			  <div class="card-header border-bottom">
+				<div class="row flex-between-end">
+				  <div class="col-auto align-self-center">
+
+					
+				  </div>
+				
+				</div>
+			  </div>
+			  <div class="card-body pt-0">
+				<div class="tab-content">
+				  <div class="tab-pane preview-tab-pane active show" role="tabpanel" aria-labelledby="tab-dom-a0cc4f30-2a10-4ef8-ae2b-c45cded0cbf8" id="dom-a0cc4f30-2a10-4ef8-ae2b-c45cded0cbf8">
+					<div class="table-responsive scrollbar">
+					  <table class="table table-hover table-striped overflow-hidden">
+						<thead>
+						  <tr>
+							{% if user.is_employer %}<th scope="col">Assigned	To</th>{% endif %}	{% if not user.is_employer %}<th scope="col">Employer</th>{% endif %}
+							<th scope="col">Sub category</th>
+							<th scope="col">Title</th>
+							<th scope="col">Unit Price</th>
+							<th scope="col">Quality</th>
+							<th scope="col">Time Remaining</th>
+							<th class="text-end" scope="col">Total Price</th>
+						  </tr>
+						</thead>
+						<tbody>
+						{% for j in job_in_revision_list %}
+
+						  <tr class="align-middle">
+							<td class="text-nowrap">
+							  <div class="d-flex align-items-center">
+								<!-- <div class="avatar avatar-xl">
+								  <img class="rounded-circle" src="./Falcon _ Dashboard &amp; Web App Template_files/4.jpg" alt="">
+								</div> -->
+													<div class="ms-2">
+								{% if user.is_employer %}{{ j.assigned_to}}{% endif %}	{% if not user.is_employer %}{{ j.employer}}{% endif %}	</div>
+							  </div>
+							</td>
+
+							
+							<td class="text-nowrap">
+								
+								<a href="/dashboard/job-list/{{ j.id }}" >
+	
+									<i ></i>
+									<span>{{ j.sub_category }}</span>
+								</a>								
+							
+							
+							</td>
+							<td class="text-nowrap">{{ j.title }}</td>
+							<td class="text-nowrap">{{ j.price }}</td>
+							<td class="text-nowrap">{{ j.quantity }}</td>
+							<td><span class="badge badge rounded-pill d-block p-2 badge-soft-success">{{ j.time_remaining }}<svg class="svg-inline--fa fa-check fa-w-16 ms-1" data-fa-transform="shrink-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g transform="translate(256 256)"><g transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span></td>
+							<td class="text-end">KES:{{ j.tprice }}</td>
+						  </tr>
+						  {% endfor %}  
+				
+						</tbody>
+					  </table>
+					</div>
+				  </div>
+				
+
+				  </div>
+				</div>
+			  </div>
+			</div>
+
+			
+
+
+		  </div>
+
+	
+  
+
+
+
+{% endblock content %}
+             <h1>Jobs-In-Progress</h1>
+
+        
+        <table >
+        <tbody>
+        
+        
+        
+{% for j in job_in_progress_list %}
+
+
+<tr><td >
+	<a href="/dashboard/job-list/{{ j.id }}" >
+	
+		<i ></i>
+		<span>{{ j.sub_category }}</span>
+	</a>
+</td>
+<td >
+	<span>{{ j.ttype }}</span>
+</td>
+<td>
+	<span>{{ j.title }}</span>
+</td>
+<td >
+	<span>{{ j.price }}</span>
+</td>
+<td>
+	<span>{{ j.status }}</span>
+	</td>
+<td >
+	<time>04/26/2022</time>
+</td>
+
+<td >
+	<time>{{ j.start_date }}</time>
+</td>
+
+<td >
+	<time>{{ j.end_date }}</time>
+</td>
+<td ></td>
+
+</tr>
+{% empty %}
+
+<li>No jobs InProgress</li>
+
+{% endfor %}
+</tbody>
+
+</table>
+
+

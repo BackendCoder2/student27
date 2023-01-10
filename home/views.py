@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .forms import  ContactUsForm
 from users.models import User
-from .models import UserStat
+from .models import UserStat,Index
 from accounts.models import  Transaction,Account
 from  datetime import date
 
@@ -22,30 +22,9 @@ def contact(request):
     return render(request, 'home/contact.html')
 
 
-#def index(request):
- #   return render(request, 'home/index.html')
-
 
 def index(request,*args,**kwargs): 
-    return  render(request, 'home/index.html')
-    
+    index,_=Index.objects.get_or_create(id=1)
+    context = {"user": request.user,"index":index}
+    return  render(request, 'home/index.html',context)
 
-
-def affiliate(request):
-    return render(request, 'home/affiliate.html')
-        
-def faqs(request):
-    return render(request, 'home/faqs.html') 
-   
-          
-@login_required(login_url="/user/login")    
-def dashboard(request):
-    wallet=Account.objects.get(user=request.user)
-    trans=Transaction.objects.filter(account=wallet)[:10]
-    transr=trans[:5]
-    mine_users = User.objects.filter(referer_code=request.user.code)
-    context = {"user": request.user,"trans":trans,"transr":transr,"mine_users":mine_users}
-    
-    return render(request, 'home/dashboard.html',context)    
-        
-    
