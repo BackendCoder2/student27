@@ -63,7 +63,7 @@ def register(request):
             user.save()
 
             login(request, user)
-            return redirect("/")
+            return redirect("/dashboard")
   
      
     else:

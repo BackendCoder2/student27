@@ -1,11 +1,11 @@
 from django.contrib import admin
-from .models import Category,SubCategory,Job,Submission,Type,Bid,RevInfo,DFile
+from .models import Category,SubCategory,Job,Submission,Bid,RevInfo,DFile
 #from users.models import User
 from .forms import JobForm,BidForm
 
 admin.site.register(Category)
 admin.site.register(SubCategory)
-admin.site.register(Type)
+#admin.site.register(Type)
 admin.site.register(DFile)
 #admin.site.register(RevInfo)
 #admin.site.register(Submission)
@@ -41,7 +41,7 @@ class JobAdmin(admin.ModelAdmin):
         "status",
         "display",
         "finished_at",
-        "employer",
+       # "employer",
         #"rejected",
         #"rejection_description",
         #"rejected_work_accepted"

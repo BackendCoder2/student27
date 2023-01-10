@@ -8,6 +8,7 @@ from django.utils import timezone
 User = get_user_model()
 
 CC=["PR",'RW','RV']
+CR=['RW','RV']
 
 class Category(TimeStamp):#(models.Model):
     name = models.CharField(max_length=100, default="Others", blank=True, null=True) 
@@ -20,7 +21,7 @@ class Category(TimeStamp):#(models.Model):
         verbose_name_plural = "Categories"
         
 class SubCategory(TimeStamp):#(models.Model):
-    name = models.CharField(max_length=100, default="Others", blank=True, null=True) 
+    name = models.CharField(max_length=100,blank=True, null=True) 
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     def __str__(self):
         return self.name
@@ -31,28 +32,20 @@ class SubCategory(TimeStamp):#(models.Model):
     class Meta:
         db_table = "e_subcategories"
         verbose_name_plural = "Sub Categories"
-                
-class Type(TimeStamp):#(models.Model):
-    name = models.CharField(max_length=100, default="escrew", blank=True, null=True) 
-    
-    def __str__(self):
-        return self.name
 
-    class Meta:
-        db_table = "e_types"   
 
         
 class DFile(TimeStamp):#(models.Model):
-    dfile = models.FileField(blank=True, null=True)
+    dfile = models.FileField(upload_to='media/documents/%Y/%m/%d/',blank=True, null=True)
     description = models.CharField(help_text="Write Short File description here",max_length=255, blank=True, null=True)
     def __str__(self):
-        return str(self.id)          
+        return "FILE"+str(self.id)+':' +self.description         
         
 class RevInfo(TimeStamp):#(models.Model):
     dfile= models.ForeignKey(DFile, on_delete=models.CASCADE, blank=True, null=True)#
     description = models.TextField(help_text="FOR EMPLOYER.Write Details revision details  here",blank=True, null=True)
     def __str__(self):
-        return str(self.id)     
+        return "Rev:"+str(self.id)+':' +self.description      
         
                            
 class Job(UserFK,TimeStamp): 
@@ -76,7 +69,7 @@ class Job(UserFK,TimeStamp):
     
     title = models.CharField(help_text="Write Short job tittle here",max_length=255, blank=True, null=True)
     description = models.TextField(help_text="Write Details job delivarables  here",blank=True, null=True)
-    dfile = models.ForeignKey(DFile, on_delete=models.CASCADE, blank=True, null=True)#
+    dfile = models.ForeignKey(DFile,help_text="Upload files from your device", on_delete=models.CASCADE, blank=True, null=True)#
     #dfile = models.FileField(blank=True, null=True)
     
     price = models.FloatField(help_text="Enter amount to pay per page-KES",blank=True, null=True)
@@ -88,10 +81,10 @@ class Job(UserFK,TimeStamp):
     #closed = models.BooleanField(default=False, blank=True)
     
     ###REVISION-STATUS
-    revise = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True)
-    revise_info = models.ForeignKey(RevInfo, on_delete=models.CASCADE, blank=True, null=True)##DN   
-    ###          
-        
+    #revise = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True)
+    revise_info = models.ForeignKey(RevInfo,help_text="ADD file to put this job in revision", on_delete=models.CASCADE, blank=True, null=True)##DN   
+    ###  
+
     ###CLOSED-STATUS
     accepted = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True)
     rejected = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True)
@@ -162,7 +155,11 @@ class Job(UserFK,TimeStamp):
         if self.accepted and self.status in CC:
             self.complete_order()
             self.status="CL"
-            
+
+        if self.revise_info and self.status =="RW":   
+            print("IKOOO_RRRE")     
+            Job.objects.filter(id=self.id).update(status="RV") 
+
         if self.rejected and not self.accepted and self.status in CC:
              
             if not self.rejection_description:

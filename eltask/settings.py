@@ -168,6 +168,13 @@ STATIC_ROOT = (
     BASE_DIR / "./static"
 ) 
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = (
+    BASE_DIR / "./media"
+) 
+
+
+
 # Simplified static file serving.
 # https://pypi.org/project/whitenoise/
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

@@ -75,13 +75,12 @@
                   <div class="col-auto fs--1 text-600"><span class="mb-0 undefined">Have an account?</span> <span><a href="{% url 'users:login' %}">Login</a></span></div>
                 </div>
                 
-                
-                
+                                
                 <form role="form" method="POST" action="{% url 'users:register' %}">
                 {% csrf_token %}
 
                 {% if form.errors %}
-                <span class="text-danger">{{ form.errors|join:'<br />' }}</span>
+                <span class="text-danger">{{ form.errors}}</span>
             {% endif %}
 
                   <div class="mb-3"><input class="form-control" type="text" name="username" id="username" autocomplete="on" placeholder="Name" required></div>
