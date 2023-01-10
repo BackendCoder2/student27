@@ -27,14 +27,12 @@ class SubCategory(TimeStamp):#(models.Model):
         return self.name
         
     def __str__(self):
-        return self.name +" of " + str(self.category)+" Category"
+        return self.name +" of " + sStr(self.category)+" Category"
 
     class Meta:
         db_table = "e_subcategories"
         verbose_name_plural = "Sub Categories"
 
-
-        
 class DFile(TimeStamp):#(models.Model):
     dfile = models.FileField(upload_to='media/documents/%Y/%m/%d/',blank=True, null=True)
     description = models.CharField(help_text="Write Short File description here",max_length=255, blank=True, null=True)
