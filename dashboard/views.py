@@ -144,10 +144,15 @@ def index(request):
     })
 
 class JobListView(ListView):
-    queryset = Job.objects.filter(status='AV',display=True)
+    #queryset = Job.objects.filter(status='AV',display=True)
     context_object_name = 'job_list'
     template_name = 'dashboard/new/job_list.html'
-
+    
+    def get_queryset(self):         
+        if self.request.user.is_employer:
+            return Job.objects.filter(employer=self.request.user,status="AV")
+        return Job.objects.filter(status='AV',display=True)
+        
 class JobDetailView(DetailView):
     model = Job
     context_object_name = 'job'
@@ -179,31 +184,43 @@ class JobInProgressListView(ListView):
     context_object_name = 'job_in_progress_list'
     template_name = 'dashboard/new/jobs_in_progress.html'
     
-    def get_queryset(self):
-        return Job.objects.filter(assigned_to=self.request.user,status="PR") 
+    def get_queryset(self):         
+        if self.request.user.is_employer:
+            return Job.objects.filter(employer=self.request.user,status="PR")
+        return Job.objects.filter(assigned_to=self.request.user,status="PR")       
+        
+            
 
 class JobInReviewListView(ListView):
 
     context_object_name = 'job_in_review_list'
     template_name = 'dashboard/new/jobs_in_review.html'
     
-    def get_queryset(self):
-        return Job.objects.filter(assigned_to=self.request.user,status="RW") 
+          
+    def get_queryset(self):         
+        if self.request.user.is_employer:
+            return Job.objects.filter(employer=self.request.user,status="RW")
+        return Job.objects.filter(assigned_to=self.request.user,status="RW")
+        
         
 class JobInRevisionListView(ListView):
 
     context_object_name = 'job_in_revision_list'
     template_name = 'dashboard/new/jobs_in_revision.html'
     
-    def get_queryset(self):
-        return Job.objects.filter(assigned_to=self.request.user,status="RV")    
-        
+ 
+    def get_queryset(self):         
+        if self.request.user.is_employer:
+            return Job.objects.filter(employer=self.request.user,status="RV")
+        return Job.objects.filter(assigned_to=self.request.user,status="RV")        
         
 class JobClosedListView(ListView):
 
     context_object_name = 'job_closed_list'
     template_name = 'dashboard/new/jobs_closed.html'
     
-    def get_queryset(self):
-        return Job.objects.filter(assigned_to=self.request.user,status="CL")         
+    def get_queryset(self):         
+        if self.request.user.is_employer:
+            return Job.objects.filter(employer=self.request.user,status="CL")
+        return Job.objects.filter(assigned_to=self.request.user,status="CL")        
         

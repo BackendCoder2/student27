@@ -93,7 +93,8 @@
 					  <table class="table table-hover table-striped overflow-hidden">
 						<thead>
 						  <tr>
-							<th scope="col">Employer</th>
+						  {% if user.is_employer %}<th scope="col">Assigned	To</th>{% endif %}	{% if not user.is_employer %}<th scope="col">Employer</th>{% endif %}
+							
 							<th scope="col">Sub category</th>
 							<th scope="col">Title</th>
 							<th scope="col">Unit Price</th>
@@ -111,7 +112,8 @@
 								<!-- <div class="avatar avatar-xl">
 								  <img class="rounded-circle" src="./Falcon _ Dashboard &amp; Web App Template_files/4.jpg" alt="">
 								</div> -->
-								<div class="ms-2">{{ j.user}}</div>
+								<div class="ms-2">
+								{% if user.is_employer %}{{ j.assigned_to}}{% endif %}	{% if not user.is_employer %}{{ j.employer}}{% endif %}	</div>
 							  </div>
 							</td>
 

@@ -40,22 +40,20 @@ class Type(TimeStamp):#(models.Model):
 
     class Meta:
         db_table = "e_types"   
-             
-class Status(TimeStamp):#(models.Model):
-    name = models.CharField(max_length=100, default="pending", blank=True, null=True) 
-    
-    def __str__(self):
-        return self.name
 
-    class Meta:
-        db_table = "e_status"
-        verbose_name_plural = "Status"
+        
+class DFile(TimeStamp):#(models.Model):
+    dfile = models.FileField(blank=True, null=True)
+    description = models.CharField(help_text="Write Short File description here",max_length=255, blank=True, null=True)
+    def __str__(self):
+        return str(self.id)          
         
 class RevInfo(TimeStamp):#(models.Model):
+    dfile= models.ForeignKey(DFile, on_delete=models.CASCADE, blank=True, null=True)#
     description = models.TextField(help_text="FOR EMPLOYER.Write Details revision details  here",blank=True, null=True)
-    dfile = models.FileField(max_length=255,blank=True, null=True)
     def __str__(self):
-        return str(self.id)        
+        return str(self.id)     
+        
                            
 class Job(UserFK,TimeStamp): 
   
@@ -78,6 +76,7 @@ class Job(UserFK,TimeStamp):
     
     title = models.CharField(help_text="Write Short job tittle here",max_length=255, blank=True, null=True)
     description = models.TextField(help_text="Write Details job delivarables  here",blank=True, null=True)
+    dfile = models.ForeignKey(DFile, on_delete=models.CASCADE, blank=True, null=True)#
     #dfile = models.FileField(blank=True, null=True)
     
     price = models.FloatField(help_text="Enter amount to pay per page-KES",blank=True, null=True)
@@ -107,9 +106,17 @@ class Job(UserFK,TimeStamp):
         default=AVAILABLE,
     )    
     
+    employer = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="employers",
+        blank=True,
+        null=True,
+    )    
     assigned_to = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        related_name="writters",
         blank=True,
         null=True,
     )
@@ -149,8 +156,8 @@ class Job(UserFK,TimeStamp):
         #return "NO-PAY"  
                                 
     def save(self, *args, **kwargs):
-        #if not self.pk:
-        #    self.bidder=self.user       
+        if not self.pk:
+            self.employer=self.user       
                     
         if self.accepted and self.status in CC:
             self.complete_order()
@@ -217,8 +224,7 @@ class Bid(UserFK,TimeStamp):#(models.Model):
         print("ACCEPT:",self.accept)
      
         if self.accept and not self.approve:
-            self.accept=False 
-                       
+            self.accept=False                        
             
         #self.user=User.objects.get(id=self.bidder_id)    
 
@@ -232,7 +238,7 @@ class Submission(UserFK,TimeStamp):
 
     job = models.ForeignKey(Job, on_delete=models.CASCADE, blank=True, null=True)
     proof = models.TextField()
-    # dfile = models.FileField(blank=True, null=True)
+    dfile = models.ForeignKey(DFile, on_delete=models.CASCADE, blank=True, null=True)#
     final = models.BooleanField(help_text="DRAFT/FINAL",default=False, blank=True)#by_bidder
 
         

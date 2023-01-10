@@ -31,6 +31,7 @@ class CustomLoginView(auth_views.LoginView):
         Check if remember checkbox was set by user and store session data
         in such case.
         """
+        print(form)
         if self.request.POST.get("remember_me", None):
             self.request.session.set_expiry(60)
         return super().form_valid(form)

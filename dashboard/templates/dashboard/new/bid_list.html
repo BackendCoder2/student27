@@ -55,7 +55,7 @@
 			  <div class="card-body position-relative">
 				<div class="row">
 				  <div class="col-lg-8">
-					<h3>Available Tasks</h3>
+					<h3>MY BIDS</h3>
 				  </div>
 				</div>
 			  </div>
@@ -93,8 +93,7 @@
 					  <table class="table table-hover table-striped overflow-hidden">
 						<thead>
 						  <tr>
-						  {% if user.is_employer %}<th scope="col">Assigned	To</th>{% endif %}	{% if not user.is_employer %}<th scope="col">Employer</th>{% endif %}
-							
+							<th scope="col">Employer</th>
 							<th scope="col">Sub category</th>
 							<th scope="col">Title</th>
 							<th scope="col">Unit Price</th>
@@ -104,7 +103,7 @@
 						  </tr>
 						</thead>
 						<tbody>
-						{% for j in job_list %}
+						{% for j in bid_list %}
 
 						  <tr class="align-middle">
 							<td class="text-nowrap">
@@ -112,8 +111,7 @@
 								<!-- <div class="avatar avatar-xl">
 								  <img class="rounded-circle" src="./Falcon _ Dashboard &amp; Web App Template_files/4.jpg" alt="">
 								</div> -->
-						<div class="ms-2">
-								{% if user.is_employer %}{{ j.assigned_to}}{% endif %}	{% if not user.is_employer %}{{ j.employer}}{% endif %}	</div>
+								<div class="ms-2">{{ j.job.employer}}</div>
 							  </div>
 							</td>
 
@@ -123,16 +121,16 @@
 								<a href="/dashboard/job-list/{{ j.id }}" >
 	
 									<i ></i>
-									<span>{{ j.sub_category }}</span>
+									<span>{{ j.job.sub_category }}</span>
 								</a>								
 							
 							
 							</td>
-							<td class="text-nowrap">{{ j.title }}</td>
-							<td class="text-nowrap">{{ j.price }}</td>
-							<td class="text-nowrap">{{ j.quantity }}</td>
+							<td class="text-nowrap">{{ j.job.title }}</td>
+							<td class="text-nowrap">{{ j.job.price }}</td>
+							<td class="text-nowrap">{{ j.job.quantity }}</td>
 							<td><span class="badge badge rounded-pill d-block p-2 badge-soft-success">{{ j.finished_at|naturaltime }}<svg class="svg-inline--fa fa-check fa-w-16 ms-1" data-fa-transform="shrink-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g transform="translate(256 256)"><g transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span></td>
-							<td class="text-end">KES:{{ j.tprice }}</td>
+							<td class="text-end">KES:{{ j.job.tprice }}</td>
 						  </tr>
 						  {% endfor %}  
 				

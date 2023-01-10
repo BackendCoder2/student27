@@ -1,12 +1,12 @@
 from django.contrib import admin
-from .models import Category,SubCategory,Job,Submission,Status,Type,Bid,RevInfo
+from .models import Category,SubCategory,Job,Submission,Type,Bid,RevInfo,DFile
 #from users.models import User
 from .forms import JobForm,BidForm
 
 admin.site.register(Category)
 admin.site.register(SubCategory)
 admin.site.register(Type)
-admin.site.register(Status)
+admin.site.register(DFile)
 #admin.site.register(RevInfo)
 #admin.site.register(Submission)
 
@@ -15,15 +15,18 @@ class JobAdmin(admin.ModelAdmin):
     form = JobForm
     list_display = (
         "id",
-        "user",
+       # "user",
+        "employer",
+        "assigned_to",
         "sub_category",
         "title",
+        "description",
+        "dfile",
         "finished_at",
         "time_remaining",
         "status",
         "display",
-        "bids",
-        "assigned_to",
+        "bids",        
         #POST_WORK
         "accepted",
         "rejected",
@@ -38,7 +41,7 @@ class JobAdmin(admin.ModelAdmin):
         "status",
         "display",
         "finished_at",
-        #"accepted",
+        "employer",
         #"rejected",
         #"rejection_description",
         #"rejected_work_accepted"
@@ -55,7 +58,7 @@ class JobAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             qs = self.model._default_manager.get_queryset()
         else:     
-            qs = self.model.objects.filter(user=request.user)#_default_manager.get_queryset()  
+            qs = self.model.objects.filter(employer=request.user)#_default_manager.get_queryset()  
               
         ordering = self.get_ordering(request)
         if ordering:
@@ -78,7 +81,7 @@ class BidAdmin(admin.ModelAdmin):
     form = BidForm
     list_display = (
         "id",
-        "user",
+        #"user",        
         "bidder",
         "approve",
         "accept",
@@ -94,7 +97,7 @@ class BidAdmin(admin.ModelAdmin):
     )
 
     list_display_links = ("id","job")
-    list_filter = ("id","job__title","user__username","user__profile__rating","user__profile__jobs_in_revision","user__profile__job_in_progress")
+    list_filter = ("id","job__title","job__employer","user__username","user__profile__rating","user__profile__jobs_in_revision","user__profile__job_in_progress")
     search_fields = ("job__title","user__username")
     list_editable = (
         "approve",
@@ -108,7 +111,7 @@ class BidAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             qs = self.model._default_manager.get_queryset()
         else:
-            qs = self.model.objects.filter(job__user=request.user) | self.model.objects.filter(bidder=request.user)
+            qs = self.model.objects.filter(job__employer=request.user) | self.model.objects.filter(bidder=request.user)
             
         ordering = self.get_ordering(request)
         if ordering:
@@ -132,6 +135,7 @@ class SubmissionAdmin(admin.ModelAdmin):
         "id",
         "job",
         "proof",
+        "dfile"
     )
 
     list_display_links = ("id","job")
@@ -149,7 +153,7 @@ class SubmissionAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             qs = self.model._default_manager.get_queryset()
         else:                  
-            qs = self.model.objects.filter(job__user=request.user)  
+            qs = self.model.objects.filter(job__employer=request.user)  
               
         ordering = self.get_ordering(request)
         if ordering:
@@ -180,7 +184,7 @@ class RevInfoAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             qs = self.model._default_manager.get_queryset()
         else:                  
-            qs = self.model.objects.filter(job__user=request.user)  
+            qs = self.model.objects.filter(job__employer=request.user)  
               
         ordering = self.get_ordering(request)
         if ordering:

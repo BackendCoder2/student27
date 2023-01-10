@@ -48,9 +48,14 @@ class SignUpForm(UserCreationForm):
             attrs={"class": "form-control", "placeholder": "Confirm password..."}
         ),
     )
-
+    
+    is_employer = forms.TypedChoiceField(coerce=lambda x: bool(int(x)),
+                   choices=((0, 'WRITTER'), (1, 'EMPLOYER')),
+                   widget=forms.RadioSelect
+                )
+                
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2")
+        fields = ("username", "email", "password1", "password2","is_employer",)
 
 

@@ -119,7 +119,7 @@
                           <h5 class="mb-0">Log in</h5>
                         </div>
                         <div class="col-auto">
-                          <p class="fs--1 text-600 mb-0">Or    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Create an account</a></p>
+                          <p class="fs--1 text-600 mb-0">Or    <a href="{% url 'users:register' %}" >Create an account</a></p>
                         </div>
                       </div>
                       <form role="form" method="POST" action="{% url 'users:login' %}">
@@ -158,57 +158,7 @@
           </div>
         </div>
       </nav>
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-body p-4">
-              <div class="row text-start justify-content-between align-items-center mb-2">
-                <div class="col-auto">
-                  <h5 id="modalLabel">Register</h5>
-                </div>
-                <div class="col-auto">
-                  <p class="fs--1 text-600 mb-0">Have an account? <a href="/users/login">Login</a></p>
-                </div>
-              </div>
-              <form role="form" method="POST" action="{% url 'users:register' %}"></form>
-              {% csrf_token %}
 
-              {% if field.errors %}
-              <span class="text-danger">{{ field.errors|join:'<br />' }}</span>
-          {% endif %}
-
-                <div class="mb-3"><input class="form-control" type="text" name="username" id="username" autocomplete="on" placeholder="Name"></div>
-
-                <div class="mb-3"><input class="form-control" type="email" name="email" id="email" autocomplete="on" placeholder="Email address"></div>
-                <div class="row gx-2">
-                  <div class="mb-3 col-sm-6"><input class="form-control" type="password" name="password1" id="password1"  autocomplete="on" placeholder="Password"></div>
-                  <div class="mb-3 col-sm-6"><input class="form-control" type="password" name="password2" id="password2" autocomplete="on" placeholder="Confirm Password"></div>
-                </div>
-
-
-
-                <div class="position-relative mt-4">
-                  <hr>
-                  <div class="divider-content-center">Register As</div>
-                </div>
-                <div class="row g-2 mt-2">
-                  <div class="col-sm-6"><a class="btn btn-outline-google-plus btn-sm d-block w-100" href="/falcon/v3.14.0/pages/authentication/simple/register.html#"><svg class="svg-inline--fa fa-google-plus-g fa-w-20 me-2" data-fa-transform="grow-8" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google-plus-g" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg="" style="transform-origin: 0.625em 0.5em;"><g transform="translate(320 256)"><g transform="translate(0, 0)  scale(1.5, 1.5)  rotate(0 0 0)"><path fill="currentColor" 
-                    transform="translate(-320 -256)"></path></g></g></svg><!-- <span class="fab fa-google-plus-g me-2" data-fa-transform="grow-8"></span> Font Awesome fontawesome.com --> Employer</a></div>
-                  <div class="col-sm-6"><a class="btn btn-outline-facebook btn-sm d-block w-100" href="/falcon/v3.14.0/pages/authentication/simple/register.html#"><svg class="svg-inline--fa fa-facebook-square fa-w-14 me-2" data-fa-transform="grow-8" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-square" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="" style="transform-origin: 0.4375em 0.5em;"><g transform="translate(224 256)"><g transform="translate(0, 0)  scale(1.5, 1.5)  rotate(0 0 0)"><path fill="currentColor" 
-                    transform="translate(-224 -256)"></path></g></g></svg><!-- <span class="fab fa-facebook-square me-2" data-fa-transform="grow-8"></span> Font Awesome fontawesome.com --> Writter</a></div>
-                </div>
-
-
-                
-                <div class="form-check"><input class="form-check-input" type="checkbox" id="basic-register-checkbox"><label class="form-label" for="basic-register-checkbox">I accept the <a href="/">terms </a>and <a href="/">privacy policy</a></label></div>
-                <div class="mb-3"><button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Register</button></div>
-              </form>
-              
-              
-            </div>
-          </div>
-        </div>
-      </div>
 
       <!-- ============================================-->
       <!-- <section> begin ============================-->
