@@ -20,8 +20,6 @@ class JobAdmin(admin.ModelAdmin):
         "assigned_to",
         "sub_category",
         "title",
-        "description",
-        "dfile",
         "finished_at",
         "time_remaining",
         "status",
