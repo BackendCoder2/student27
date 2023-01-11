@@ -1,51 +1,8 @@
-{% extends "elayouts/base.html" %}
+{% extends "elayouts/base2.html" %}
 {% load static %}
 
 {% block content %}
           
-
-		  
-		  <div class="content">
-			
-			
-			<script>
-			  var navbarPosition = localStorage.getItem('navbarPosition');
-			  var navbarVertical = document.querySelector('.navbar-vertical');
-			  var navbarTopVertical = document.querySelector('.content .navbar-top');
-			  var navbarTop = document.querySelector('[data-layout] .navbar-top:not([data-double-top-nav');
-			  var navbarDoubleTop = document.querySelector('[data-double-top-nav]');
-			  var navbarTopCombo = document.querySelector('.content [data-navbar-top="combo"]');
-  
-			  if (localStorage.getItem('navbarPosition') === 'double-top') {
-				document.documentElement.classList.toggle('double-top-nav-layout');
-			  }
-  
-			  if (navbarPosition === 'top') {
-				navbarTop.removeAttribute('style');
-				navbarTopVertical.remove(navbarTopVertical);
-				navbarVertical.remove(navbarVertical);
-				navbarTopCombo.remove(navbarTopCombo);
-				navbarDoubleTop.remove(navbarDoubleTop);
-			  } else if (navbarPosition === 'combo') {
-				navbarVertical.removeAttribute('style');
-				navbarTopCombo.removeAttribute('style');
-				navbarTop.remove(navbarTop);
-				navbarTopVertical.remove(navbarTopVertical);
-				navbarDoubleTop.remove(navbarDoubleTop);
-			  } else if (navbarPosition === 'double-top') {
-				navbarDoubleTop.removeAttribute('style');
-				navbarTopVertical.remove(navbarTopVertical);
-				navbarVertical.remove(navbarVertical);
-				navbarTop.remove(navbarTop);
-				navbarTopCombo.remove(navbarTopCombo);
-			  } else {
-				navbarVertical.removeAttribute('style');
-				navbarTopVertical.removeAttribute('style');
-				navbarTop.remove(navbarTop);
-				navbarDoubleTop.remove(navbarDoubleTop);
-				navbarTopCombo.remove(navbarTopCombo);
-			  }
-			</script>
 
 
 
@@ -55,25 +12,11 @@
 			  <div class="card-body position-relative">
 				<div class="row">
 				  <div class="col-lg-8">
-					<h3>Available Tasks</h3>
+					<h3>Task In Progress</h3>
 				  </div>
 				</div>
 			  </div>
 			</div>
-
-			
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 			<div class="card mb-3">
@@ -147,67 +90,8 @@
 			  </div>
 			</div>
 
-			
-
-
-		  </div>
-
 	
-  
-
 
 
 {% endblock content %}
-             <h1>Jobs-In-Progress</h1>
-
-        
-        <table >
-        <tbody>
-        
-        
-        
-{% for j in job_in_progress_list %}
-
-
-<tr><td >
-	<a href="/dashboard/job-list/{{ j.id }}" >
-	
-		<i ></i>
-		<span>{{ j.sub_category }}</span>
-	</a>
-</td>
-<td >
-	<span>{{ j.ttype }}</span>
-</td>
-<td>
-	<span>{{ j.title }}</span>
-</td>
-<td >
-	<span>{{ j.price }}</span>
-</td>
-<td>
-	<span>{{ j.status }}</span>
-	</td>
-<td >
-	<time>04/26/2022</time>
-</td>
-
-<td >
-	<time>{{ j.start_date }}</time>
-</td>
-
-<td >
-	<time>{{ j.end_date }}</time>
-</td>
-<td ></td>
-
-</tr>
-{% empty %}
-
-<li>No jobs InProgress</li>
-
-{% endfor %}
-</tbody>
-
-</table>
-
+ 

@@ -27,7 +27,7 @@ class SubCategory(TimeStamp):#(models.Model):
         return self.name
         
     def __str__(self):
-        return self.name +" of " + sStr(self.category)+" Category"
+        return self.name +" of " + str(self.category)+" Category"
 
     class Meta:
         db_table = "e_subcategories"
