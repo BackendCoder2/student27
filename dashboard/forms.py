@@ -6,7 +6,7 @@ class JobForm(forms.ModelForm):
         model = Job
         exclude = (
         "id"
-        "user",
+        #"user",
         "assigned_to",
         "status",
         "employer",
