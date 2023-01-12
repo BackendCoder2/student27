@@ -39,11 +39,7 @@ class DFile(TimeStamp):#(models.Model):
     def __str__(self):
         return "FILE"+str(self.id)+':' +self.description         
         
-class RevInfo(TimeStamp):#(models.Model):
-    dfile= models.ForeignKey(DFile, on_delete=models.CASCADE, blank=True, null=True)#
-    description = models.TextField(help_text="FOR EMPLOYER.Write Details revision details  here",blank=True, null=True)
-    def __str__(self):
-        return "Rev:"+str(self.id)+':' +self.description      
+ 
         
                            
 class Job(UserFK,TimeStamp): 
@@ -79,16 +75,17 @@ class Job(UserFK,TimeStamp):
     #closed = models.BooleanField(default=False, blank=True)
     
     ###REVISION-STATUS
-    #revise = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True)
-    revise_info = models.ForeignKey(RevInfo,help_text="ADD file to put this job in revision", on_delete=models.CASCADE, blank=True, null=True)##DN   
+    revise = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True)
+     
     ###  
 
     ###CLOSED-STATUS
     accepted = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True)
-    rejected = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True)
+    rejected = models.BooleanField(help_text="FOR EMPLOYER.You need to provide rejection_description",default=False, blank=True)
     rejection_description = models.TextField(help_text="FOR EMPLOYER.Write Details why you reject the work done by  tasker  here",blank=True, null=True)
     rejected_work_accepted = models.BooleanField(help_text="FOR TASKER,SUPPORT OR ADMIN.Admin to decide if the tasker refused to ACCEPT",default=False, blank=True)    
-    ###    
+    ###   
+    paid = models.CharField(max_length=20, blank=True, null=True)
     
     
     status = models.CharField(
@@ -116,10 +113,12 @@ class Job(UserFK,TimeStamp):
         return "JOB-ID: "+str(self.pk)+" :"+self.title
 
     @property
-    def time_remaining(self):
-        now=self.finished_at-timezone.now()
-   
-        return now	   
+    def time_remaining(self):        
+        try:
+            return  self.finished_at-timezone.now()                    
+        except:
+            return 0	   
+           
     class Meta:
         db_table = "e_jobs"                  
              
@@ -129,7 +128,20 @@ class Job(UserFK,TimeStamp):
         
     @property
     def tprice(self):
-        return self.quantity*self.price    
+        return self.quantity*self.price 
+    @property
+    def tprice(self):        
+        try:
+            return  self.quantity*self.price                 
+        except:
+            return 0	   
+                   
+        
+    @property
+    def accepted_job(self):
+        if self.accepted :               
+            return "Accepted"
+        return "Rejected" 
         
     @classmethod    
     def jobs(cls,job):
@@ -153,10 +165,14 @@ class Job(UserFK,TimeStamp):
         if self.accepted and self.status in CC:
             self.complete_order()
             self.status="CL"
+            self.paid="Paid"
 
-        if self.revise_info and self.status =="RW":   
+        if self.revise and self.status =="RW":   
             print("IKOOO_RRRE")     
-            Job.objects.filter(id=self.id).update(status="RV") 
+            #Job.objects.filter(id=self.id).update(status="RV") 
+            self.status="RV"
+            
+            self.save()
 
         if self.rejected and not self.accepted and self.status in CC:
              
@@ -164,19 +180,32 @@ class Job(UserFK,TimeStamp):
                 return
             if self.rejected_work_accepted:
                 self.status="CL"
+                self.paid="Not-Paid"
                 #self.explain_n_raise_complain()
             
         super().save(*args, **kwargs)   
         
+    #class Meta:
+    #      constraints = [
+    #         #models.CheckConstraint(check=models.Q(rejected!=None), rejection_description!=None,violation_error_message="NEED_REPLA"),
+    #      ]  
         
+        
+class RevInfo(TimeStamp):#(models.Model): 
+    title = models.CharField(help_text="Write Short Reevision title here",max_length=255, blank=True, null=True)
+    job = models.ForeignKey(Job,on_delete=models.CASCADE, blank=True, null=True)  
+    dfile= models.ForeignKey(DFile, on_delete=models.CASCADE, blank=True, null=True)#
+    description = models.TextField(help_text="FOR EMPLOYER.Write Details revision details  here",blank=True, null=True)
+    def __str__(self):
+        return "Rev:"+str(self.id)+':' +self.description             
         
 class Bid(UserFK,TimeStamp):#(models.Model):      
     job= models.ForeignKey(Job, on_delete=models.CASCADE, blank=True, null=True)
     bidder = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     description = models.TextField(blank=True,null=True)
     
-    approve = models.BooleanField(help_text="FOR EMPLOYER",default=False, blank=True,null=True) #job_owner   
-    accept = models.BooleanField(help_text="FOR TASKER",default=False, blank=True,null=True)#by_bidder
+    approve = models.BooleanField(help_text="Check to Accept & Save/Submit(FOR EMPLOYER)",default=False, blank=True) #job_owner   
+    accept = models.BooleanField(help_text="Check to Accept & Save/Submit(FOR TASKER)",default=False, blank=True)#by_bidder
     
     def __str__(self):
         return str(self.job)

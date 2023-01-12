@@ -14,7 +14,7 @@ admin.site.register(DFile)
 class JobAdmin(admin.ModelAdmin):
     form = JobForm
     list_display = (
-        "id",
+        #"id",
        # "user",
         "employer",
         "assigned_to",
@@ -24,23 +24,24 @@ class JobAdmin(admin.ModelAdmin):
         "time_remaining",
         "status",
         "display",
-        "bids",        
-        #POST_WORK
+        "bids", 
         "accepted",
         "rejected",
         "rejection_description",
-        "rejected_work_accepted"
+        "rejected_work_accepted",
+        "paid"
     )
 
-    list_display_links = ("id","sub_category","title",)
+    list_display_links = ("sub_category","title",)
     list_filter = ("sub_category__category__name","status","display")
-    search_fields = ('id',"sub_category__category__name","sub_category__name",)
+    search_fields = ("sub_category__category__name","sub_category__name",)
     list_editable = (
-        "status",
+        #"status",
         "display",
         "finished_at",
-       # "employer",
-        #"rejected",
+       # "assigned_to",
+        #"employer",
+       # "rejected",
         #"rejection_description",
         #"rejected_work_accepted"
         
@@ -163,6 +164,8 @@ admin.site.register(Submission, SubmissionAdmin)
 class RevInfoAdmin(admin.ModelAdmin):
     list_display = (
         "id",
+        "job",
+        "title",
         "description",
         "dfile",
     )

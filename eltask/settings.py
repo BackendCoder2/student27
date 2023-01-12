@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'accounts',
     'mpesa_api.core',
     'mpesa_api.util',
-    'paypal.pro',
+    #'rest_framework',
+    #'paypal.pro',
     'paypal.standard.ipn',
     #'rest_framework',
        
@@ -210,7 +211,7 @@ JET_SIDE_MENU_COMPACT = True
 # see https://developer.safaricom.co.ke/test_credentials
 # https://developer.safaricom.co.ke/b2c/apis/post/paymentrequest
 #SECRET_MPESA_URL=''# config("SECRET_MPESA_URL", default=SECRET_ADMIN_URL)
-SECRET_MPESA_URL="h6__pz5m$yks2l93$c6ux=%!r1hm%3h%5-^$pb9wzv5^gp*@2"
+SECRET_MPESA_URL="pesa_secreturl"
 MPESA_B2C_ACCESS_KEY = ''#config("MPESA_B2C_ACCESS_KEY", default="")
 MPESA_B2C_CONSUMER_SECRET = ''#config("MPESA_B2C_CONSUMER_SECRET", default="")
 
@@ -244,7 +245,7 @@ TOKEN_THRESHOLD = ''#config("TOKEN_THRESHOLD", default=600)  # , cast=int)
 
 
 PAYPAL_BUY_BUTTON_IMAGE="https://www.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif"
-PAYPAL_RECEIVER_EMAIL ="emmanuel.kipyegon30@gmail.com"
+PAYPAL_RECEIVER_EMAIL ="winzangu@gmail.com"
 
 PAYPAL_TEST = False
 
@@ -271,4 +272,5 @@ DJANGO_SETTINGS_MODULE = 'eltask.settings'
 # Creating Access Token for Sandbox
 PAYPAL_CLIENT_ID = ""
 PAYPAL_CLIENT_SECRET =""
+
 

@@ -8,7 +8,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>AjiraPanel | Dashboard</title>
+    <title>Egxpart | Dashboard</title>
 
     <!-- ===============================================-->
     <!--    Favicons-->
@@ -67,7 +67,7 @@
         <nav class="navbar navbar-light navbar-glass navbar-top navbar-expand-lg">
           <button class="btn navbar-toggler-humburger-icon navbar-toggler me-1 me-sm-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarStandard" aria-controls="navbarStandard" aria-expanded="false" aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
           <a class="navbar-brand me-1 me-sm-3" href="/dashboard/">
-            <div class="d-flex align-items-center"><img class="me-2" src="/static/assets2/logo.png" alt="" width="40"><span class="font-sans-serif">AjiraPanel</span></div>
+            <div class="d-flex align-items-center"><img class="me-2" src="/static/assets2/logo.png" alt="" width="40"><span class="font-sans-serif">Egxpart</span></div>
           </a>
           <div class="collapse navbar-collapse scrollbar" id="navbarStandard">
             <ul class="navbar-nav" data-top-nav-dropdowns="data-top-nav-dropdowns">
@@ -75,12 +75,23 @@
                 <a class="nav-link dropdown-toggle" href="/demo/navbar-top.html#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dashboards">Dashboard</a>
                 <div class="dropdown-menu dropdown-caret dropdown-menu-card border-0 mt-0" aria-labelledby="dashboards">
                   <div class="bg-white dark__bg-1000 rounded-3 py-2"><a class="dropdown-item link-600 fw-medium" href="/dashboard/">Dashboard</a>
-                    <a class="dropdown-item link-600 fw-medium" href="/dashboard/job-list">Available</a>
-                    <a class="dropdown-item link-600 fw-medium" href="/dashboard/bid-list">Bids</a>
-                    <a class="dropdown-item link-600 fw-medium" href="/dashboard/job-in-progress">In Progress</a>
-                    <a class="dropdown-item link-600 fw-medium" href="/dashboard/job-in-review">In Review</a>
-                    <a class="dropdown-item link-600 fw-medium" href="/dashboard/jobs-in-revision">In Revision</a>
-                    <a class="dropdown-item link-600 fw-medium" href="/dashboard/job-closed">Closed</a>
+                  
+                  
+                      
+                    {% if not user.is_employer %}
+                    <a class="dropdown-item link-600 fw-medium" href="/dashboard/job-list">Tasks Available</a>
+                    <a class="dropdown-item link-600 fw-medium" href="/dashboard/bid-list">Bids</a>                    
+                    {% endif %}
+                    {% if user.is_employer %}
+                    <a class="dropdown-item link-600 fw-medium" href="/admin/dashboard/job/add/">Create Task</a>
+                    <a class="dropdown-item link-600 fw-medium" href="/dashboard/job-list">Active Tasks</a>                                        
+                    {% endif %}  
+                    
+
+                    <a class="dropdown-item link-600 fw-medium" href="/dashboard/job-in-progress">Tasks In Progress</a>
+                    <a class="dropdown-item link-600 fw-medium" href="/dashboard/job-in-review">Tasks In Review</a>
+                    <a class="dropdown-item link-600 fw-medium" href="/dashboard/jobs-in-revision">Tasks In Revision</a>
+                    <a class="dropdown-item link-600 fw-medium" href="/dashboard/job-closed">Task Closed</a>
                   
                   </div>
                 </div>
@@ -157,11 +168,13 @@
                     <div class="card-body px-3">
                       <div class="row text-center gx-0 gy-0">
                   
-                          <div class="col-4"><
+ 
+                          
+                          {% if not user.is_employer %}
+                          <div class="col-4">
                             <div class="avatar avatar-2xl"> <img class="rounded-circle" src="/static/assets2/wal.png" alt=""></div>
                             <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Wallet</button>
-                        </div>
-    
+                        </div>    
                           <div class="col-4"><a class="d-block hover-bg-200 px-2 py-3 rounded-3 text-center text-decoration-none" href="/dashboard/job-list" target="_blank">
                             <div class="avatar avatar-2xl"> <img class="rounded-circle" src="/static/assets2/vibrant.png" alt=""></div>
                             <p class="mb-0 fw-medium text-800 text-truncate fs--2">Available</p>
@@ -178,6 +191,38 @@
                             <div class="avatar avatar-2xl"> <img class="rounded-circle" src="/static/assets2/steam.png" alt=""></div>
                             <p class="mb-0 fw-medium text-800 text-truncate fs--2">In Revision</p>
                           </a></div> 
+                          <div class="col-4"><a class="d-block hover-bg-200 px-2 py-3 rounded-3 text-center text-decoration-none" href="/dashboard/jobs-closedin-revision" target="_blank">
+                            <div class="avatar avatar-2xl"> <img class="rounded-circle" src="/static/assets2/steams.png" alt=""></div>
+                            <p class="mb-0 fw-medium text-800 text-truncate fs--2">Closed</p>
+                          </a></div>                           
+                          {% endif %}
+                          
+                          {% if user.is_employer %}
+                          <div class="col-4">
+                            <div class="avatar avatar-2xl"> <img class="rounded-circle" src="/static/assets2/wal.png" alt=""></div>
+                            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Wallet</button>
+                        </div>    
+                          <div class="col-4"><a class="d-block hover-bg-200 px-2 py-3 rounded-3 text-center text-decoration-none" href="/dashboard/job-list" target="_blank">
+                            <div class="avatar avatar-2xl"> <img class="rounded-circle" src="/static/assets2/vibrant.png" alt=""></div>
+                            <p class="mb-0 fw-medium text-800 text-truncate fs--2">Active Tasks</p>
+                          </a></div>
+                          <div class="col-4"><a class="d-block hover-bg-200 px-2 py-3 rounded-3 text-center text-decoration-none" href="/dashboard/job-in-progress" target="_blank">
+                            <div class="avatar avatar-2xl"> <img class="rounded-circle" src="/static/assets2/edit-alt.svg" alt=""></div>
+                            <p class="mb-0 fw-medium text-800 text-truncate fs--2">In Progress</p>
+                          </a></div>                                               
+                          <div class="col-4"><a class="d-block hover-bg-200 px-2 py-3 rounded-3 text-center text-decoration-none" href="/dashboard/job-in-review" target="_blank">
+                            <div class="avatar avatar-2xl"> <img class="rounded-circle" src="/static/assets2/docs.png" alt=""></div>
+                            <p class="mb-0 fw-medium text-800 text-truncate fs--2">In Review</p>
+                          </a></div>                                               
+                          <div class="col-4"><a class="d-block hover-bg-200 px-2 py-3 rounded-3 text-center text-decoration-none" href="/dashboard/jobs-in-revision" target="_blank">
+                            <div class="avatar avatar-2xl"> <img class="rounded-circle" src="/static/assets2/steam.png" alt=""></div>
+                            <p class="mb-0 fw-medium text-800 text-truncate fs--2">In Revision</p>
+                          </a></div>   
+                          <div class="col-4"><a class="d-block hover-bg-200 px-2 py-3 rounded-3 text-center text-decoration-none" href="/dashboard/jobs-closedin-revision" target="_blank">
+                            <div class="avatar avatar-2xl"> <img class="rounded-circle" src="/static/assets2/steams.png" alt=""></div>
+                            <p class="mb-0 fw-medium text-800 text-truncate fs--2">Closed</p>
+                          </a></div>                            
+                          {% endif %} 
 
             
                                                   
@@ -219,42 +264,105 @@
                 <div class="modal-body p-0">
                   <div class="bg-light rounded-top-lg py-3 ps-4 pe-6">
                     <h4 class="mb-1" id="staticBackdropLabel">Wallet</h4>
-                    <p class="fs--2 mb-0">2000\y <a class="link-600 fw-semi-bold" href="#!">3000</a></p>
+                    <p class="fs--2 mb-0">ACCOUNT TYPE: <a class="link-600 fw-semi-bold" href="#!"> 
+                      {% if  user.is_employer %}Employer{% endif %}{% if not user.is_employer %}Writter{% endif %}
+                   </a></p>
                   </div>
                   <div class="p-4">
                     <div class="row">
                       <div class="col-lg-9">
                         <div class="d-flex"><span class="fa-stack ms-n1 me-3"><i class="fas fa-circle fa-stack-2x text-200"></i><i class="fa-inverse fa-stack-1x text-primary fas fa-tag" data-fa-transform="shrink-2"></i></span>
                           <div class="flex-1">
-                            <h5 class="mb-2 fs-0">Labels</h5>
-                            <div class="d-flex"><span class="badge me-1 py-2 badge-soft-success">New</span><span class="badge me-1 py-2 badge-soft-primary">Goal</span><span class="badge me-1 py-2 badge-soft-info">Enhancement</span>
-                              <div class="dropdown dropend"><button class="btn btn-sm btn-secondary px-2 fsp-75 bg-400 border-400 dropdown-toggle dropdown-caret-none" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-plus"></span></button>
-                                <div class="dropdown-menu">
-                                  <h6 class="dropdown-header py-0 px-3 mb-0">EARNINGS Label</h6>
-                                  <div class="dropdown-divider"></div>
-                                  <div class="px-3"><button class="badge-soft-danger dropdown-item rounded-1 mb-2" type="button">EARNINGS2</button><button class="badge-soft-primary dropdown-item rounded-1 mb-2" type="button">Goal</button><button class="badge-soft-info dropdown-item rounded-1 mb-2" type="button">Enhancement</button></div>
-                                  <div class="dropdown-divider"></div>
-                                  <div class="px-3"><button class="btn btn-sm d-block w-100 btn-outline-secondary border-400">Create Label</button></div>
-                                </div>
-                              </div>
+                            <h5 class="mb-2 fs-0"></h5>
+                            <div class="d-flex"><span class="badge me-1 py-2 badge-soft-success">BALANCE</span><span class="badge me-1 py-2 badge-soft-primary">{{request.user.accounts.balance}}</span>
                             </div>
+                            
                             <hr class="my-4" />
+                            
+                            
                           </div>
+                          
                         </div>
-                        <div class="d-flex"><span class="fa-stack ms-n1 me-3"><i class="fas fa-circle fa-stack-2x text-200"></i><i class="fa-inverse fa-stack-1x text-primary fas fa-align-left" data-fa-transform="shrink-2"></i></span>
-                          <div class="flex-1">
-                            <h5 class="mb-2 fs-0">Description</h5>
-                            <p class="text-word-break fs--1">TODO </p>
-                          </div>
-                        </div>
+                 
+                             
+                 
                       </div>
+                      
+                      
+                                            <div class="col-lg-9">
+                                            <h6 class="mt-5 mt-lg-0">M-Pesa</h6>
+                        <div class="d-flex"><span class="fa-stack ms-n1 me-3"><i class="fas fa-circle fa-stack-2x text-200"></i><i class="fa-inverse fa-stack-1x text-primary fas fa-tag" data-fa-transform="shrink-2"></i></span>
+                          <div class="flex-1">
+                            <h5 class="mb-2 fs-0"></h5>
+                            <div class="d-flex">
+                            <span class="badge me-1 py-2 badge-soft-info">Withraw</span>
+                              <div >
+                              <a  href="/accounts/mpesa/withrawal/"> <button class="btn btn-sm btn-secondary px-2 fsp-75 bg-400 border-400 dropdown-toggle dropdown-caret-none"  aria-haspopup="true" aria-expanded="false"><span class="fas fa-minus"></span></button></a>
+                                                              
+                              </div>
+                            
+
+                            <span class="badge me-1 py-2 badge-soft-info">TopUp</span>
+                              <div >
+                              <a  href="/accounts/mpesa/deposit/"> <button class="btn btn-sm btn-secondary px-2 fsp-75 bg-400 border-400 dropdown-toggle dropdown-caret-none"  aria-haspopup="true" aria-expanded="false"><span class="fas fa-plus"></span></button></a>
+                   
+                                                              
+                              </div>                             
+                            
+                            </div>                 
+                            
+                            <hr class="my-4" />
+                            
+                            
+                          </div>
+                          
+                        </div>
+                 
+                             
+                 
+                      </div>
+                      
+                                            <div class="col-lg-9">
+                                            <h6 class="mt-5 mt-lg-0">Paypal</h6>
+                        <div class="d-flex"><span class="fa-stack ms-n1 me-3"><i class="fas fa-circle fa-stack-2x text-200"></i><i class="fa-inverse fa-stack-1x text-primary fas fa-tag" data-fa-transform="shrink-2"></i></span>
+                          <div class="flex-1">
+                            <h5 class="mb-2 fs-0"></h5>
+                            <div class="d-flex">
+                            <span class="badge me-1 py-2 badge-soft-info">Withraw</span>
+                              <div >
+                              <a  href="/accounts/paypal/withrawal/"> <button class="btn btn-sm btn-secondary px-2 fsp-75 bg-400 border-400 dropdown-toggle dropdown-caret-none" aria-haspopup="true" aria-expanded="false"><span class="fas fa-minus"></span></button></a>
+                                                              
+                              </div>
+                            
+
+                            <span class="badge me-1 py-2 badge-soft-info">TopUp</span>
+                              <div >
+                              <a  href="/accounts/paypal/checkout/"> <button class="btn btn-sm btn-secondary px-2 fsp-75 bg-400 border-400 dropdown-toggle dropdown-caret-none"  aria-haspopup="true" aria-expanded="false"><span class="fas fa-plus"></span></button></a>
+                   
+                                                              
+                              </div>                             
+                            
+                            </div>                 
+                            
+                            <hr class="my-4" />
+                            
+                            
+                          </div>
+                          
+                        </div>
+                 
+                             
+                 
+                      </div>                      
+                 
+                          
                       <div class="col-lg-3">
-                        <h6 class="mt-5 mt-lg-0">TODO</h6>
+                        <h6 class="mt-5 mt-lg-0">Account Details</h6>
                         <ul class="nav flex-lg-column fs--1">
-                          <li class="nav-item me-2 me-lg-0"><a class="nav-link nav-link-card-details" href="#!"><span class="fas fa-user me-2"></span>EARNINGS</a></li>
-                          <li class="nav-item me-2 me-lg-0"><a class="nav-link nav-link-card-details" href="#!"><span class="fas fa-tag me-2"></span>EARNINGS</a></li>
-                          <li class="nav-item me-2 me-lg-0"><a class="nav-link nav-link-card-details" href="#!"><span class="fas fa-paperclip me-2"></span>EARNINGS</a></li>
-                          <li class="nav-item me-2 me-lg-0"><a class="nav-link nav-link-card-details" href="#!"><span class="fa fa-align-left me-2"></span>EARNINGS </a></li>
+                          <li class="nav-item me-2 me-lg-0"><a class="nav-link nav-link-card-details" href="#!"><span class="fas fa-user me-2"></span>{{request.user}}</a></li>
+                          <li class="nav-item me-2 me-lg-0"><a class="nav-link nav-link-card-details" href="#!"><span class="fas fa-tag me-2"></span>Pending: {{request.user.accounts.withraw_power}}</a></li>
+                          <li class="nav-item me-2 me-lg-0"><a class="nav-link nav-link-card-details" href="#!"><span class="fas fa-paperclip me-2"></span>Cum Deposits: {{request.user.accounts.cum_deposit}}</a></li>
+                          <li class="nav-item me-2 me-lg-0"><a class="nav-link nav-link-card-details" href="#!"><span class="fa fa-align-left me-2"></span>Cum Withrawals: {{request.user.accounts.cum_withraw}} </a></li>
                         </ul>
                       </div>
                     </div>
@@ -267,7 +375,7 @@
           <footer class="footer">
             <div class="row g-0 justify-content-between fs--1 mt-4 mb-3">
               <div class="col-12 col-sm-auto text-center">
-                <p class="mb-0 text-600">All Rights Reserved <span class="d-none d-sm-inline-block">| </span><br class="d-sm-none"> 2023 © <a href="/">AjiraPanel</a></p>
+                <p class="mb-0 text-600">All Rights Reserved <span class="d-none d-sm-inline-block">| </span><br class="d-sm-none"> 2023 © <a href="/">Egxpart</a></p>
               </div>
               <div class="col-12 col-sm-auto text-center">
                 <p class="mb-0 text-600">v1.0.0</p>

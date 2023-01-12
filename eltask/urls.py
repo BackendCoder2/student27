@@ -25,12 +25,16 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("dashboard/", include("dashboard.urls", namespace="dashboard")),    
     path("users/", include("users.urls", namespace="users")),
-    
+    path("accounts/", include("accounts.urls", namespace="accounts")),
+    #path(settings.SECRET_MPESA_URL +"/pesa/", include("mpesa_api.core.urls", "mpesa")),#avoid fake callback by hackers
+    #path('paypal/', include('paypal.standard.ipn.urls')), 
 ]
 
-from django.conf.urls.static import static
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-# # Serve static and media files from development server
-urlpatterns += staticfiles_urlpatterns()
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    from django.conf.urls.static import static
+    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+    # # Serve static and media files from development server
+    urlpatterns += staticfiles_urlpatterns()
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

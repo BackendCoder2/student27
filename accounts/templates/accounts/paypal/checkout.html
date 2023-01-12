@@ -1,5 +1,7 @@
-
-{% extends "layouts/base.html" %}
+					
+{% extends "elayouts/base2.html" %}
+{% load static %}
+{% load humanize %} 
 
 {% block stylesheets %}{% endblock stylesheets %}
 
@@ -29,7 +31,7 @@
 
 						<div class="section-heading">
     
-              <form action="{% url 'account:paypal-checkout' %}" method="post">
+              <form action="{% url 'accounts:paypal-checkout' %}" method="post">
                 {% csrf_token %}
                 
                   <div class="form-group">
@@ -56,4 +58,7 @@
 		</div>
 	</section> 
 	<!-- Recent Winners Area End -->
-zz
+
+
+{% endblock content %}
+	

@@ -133,15 +133,25 @@ def employer_submission_success(request, submission_id):
 from django.utils import timezone
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from .models import Job
+from django.views.generic.edit import UpdateView, CreateView
+from .models import Job,DFile,RevInfo,Bid
 
 
 @login_required(login_url="/users/login/")
 def index(request):
-    jobs = Job.objects.all()
-    return render(request, "dashboard/new/index.html", {
-        "jobs": jobs
-    })
+    job=Job.objects
+    t_count = job.count()
+    av_count = job.filter(status="AV").count
+    closed= job.filter(assigned_to=request.user,status="CL").count
+    active=job.filter(user=request.user,status="PR").count
+    bids=Bid.objects.filter(bidder=request.user).count
+    if t_count==0:
+       t_count=1 
+    
+    per_done=(job.filter(assigned_to=request.user,status="CL").count()/t_count)*100
+    
+    context={"av_count":av_count,"t_count":t_count,"closed":closed,"active":active,"bids":bids,"per_done":per_done}
+    return render(request, "dashboard/new/index.html", context)
 
 class JobListView(ListView):
     #queryset = Job.objects.filter(status='AV',display=True)
@@ -154,15 +164,28 @@ class JobListView(ListView):
         return Job.objects.filter(status='AV',display=True)
         
 class JobDetailView(DetailView):
-    model = Job
+    #model = Job
     context_object_name = 'job'
     template_name = 'dashboard/new/job_detail.html'
     
+    def get_queryset(self):         
+        self.user=self.request.user
+        return Job.objects.all()        
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        #context['now'] = timezone.now()        
+       # context['now'] = timezone.now()
+        #print('KK',kwargs['object'].id)
+        
+        context['dfile'] = DFile.objects.filter(job__id=kwargs['object'].id)
+        context['rfile'] = RevInfo.objects.filter(job_id=kwargs['object'].id)
+        context['rev_no'] =RevInfo.objects.filter(job_id=kwargs['object'].id).count
+        context['bids']= Bid.objects.filter(job__id=kwargs['object'].id,bidder=self.user).count
+        
+        
+    
         print("CONTEST",context)     
-        return context 
+        return context
 
 class BidListView(ListView):   
     context_object_name = 'bid_list'
@@ -223,4 +246,82 @@ class JobClosedListView(ListView):
         if self.request.user.is_employer:
             return Job.objects.filter(employer=self.request.user,status="CL")
         return Job.objects.filter(assigned_to=self.request.user,status="CL")        
-        
+
+
+        from django.views.generic.edit import UpdateView
+        from myapp.models import Author
+
+class AcceptBidUpdateView(UpdateView):
+     model = Bid
+     fields = ['accept']
+    # template_name_suffix = '_update_form_bid'
+     template_name = 'dashboard/new/bid_update_form_bid.html'
+     success_url = '/dashboard/job-in-progress/'
+     
+class JobUpdateView(UpdateView):
+     model = Job
+     fields = ['bids']
+    # template_name_suffix = '_update_form_bid'
+     template_name = 'dashboard/new/bid_update_form_bid.html'
+     success_url = '/dashboard/job-in-progress/'
+ 
+     
+@login_required(login_url="/users/login/")
+def cancel_bid(request, job_id):
+    job = Job.objects.get(id=job_id)
+    bid = Bid.objects.get(user=request.user, job=job)
+    task.delete()
+    return redirect("/dashboard/bid-list") 
+    
+    
+    
+@login_required(login_url="/users/login/")
+def create_bid(request, *args, **kwargs): 
+    print(args, kwargs)
+    desrc = request.POST.get("description")
+    job = Job.objects.get(id=kwargs['pk']) 
+    #Bid.objects.create(user=request.user,description=desrc, job=job)
+    return redirect('/dashboard/bid-list/')
+    
+    
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
+
+
+####BUTTONS##
+def bid(request, job_id):
+    job = get_object_or_404(Job, pk=job_id)
+    desrc = request.POST.get("description")
+    Bid.objects.create(user=request.user,description=desrc, job=job)
+    return redirect('/dashboard/bid-list/')
+    
+def delete_bid(request, job_id):
+    job = get_object_or_404(Job, pk=job_id)
+    bids=Bid.objects.filter(user=request.user, job=job)
+    bids.delete()
+    return redirect('/dashboard/bid-list/')    
+    
+def accept_bid(request, job_id):
+    bid=Bid.objects.get(id=job_id)
+    bid.accept=True
+    bid.save()
+    
+    return redirect('/dashboard/job-in-progress/')
+    
+    
+
+
+#E
+
+class CreateJobView(CreateView):
+    model = Job
+    fields = [
+        "sub_category",
+        "title",
+        "description",
+        "finished_at",
+        "display",  
+        ]
+    template_name = 'dashboard/new/create_job.html'
+    success_url = '/dashboard/job-list/'

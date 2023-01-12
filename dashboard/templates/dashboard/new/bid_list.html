@@ -1,51 +1,8 @@
-{% extends "elayouts/base.html" %}
+{% extends "elayouts/base2.html" %}
 {% load static %}
 {% load humanize %} 
 {% block content %}
           
-
-		  
-		  <div class="content">
-			
-			
-			<script>
-			  var navbarPosition = localStorage.getItem('navbarPosition');
-			  var navbarVertical = document.querySelector('.navbar-vertical');
-			  var navbarTopVertical = document.querySelector('.content .navbar-top');
-			  var navbarTop = document.querySelector('[data-layout] .navbar-top:not([data-double-top-nav');
-			  var navbarDoubleTop = document.querySelector('[data-double-top-nav]');
-			  var navbarTopCombo = document.querySelector('.content [data-navbar-top="combo"]');
-  
-			  if (localStorage.getItem('navbarPosition') === 'double-top') {
-				document.documentElement.classList.toggle('double-top-nav-layout');
-			  }
-  
-			  if (navbarPosition === 'top') {
-				navbarTop.removeAttribute('style');
-				navbarTopVertical.remove(navbarTopVertical);
-				navbarVertical.remove(navbarVertical);
-				navbarTopCombo.remove(navbarTopCombo);
-				navbarDoubleTop.remove(navbarDoubleTop);
-			  } else if (navbarPosition === 'combo') {
-				navbarVertical.removeAttribute('style');
-				navbarTopCombo.removeAttribute('style');
-				navbarTop.remove(navbarTop);
-				navbarTopVertical.remove(navbarTopVertical);
-				navbarDoubleTop.remove(navbarDoubleTop);
-			  } else if (navbarPosition === 'double-top') {
-				navbarDoubleTop.removeAttribute('style');
-				navbarTopVertical.remove(navbarTopVertical);
-				navbarVertical.remove(navbarVertical);
-				navbarTop.remove(navbarTop);
-				navbarTopCombo.remove(navbarTopCombo);
-			  } else {
-				navbarVertical.removeAttribute('style');
-				navbarTopVertical.removeAttribute('style');
-				navbarTop.remove(navbarTop);
-				navbarDoubleTop.remove(navbarDoubleTop);
-				navbarTopCombo.remove(navbarTopCombo);
-			  }
-			</script>
 
 
 
@@ -60,20 +17,6 @@
 				</div>
 			  </div>
 			</div>
-
-			
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 			<div class="card mb-3">
@@ -96,10 +39,12 @@
 							<th scope="col">Employer</th>
 							<th scope="col">Sub category</th>
 							<th scope="col">Title</th>
-							<th scope="col">Unit Price</th>
-							<th scope="col">Quality</th>
-							<th scope="col">Time Remaining</th>
 							<th class="text-end" scope="col">Total Price</th>
+				
+							<th scope="col">Delete Bid</th>
+							<th scope="col">Approved</th>
+							<th scope="col">Accept</th>
+							
 						  </tr>
 						</thead>
 						<tbody>
@@ -117,22 +62,63 @@
 
 							
 							<td class="text-nowrap">
-								
-								<a href="/dashboard/job-list/{{ j.id }}" >
-	
-									<i ></i>
-									<span>{{ j.job.sub_category }}</span>
-								</a>								
-							
-							
+									<span>{{ j.job.sub_category }}</span>							
 							</td>
+							
 							<td class="text-nowrap">{{ j.job.title }}</td>
-							<td class="text-nowrap">{{ j.job.price }}</td>
-							<td class="text-nowrap">{{ j.job.quantity }}</td>
-							<td><span class="badge badge rounded-pill d-block p-2 badge-soft-success">{{ j.finished_at|naturaltime }}<svg class="svg-inline--fa fa-check fa-w-16 ms-1" data-fa-transform="shrink-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g transform="translate(256 256)"><g transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span></td>
 							<td class="text-end">KES:{{ j.job.tprice }}</td>
-						  </tr>
-						  {% endfor %}  
+							
+						
+						
+							
+									        <td  class="text-nowrap">
+          <div>
+          <form action="{% url 'dashboard:delete_bid' j.job.id %}" method="post">{% csrf_token %}
+          <button class="btn btn-link p-0 ms-2" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"><span class="text-500 fas fa-trash-alt"></span></button>
+          </form>          
+          </div>
+        </td>			
+							
+		{% if j.approve %}
+							<td><span class="badge badge rounded-pill d-block p-2 badge-soft-success">Approved<svg class="svg-inline--fa fa-check fa-w-16 ms-1" data-fa-transform="shrink-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g transform="translate(256 256)"><g transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span></td>
+							
+
+
+							<td><span class="badge badge rounded-pill d-block p-2 badge-soft-success">
+							<form action="{% url 'dashboard:accept_bid' j.id %}" method="post">{% csrf_token %}
+         
+          <input type="submit"  value="ACCEPT NOW" required>
+          </form>
+							
+							<svg class="svg-inline--fa fa-check fa-w-16 ms-1" data-fa-transform="shrink-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g transform="translate(256 256)"><g transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span></td>
+							
+							
+								
+							
+							
+							
+							
+
+														
+							
+							{% endif %}
+		{% if not j.approve %}
+							<td><span class="badge badge rounded-pill d-block p-2 badge-soft-success">Not Yet<svg class="svg-inline--fa fa-check fa-w-16 ms-1" data-fa-transform="shrink-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g transform="translate(256 256)"><g transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="ms-1 fas fa-check" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span></td>
+							
+							
+							<td>
+	
+							
+
+								
+								
+						  </tr>	
+						  
+							</td>		
+							{% endif %}							
+							{% endfor %}
+							
+							
 				
 						</tbody>
 					  </table>
@@ -146,9 +132,6 @@
 			</div>
 
 			
-
-
-		  </div>
 
 	
   
