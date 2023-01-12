@@ -4,8 +4,8 @@ from .models import Job,Bid
 class JobForm(forms.ModelForm):
     class Meta:
         model = Job
-        exclude = (
-        "id"
+        exclude = (     
+        "id",
         "user",
         "assigned_to",
         "status",
