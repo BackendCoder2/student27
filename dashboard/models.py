@@ -340,6 +340,5 @@ class DFile(TimeStamp):#(models.Model):
     dfile = models.FileField(upload_to='media/documents/%Y/%m/%d/',blank=True, null=True)
     description = models.CharField(help_text="Write Short File description here",max_length=255, blank=True, null=True)
     def __str__(self):
-        return "FILE"+str(self.job.title)+':' +str(self.job.order_id)
-        
+        return "FILE"
 
