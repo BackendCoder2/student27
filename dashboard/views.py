@@ -129,6 +129,9 @@ def employer_submission_success(request, submission_id):
     return redirect("/employer-dashboard/")
     
     
+    
+    
+    
 #-------------------------------------------------------------    
 from django.utils import timezone
 from django.views.generic.list import ListView
@@ -140,15 +143,28 @@ from .models import Job,DFile,RevInfo,Bid
 @login_required(login_url="/users/login/")
 def index(request):
     job=Job.objects
-    t_count = job.count()
-    av_count = job.filter(status="AV").count
-    closed= job.filter(assigned_to=request.user,status="CL").count
-    active=job.filter(user=request.user,status="PR").count
-    bids=Bid.objects.filter(bidder=request.user).count
-    if t_count==0:
-       t_count=1 
     
-    per_done=(job.filter(assigned_to=request.user,status="CL").count()/t_count)*100
+    if not request.user.is_employer:
+        t_count = job.count()
+        av_count = job.filter(status="AV").count
+        closed= job.filter(assigned_to=request.user,status="CL").count
+        active=job.filter(user=request.user,status="PR").count
+        bids=Bid.objects.filter(bidder=request.user).count
+        if t_count==0:
+            t_count=1 
+        per_done=round((job.filter(assigned_to=request.user,status="CL").count()/t_count)*100,1)
+    else:
+        t_count = job.filter(employer=request.user).count()
+        av_count = job.filter(status="AV",employer=request.user).count
+        closed= job.filter(assigned_to=request.user,status="CL").count
+        active=job.filter(user=request.user,status="PR").count
+        bids=Bid.objects.filter(bidder=request.user).count
+        if t_count==0:
+            t_count=1 
+        per_done=round((job.filter(assigned_to=request.user,status="CL").count()/t_count)*100 ,1)   
+    
+    
+    
     
     context={"av_count":av_count,"t_count":t_count,"closed":closed,"active":active,"bids":bids,"per_done":per_done}
     return render(request, "dashboard/new/index.html", context)
@@ -178,8 +194,12 @@ class JobDetailView(DetailView):
         #print('KK',kwargs['object'].id)
         
         context['dfile'] = DFile.objects.filter(job__id=kwargs['object'].id)
-        context['rfile'] = RevInfo.objects.filter(job_id=kwargs['object'].id)
-        context['rev_no'] =RevInfo.objects.filter(job_id=kwargs['object'].id).count
+        #context['rfile'] = RevInfo.objects.filter(job_id=kwargs['object'].id)
+
+        context['rev_no'] =Submission.objects.filter(job_id=kwargs['object'].id).count
+        
+        context['submissions'] = Submission.objects.filter(job_id=kwargs['object'].id)
+        
         context['bids']= Bid.objects.filter(job__id=kwargs['object'].id,bidder=self.user).count
         
         
@@ -248,8 +268,6 @@ class JobClosedListView(ListView):
         return Job.objects.filter(assigned_to=self.request.user,status="CL")        
 
 
-        from django.views.generic.edit import UpdateView
-        from myapp.models import Author
 
 class AcceptBidUpdateView(UpdateView):
      model = Bid
@@ -290,27 +308,55 @@ from django.urls import reverse
 
 
 ####BUTTONS##
+#W
+@login_required(login_url="/users/login/")
 def bid(request, job_id):
     job = get_object_or_404(Job, pk=job_id)
     desrc = request.POST.get("description")
     Bid.objects.create(user=request.user,description=desrc, job=job)
     return redirect('/dashboard/bid-list/')
-    
+
+#EW
+@login_required(login_url="/users/login/")
 def delete_bid(request, job_id):
     job = get_object_or_404(Job, pk=job_id)
-    bids=Bid.objects.filter(user=request.user, job=job)
+
+    if not request.user.is_employer:
+        bids=Bid.objects.filter(user=request.user, job_id=job.id)
+        bids.delete()
+        return redirect('/dashboard/bid-list/')
+        
+    bids=Bid.objects.filter(job__employer=request.user, job_id=job.id) 
     bids.delete()
-    return redirect('/dashboard/bid-list/')    
-    
-def accept_bid(request, job_id):
-    bid=Bid.objects.get(id=job_id)
+    return redirect(f'/dashboard/job-list/{job_id}/bid-list/')
+
+#W    
+@login_required(login_url="/users/login/")    
+def accept_bid(request, bid_id):
+    bid=Bid.objects.get(id=bid_id)
     bid.accept=True
     bid.save()
     
     return redirect('/dashboard/job-in-progress/')
-    
-    
 
+#E
+@login_required(login_url="/users/login/")    
+def approve_bid(request, bid_id):
+    bid=Bid.objects.get(id=bid_id)
+    bid.approve=True
+    bid.save()
+    return redirect(f'/dashboard/job-list/{bid.job.id}/bid-list/')    
+    
+#E    
+@login_required(login_url="/users/login/")
+def bid_list_per_job(request,job_id):
+    job=Job.objects.get(id=job_id)
+    bids = Bid.objects.filter(job_id=job_id)
+    if  request.user.is_employer:
+        return render(request, "dashboard/new/bid-list-user.html", {
+        "bids": bids,"job":job })  
+        
+    return redirect('/dashboard/bid-list/')
 
 #E
 
@@ -324,4 +370,36 @@ class CreateJobView(CreateView):
         "display",  
         ]
     template_name = 'dashboard/new/create_job.html'
-    success_url = '/dashboard/job-list/'
+    success_url = '/dashboard/job-list/'#W 
+    
+    
+@login_required(login_url="/users/login/")    
+def accept_job(request, job_id):
+    job=Job.objects.get(id=job_id)
+    job.accepted=True
+    job.save()
+    
+    return redirect('/dashboard/job-closed/')
+    
+    
+@login_required(login_url="/users/login/")
+def create_submission(request,job_id):
+    if request.method == "POST":
+        job=Job.objects.get(id=job_id)
+        
+        Submission.objects.create(job=job,user=request.user)#, proof=request.POST["proof"])
+        
+        return redirect(f"/dashboard/job-list/{job_id}")
+
+
+from .models import DFile
+from .forms import DFileForm
+
+
+def upload_file(request,job_id,sub_id):
+    job=Job.objects.get(id=job_id)
+    submission=Submission.objects.get(id=sub_id)
+    if request.method == 'POST':
+        newdoc = DFile(job=job,submission=submission,dfile=request.FILES['docfile'])
+        newdoc.save()
+        return redirect(f"/dashboard/job-list/{job_id}")

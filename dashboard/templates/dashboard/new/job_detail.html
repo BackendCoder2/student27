@@ -1,6 +1,6 @@
-
 {% extends "elayouts/base2.html" %}
 {% load static %}
+{% load humanize %} 
 
 {% block content %}
  
@@ -14,16 +14,26 @@
                   <div class="d-flex"><button class="btn btn-falcon-default btn-sm" type="button"><svg class="svg-inline--fa fa-object-ungroup fa-w-18" data-fa-transform="shrink-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="object-ungroup" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg="" style="transform-origin: 0.5625em 0.5em;"><g transform="translate(288 256)"><g transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M64 320v26a6 6 0 0 1-6 6H6a6 6 0 0 1-6-6v-52a6 6 0 0 1 6-6h26V96H6a6 6 0 0 1-6-6V38a6 6 0 0 1 6-6h52a6 6 0 0 1 6 6v26h288V38a6 6 0 0 1 6-6h52a6 6 0 0 1 6 6v52a6 6 0 0 1-6 6h-26v192h26a6 6 0 0 1 6 6v52a6 6 0 0 1-6 6h-52a6 6 0 0 1-6-6v-26H64zm480-64v-32h26a6 6 0 0 0 6-6v-52a6 6 0 0 0-6-6h-52a6 6 0 0 0-6 6v26H408v72h8c13.255 0 24 10.745 24 24v64c0 13.255-10.745 24-24 24h-64c-13.255 0-24-10.745-24-24v-8H192v72h-26a6 6 0 0 0-6 6v52a6 6 0 0 0 6 6h52a6 6 0 0 0 6-6v-26h288v26a6 6 0 0 0 6 6h52a6 6 0 0 0 6-6v-52a6 6 0 0 0-6-6h-26V256z" transform="translate(-288 -256)"></path></g></g></svg>
                   {% if user.is_employer %}
                   
-                  <!-- <span class="fas fa-object-ungroup" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --><span class="d-none d-md-inline-block ms-1">PUT IN REVISION</span></button><button class="btn btn-falcon-default btn-sm mx-2" type="button"><svg class="svg-inline--fa fa-check fa-w-16" data-fa-transform="shrink-2 down-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.625em;"><g transform="translate(256 256)"><g transform="translate(0, 64)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" transform="translate(-256 -256)"></path></g></g></svg>
+                  <!-- <span class="fas fa-object-ungroup" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --><span class="d-none d-md-inline-block ms-1">PUT IN REVISION</span></button>
                   
-                  <!-- <span class="fas fa-check" data-fa-transform="shrink-2 down-2"></span> Font Awesome fontawesome.com --><span class="d-none d-md-inline-block ms-1">ACCEPT SUBMISION</span></button><button class="btn btn-falcon-default btn-sm" type="button"><svg class="svg-inline--fa fa-ban fa-w-16" data-fa-transform="shrink-2 down-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ban" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.5625em;"><g transform="translate(256 256)"><g transform="translate(0, 32)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z" transform="translate(-256 -256)"></path></g></g></svg>
+                  <form action="{% url 'dashboard:accept-job' job.id %}" method="post">{% csrf_token %}
+         
+          <input type="submit"  value="Approve" required>
+          </form>
+                  
+                  
+                  <button class="btn btn-falcon-default btn-sm mx-2" type="button"><svg class="svg-inline--fa fa-check fa-w-16" data-fa-transform="shrink-2 down-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.625em;"><g transform="translate(256 256)"><g transform="translate(0, 64)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" transform="translate(-256 -256)"></path></g></g></svg>
+                  
+                  <!-- <span class="fas fa-check" data-fa-transform="shrink-2 down-2"></span> Font Awesome fontawesome.com --><span class="d-none d-md-inline-block ms-1">ACCEPT SUBMISION</span></button>
+                  
+                  
+                  
+                  
+                  <button class="btn btn-falcon-default btn-sm" type="button"><svg class="svg-inline--fa fa-ban fa-w-16" data-fa-transform="shrink-2 down-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ban" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.5625em;"><g transform="translate(256 256)"><g transform="translate(0, 32)  scale(0.875, 0.875)  rotate(0 0 0)"><path fill="currentColor" d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z" transform="translate(-256 -256)"></path></g></g></svg>
                   
                   <!-- <span class="fas fa-ban" data-fa-transform="shrink-2 down-1"></span> Font Awesome fontawesome.com --><span class="d-none d-md-inline-block ms-1">REJECT SUBMISION</span></button>
                 
                   
-                  
-                    
-                    
                     
                     {% endif %}
                     
@@ -37,11 +47,7 @@
                   <h5><svg class="svg-inline--fa fa-envelope fa-w-16 me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg><!-- <span class="fas fa-envelope me-2"></span> Detailed-Job-description --><span>Task Details</span></h5>
                 </div>
                 <div class="card-body">
-                
-                
-                
-                
-                                  <div class="d-md-flex d-xl-inline-block d-xxl-flex align-items-center justify-content-between mb-x1">
+                  <div class="d-md-flex d-xl-inline-block d-xxl-flex align-items-center justify-content-between mb-x1">
                     <div class="d-flex align-items-center gap-2">
                       <div class="avatar avatar-2xl">
                         <img class="rounded-circle" src="./Falcon _ Dashboard &amp; Web App Template_files/1-thumb.png" alt="">
@@ -49,25 +55,25 @@
                       
                       {% if user.is_employer %}
                       
-                                            <p class="mb-0"><a class="fw-semi-bold mb-0 text-800" href="https://prium.github.io/falcon/v3.14.0/app/support-desk/contact-details.html">{{job.assigned_to}}</a><span class="fs--2 text-800 fw-normal mx-2">Assigned-To</span><a class="mb-0 fs--1 d-block text-500" href="mailto:emma@watson.com">{{ job.assigned_to.email}}</a></p>
+                                            <p class="mb-0"><a class="fw-semi-bold mb-0 text-800" href="#">{{job.assigned_to}}</a><span class="fs--2 text-800 fw-normal mx-2">Assigned-To</span><a class="mb-0 fs--1 d-block text-500" href="mailto:emma@watson.com">{{ job.assigned_to.email}}</a></p>
                       
                       {% endif %}
                       
                       {% if not user.is_employer %}
                     
                       
-              <p class="mb-0"><a class="fw-semi-bold mb-0 text-800" href="https://prium.github.io/falcon/v3.14.0/app/support-desk/contact-details.html">{{ job.employer}}</a><span class="fs--2 text-800 fw-normal mx-2">Employer</span><a class="mb-0 fs--1 d-block text-500" href="mailto:emma@watson.com">{{ job.employer.email}}</a></p>
+              <p class="mb-0"><a class="fw-semi-bold mb-0 text-800" href="#">{{ job.employer}}</a><span class="fs--2 text-800 fw-normal mx-2">Employer</span><a class="mb-0 fs--1 d-block text-500" href="mailto:emma@watson.com">{{ job.employer.email}}</a></p>
                       
                       {% endif %}	
 
                       
                       
                     </div>
-                    <p class="mb-0 fs--2 fs-sm--1 fw-semi-bold mt-2 mt-md-0 mt-xl-2 mt-xxl-0 ms-5">Time Remaining<span class="mx-1">|</span><span class="fst-italic">{{ job.time_remaining}}</span><svg class="svg-inline--fa fa-star fa-w-18 ms-2 text-warning" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path></svg><!-- <span class="fas fa-star ms-2 text-warning"></span> Font Awesome fontawesome.com --></p>
+                    <p class="mb-0 fs--2 fs-sm--1 fw-semi-bold mt-2 mt-md-0 mt-xl-2 mt-xxl-0 ms-5">Time Remaining<span class="mx-1">|</span><span class="fst-italic">{{ job.finished_at|naturaltime }}</span><svg class="svg-inline--fa fa-star fa-w-18 ms-2 text-warning" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path></svg><!-- <span class="fas fa-star ms-2 text-warning"></span> Font Awesome fontawesome.com --></p>
                   </div>
                   <div>
-                    <h6 class="mb-3 fw-semi-bold text-1000">{{ job.title }}</h6>
-                    <p>Hello,Below is describtion </p>
+                    <h6 class="mb-3 fw-semi-bold text-1000">JOB-ID:{{ job.order_id }}:{{ job.title }}</h6>
+                    <p>Hello,Below is description </p>
                     <p>{{ job.description }}.</p>
                     
                     <p class="mb-0">Thanks</p>
@@ -75,14 +81,27 @@
                     <p class="mb-0">{{ job.dfile }}</p>
                     <div class="p-x1 bg-light rounded-3 mt-3">
                       <div class="d-inline-flex flex-column">
+                      
                         <div class="border p-2 rounded-3 d-flex bg-white dark__bg-1000 fs--1 mb-2"><svg class="svg-inline--fa fa-image fa-w-16 fs-1" aria-hidden="true" focusable="false" data-prefix="far" data-icon="image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 336H54a6 6 0 0 1-6-6V118a6 6 0 0 1 6-6h404a6 6 0 0 1 6 6v276a6 6 0 0 1-6 6zM128 152c-22.091 0-40 17.909-40 40s17.909 40 40 40 40-17.909 40-40-17.909-40-40-40zM96 352h320v-80l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L192 304l-39.515-39.515c-4.686-4.686-12.284-4.686-16.971 0L96 304v48z"></path></svg><!-- <span class="fs-1 far fa-image"></span> Font Awesome fontawesome.com --><span class="ms-2 me-3">broken_tv_solve.jpg (873kb)</span><a class="text-300 ms-auto" href="https://prium.github.io/falcon/v3.14.0/app/support-desk/tickets-preview.html#!" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Download" data-bs-original-title="Download"><svg class="svg-inline--fa fa-arrow-down fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"></path></svg><!-- <span class="fas fa-arrow-down"></span> Font Awesome fontawesome.com --></a></div>
                         <div class="border p-2 rounded-3 d-flex bg-white dark__bg-1000 fs--1"><svg class="svg-inline--fa fa-file-archive fa-w-12 fs-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-archive" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zM128.4 336c-17.9 0-32.4 12.1-32.4 27 0 15 14.6 27 32.5 27s32.4-12.1 32.4-27-14.6-27-32.5-27zM224 136V0h-63.6v32h-32V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM95.9 32h32v32h-32zm32.3 384c-33.2 0-58-30.4-51.4-62.9L96.4 256v-32h32v-32h-32v-32h32v-32h-32V96h32V64h32v32h-32v32h32v32h-32v32h32v32h-32v32h22.1c5.7 0 10.7 4.1 11.8 9.7l17.3 87.7c6.4 32.4-18.4 62.6-51.4 62.6z"></path></svg><!-- <span class="fs-1 fas fa-file-archive"></span> Font Awesome fontawesome.com --><span class="ms-2 me-3">broken_tv_solve.zip (342kb)</span><a class="text-300 ms-auto" href="https://prium.github.io/falcon/v3.14.0/app/support-desk/tickets-preview.html#!" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Download" data-bs-original-title="Download"><svg class="svg-inline--fa fa-arrow-down fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"></path></svg><!-- <span class="fas fa-arrow-down"></span> Font Awesome fontawesome.com --></a></div>
+                                      {% if documents %}
+            All documents in the database:
+            <ul>
+                {% for document in documents %}
+                
+                    <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No documents.</p>
+        {% endif %}   
+                     
+                        
+                        
                       </div>
                       <hr class="my-x1">
                       <div class="row flex-between-center gx-4 gy-2">
-                        <div class="col-auto">
-                          <p class="fs--1 text-1000 mb-sm-0 font-sans-serif fw-medium mb-0"><svg class="svg-inline--fa fa-link fa-w-16 me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="link" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"></path></svg><!-- <span class="fas fa-link me-2"></span> Font Awesome fontawesome.com -->2 files attached</p>
-                        </div>
+                      
                         <div class="col-auto"><button class="btn btn-falcon-default btn-sm"><svg class="svg-inline--fa fa-file-download fa-w-12 me-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-download" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm76.45 211.36l-96.42 95.7c-6.65 6.61-17.39 6.61-24.04 0l-96.42-95.7C73.42 337.29 80.54 320 94.82 320H160v-80c0-8.84 7.16-16 16-16h32c8.84 0 16 7.16 16 16v80h65.18c14.28 0 21.4 17.29 11.27 27.36zM377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9z"></path></svg><!-- <span class="fas fa-file-download me-2"></span> Font Awesome fontawesome.com -->Download all</button></div>
                       </div>
                     </div>
@@ -98,14 +117,16 @@
                   {% if job.revise%}
                   
                   <div class="my-5 position-relative text-center">
-                    <hr class="position-absolute top-50 border-300 w-100 my-0"><span class="position-relative bg-white dark__bg-card-dark px-3 z-index-1"><button class="btn btn-sm btn-outline-secondary rounded-pill border-300 px-lg-5">{{rev_no}} REVISION(S) </button></span>
+                    <hr class="position-absolute top-50 border-300 w-100 my-0"><span class="position-relative bg-white dark__bg-card-dark px-3 z-index-1"><button class="btn btn-sm btn-outline-secondary rounded-pill border-300 px-lg-5">{{rev_no}}Submission(s) </button></span>
                   </div>
                   
                   
                   
                 
+                
+                
                   
-                  	{% for df in rfile %}
+                  	{% for df in submissions %}
                   
                   
                     <div class="d-md-flex d-xl-inline-block d-xxl-flex align-items-center justify-content-between mb-x1">
@@ -113,36 +134,46 @@
                       <div class="avatar avatar-2xl">
                         <img class="rounded-circle" src="./Falcon _ Dashboard &amp; Web App Template_files/1-thumb.png" alt="">
                       </div>
+                      <p class="mb-0"><a class="fw-semi-bold mb-0 text-800" href="">{{df.sender}}</a><span class="fs--2 text-800 fw-normal mx-2">|</span><a class="mb-0 fs--1 d-block text-500" href="mailto:emma@watson.com">{{ df.sender.email}}</a></p>
                       
-                      {% if user.is_employer %}
-                      
-                                            <p class="mb-0"><a class="fw-semi-bold mb-0 text-800" href="">{{j.assigned_to}}</a><span class="fs--2 text-800 fw-normal mx-2">Assigned-To</span><a class="mb-0 fs--1 d-block text-500" href="mailto:emma@watson.com">{{ j.assigned_to.email}}</a></p>
-                      
-                      {% endif %}
-                      
-                      {% if not user.is_employer %}
                     
-                      
-              <p class="mb-0"><a class="fw-semi-bold mb-0 text-800" href="#">{{ job.employer}}</a><span class="fs--2 text-800 fw-normal mx-2">Employer</span><a class="mb-0 fs--1 d-block text-500" href="mailto:emma@watson.com">{{ job.employer.email}}</a></p>
-                      
-                      {% endif %}	
-
-                      
-                      
                     </div>
                     <p class="mb-0 fs--2 fs-sm--1 fw-semi-bold mt-2 mt-md-0 mt-xl-2 mt-xxl-0 ms-5">Time Remaining<span class="mx-1">|</span><span class="fst-italic">{{ job.time_remaining}}</span><svg class="svg-inline--fa fa-star fa-w-18 ms-2 text-warning" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="star" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path></svg><!-- <span class="fas fa-star ms-2 text-warning"></span> Font Awesome fontawesome.com --></p>
                   </div>
                   <div>
                     <h6 class="mb-3 fw-semi-bold text-1000">{{ df.title }}</h6>
                     
-                    <p>{{ df.description }}.</p>
+                    <p>{{ df.proof }}.</p>
                     
                     
                     <div class="p-x1 bg-light rounded-3 mt-3">
                       <div class="d-inline-flex flex-column">
+                      
                         <div class="border p-2 rounded-3 d-flex bg-white dark__bg-1000 fs--1 mb-2"><svg class="svg-inline--fa fa-image fa-w-16 fs-1" aria-hidden="true" focusable="false" data-prefix="far" data-icon="image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 336H54a6 6 0 0 1-6-6V118a6 6 0 0 1 6-6h404a6 6 0 0 1 6 6v276a6 6 0 0 1-6 6zM128 152c-22.091 0-40 17.909-40 40s17.909 40 40 40 40-17.909 40-40-17.909-40-40-40zM96 352h320v-80l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L192 304l-39.515-39.515c-4.686-4.686-12.284-4.686-16.971 0L96 304v48z"></path></svg><!-- <span class="fs-1 far fa-image"></span> Font Awesome fontawesome.com --><span class="ms-2 me-3">{{df.dfile}}</span><a class="text-300 ms-auto" href="#" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Download" data-bs-original-title="Download"><svg class="svg-inline--fa fa-arrow-down fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"></path></svg><!-- <span class="fas fa-arrow-down"></span> Font Awesome fontawesome.com --></a></div>
+                        
+                        
                         <div class="border p-2 rounded-3 d-flex bg-white dark__bg-1000 fs--1"><svg class="svg-inline--fa fa-file-archive fa-w-12 fs-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-archive" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zM128.4 336c-17.9 0-32.4 12.1-32.4 27 0 15 14.6 27 32.5 27s32.4-12.1 32.4-27-14.6-27-32.5-27zM224 136V0h-63.6v32h-32V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM95.9 32h32v32h-32zm32.3 384c-33.2 0-58-30.4-51.4-62.9L96.4 256v-32h32v-32h-32v-32h32v-32h-32V96h32V64h32v32h-32v32h32v32h-32v32h32v32h-32v32h22.1c5.7 0 10.7 4.1 11.8 9.7l17.3 87.7c6.4 32.4-18.4 62.6-51.4 62.6z"></path></svg><!-- <span class="fs-1 fas fa-file-archive"></span> Font Awesome fontawesome.com --><span class="ms-2 me-3">{{df.dfile}}</span><a class="text-300 ms-auto" href="https://prium.github.io/falcon/v3.14.0/app/support-desk/tickets-preview.html#!" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Download" data-bs-original-title="Download"><svg class="svg-inline--fa fa-arrow-down fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"></path></svg><!-- <span class="fas fa-arrow-down"></span> Font Awesome fontawesome.com --></a></div>
+                        
+                        
+                                  {% if documents %}
+            All documents in the database:
+            <ul>
+                {% for document in documents %}
+                
+                    <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No documents.</p>
+        {% endif %}   
+        
+        
+                        
                       </div>
+                      
+    
+                      
+                      
                       <hr class="my-x1">
                       <div class="row flex-between-center gx-4 gy-2">
                         <div class="col-auto">
@@ -157,44 +188,130 @@
                   
                   {% endif %}
                   
-
-                  
-
-                  
-      
-      
-      
-      
-      
-                  
-                  
                   
                 </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 <div class="collapse rounded-lg transition-none" id="previewMailForm">
-                  <h5 class="mb-0 p-x1 bg-light">Reply</h5>
-                  <div class="border border-top-0 border-200"><input class="form-control border-0 rounded-0 outline-none px-x1" id="email-to" type="email" aria-describedby="email-from" placeholder="From" value="mike@support.com"></div>
-                  <div class="border border-top-0 border-200"><input class="form-control border-0 rounded-0 outline-none px-x1" id="email-from" type="email" aria-describedby="email-to" placeholder="To" value="emma@watson.com"></div>
-                  <div class="border border-y-0 border-200"><input class="form-control border-0 rounded-0 outline-none px-x1" id="email-subject" type="text" aria-describedby="email-subject" placeholder="Subject"><textarea class="tinymce d-none" name="content" id="mce_0" aria-hidden="true" data-gramm="false" wt-ignore-input="true" style="display: none;"></textarea><div role="application" class="tox tox-tinymce" aria-disabled="false" style="visibility: hidden; height: 50vh;"><div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" class="tox-editor-header"><div role="group" class="tox-toolbar-overlord" aria-disabled="false"><div role="group" class="tox-toolbar__primary"><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"><button title="Formats" aria-label="Formats" aria-haspopup="true" type="button" tabindex="-1" unselectable="on" class="tox-tbtn tox-tbtn--select tox-tbtn--bespoke" aria-expanded="false" style="user-select: none;"><span class="tox-tbtn__select-label">Paragraph</span><div class="tox-tbtn__select-chevron"><svg width="10" height="10" focusable="false"><path d="M8.7 2.2c.3-.3.8-.3 1 0 .4.4.4.9 0 1.2L5.7 7.8c-.3.3-.9.3-1.2 0L.2 3.4a.8.8 0 010-1.2c.3-.3.8-.3 1.1 0L5 6l3.7-3.8z" fill-rule="nonzero"></path></svg></div></button></div><div title="" role="toolbar" data-alloy-tabstop="true" tabindex="-1" class="tox-toolbar__group"><button aria-label="Bold" title="Bold" type="button" tabindex="-1" class="tox-tbtn" aria-disabled="false" aria-pressed="false"><span class="tox-icon tox-tbtn__icon-wrap"><svg width="24" height="24" focusable="false"><path d="M7.8 19c-.3 0-.5 0-.6-.2l-.2-.5V5.7c0-.2 0-.4.2-.5l.6-.2h5c1.5 0 2.7.3 3.5 1 .7.6 1.1 1.4 1.1 2.5a3 3 0 01-.6 1.9c-.4.6-1 1-1.6 1.2.4.1.9.3 1.3.6s.8.7 1 1.2c.4.4.5 1 .5 1.6 0 1.3-.4 2.3-1.3 3-.8.7-2.1 1-3.8 1H7.8zm5-8.3c.6 0 1.2-.1 1.6-.5.4-.3.6-.7.6-1.3 0-1.1-.8-1.7-2.3-1.7H9.3v3.5h3.4zm.5 6c.7 0 1.3-.1 1.7-.4.4-.4.6-.9.6-1.5s-.2-1-.7-1.4c-.4-.3-1-.4-2-.4H9.4v3.8h4z" fill-rule="evenodd"></path></svg></span></button><button aria-label="Italic" title="Italic" type="button" tabindex="-1" class="tox-tbtn" aria-disabled="false" aria-pressed="false"><span class="tox-icon tox-tbtn__icon-wrap"><svg width="24" height="24" focusable="false"><path d="M16.7 4.7l-.1.9h-.3c-.6 0-1 0-1.4.3-.3.3-.4.6-.5 1.1l-2.1 9.8v.6c0 .5.4.8 1.4.8h.2l-.2.8H8l.2-.8h.2c1.1 0 1.8-.5 2-1.5l2-9.8.1-.5c0-.6-.4-.8-1.4-.8h-.3l.2-.9h5.8z" fill-rule="evenodd"></path></svg></span></button><button aria-label="Insert/edit link" title="Insert/edit link" type="button" tabindex="-1" class="tox-tbtn" aria-disabled="false" aria-pressed="false"><span class="tox-icon tox-tbtn__icon-wrap"><svg width="24" height="24" focusable="false"><path d="M6.2 12.3a1 1 0 011.4 1.4l-2.1 2a2 2 0 102.7 2.8l4.8-4.8a1 1 0 000-1.4 1 1 0 111.4-1.3 2.9 2.9 0 010 4L9.6 20a3.9 3.9 0 01-5.5-5.5l2-2zm11.6-.6a1 1 0 01-1.4-1.4l2-2a2 2 0 10-2.6-2.8L11 10.3a1 1 0 000 1.4A1 1 0 119.6 13a2.9 2.9 0 010-4L14.4 4a3.9 3.9 0 015.5 5.5l-2 2z" fill-rule="nonzero"></path></svg></span></button><button aria-label="Bullet list" title="Bullet list" type="button" tabindex="-1" class="tox-tbtn" aria-disabled="false" aria-pressed="false"><span class="tox-icon tox-tbtn__icon-wrap"><svg width="24" height="24" focusable="false"><path d="M11 5h8c.6 0 1 .4 1 1s-.4 1-1 1h-8a1 1 0 010-2zm0 6h8c.6 0 1 .4 1 1s-.4 1-1 1h-8a1 1 0 010-2zm0 6h8c.6 0 1 .4 1 1s-.4 1-1 1h-8a1 1 0 010-2zM4.5 6c0-.4.1-.8.4-1 .3-.4.7-.5 1.1-.5.4 0 .8.1 1 .4.4.3.5.7.5 1.1 0 .4-.1.8-.4 1-.3.4-.7.5-1.1.5-.4 0-.8-.1-1-.4-.4-.3-.5-.7-.5-1.1zm0 6c0-.4.1-.8.4-1 .3-.4.7-.5 1.1-.5.4 0 .8.1 1 .4.4.3.5.7.5 1.1 0 .4-.1.8-.4 1-.3.4-.7.5-1.1.5-.4 0-.8-.1-1-.4-.4-.3-.5-.7-.5-1.1zm0 6c0-.4.1-.8.4-1 .3-.4.7-.5 1.1-.5.4 0 .8.1 1 .4.4.3.5.7.5 1.1 0 .4-.1.8-.4 1-.3.4-.7.5-1.1.5-.4 0-.8-.1-1-.4-.4-.3-.5-.7-.5-1.1z" fill-rule="evenodd"></path></svg></span></button><button aria-label="Numbered list" title="Numbered list" type="button" tabindex="-1" class="tox-tbtn" aria-disabled="false" aria-pressed="false"><span class="tox-icon tox-tbtn__icon-wrap"><svg width="24" height="24" focusable="false"><path d="M10 17h8c.6 0 1 .4 1 1s-.4 1-1 1h-8a1 1 0 010-2zm0-6h8c.6 0 1 .4 1 1s-.4 1-1 1h-8a1 1 0 010-2zm0-6h8c.6 0 1 .4 1 1s-.4 1-1 1h-8a1 1 0 110-2zM6 4v3.5c0 .3-.2.5-.5.5a.5.5 0 01-.5-.5V5h-.5a.5.5 0 010-1H6zm-1 8.8l.2.2h1.3c.3 0 .5.2.5.5s-.2.5-.5.5H4.9a1 1 0 01-.9-1V13c0-.4.3-.8.6-1l1.2-.4.2-.3a.2.2 0 00-.2-.2H4.5a.5.5 0 01-.5-.5c0-.3.2-.5.5-.5h1.6c.5 0 .9.4.9 1v.1c0 .4-.3.8-.6 1l-1.2.4-.2.3zM7 17v2c0 .6-.4 1-1 1H4.5a.5.5 0 010-1h1.2c.2 0 .3-.1.3-.3 0-.2-.1-.3-.3-.3H4.4a.4.4 0 110-.8h1.3c.2 0 .3-.1.3-.3 0-.2-.1-.3-.3-.3H4.5a.5.5 0 110-1H6c.6 0 1 .4 1 1z" fill-rule="evenodd"></path></svg></span></button><button aria-label="Insert/edit image" title="Insert/edit image" type="button" tabindex="-1" class="tox-tbtn" aria-disabled="false" aria-pressed="false"><span class="tox-icon tox-tbtn__icon-wrap"><svg width="24" height="24" focusable="false"><path d="M5 15.7l3.3-3.2c.3-.3.7-.3 1 0L12 15l4.1-4c.3-.4.8-.4 1 0l2 1.9V5H5v10.7zM5 18V19h3l2.8-2.9-2-2L5 17.9zm14-3l-2.5-2.4-6.4 6.5H19v-4zM4 3h16c.6 0 1 .4 1 1v16c0 .6-.4 1-1 1H4a1 1 0 01-1-1V4c0-.6.4-1 1-1zm6 8a2 2 0 100-4 2 2 0 000 4z" fill-rule="nonzero"></path></svg></span></button><button aria-label="Blockquote" title="Blockquote" type="button" tabindex="-1" class="tox-tbtn" aria-disabled="false" aria-pressed="false"><span class="tox-icon tox-tbtn__icon-wrap"><svg width="24" height="24" focusable="false"><path d="M7.5 17h.9c.4 0 .7-.2.9-.6L11 13V8c0-.6-.4-1-1-1H6a1 1 0 00-1 1v4c0 .6.4 1 1 1h2l-1.3 2.7a1 1 0 00.8 1.3zm8 0h.9c.4 0 .7-.2.9-.6L19 13V8c0-.6-.4-1-1-1h-4a1 1 0 00-1 1v4c0 .6.4 1 1 1h2l-1.3 2.7a1 1 0 00.8 1.3z" fill-rule="nonzero"></path></svg></span></button><button title="Table" aria-label="Table" aria-haspopup="true" type="button" tabindex="-1" data-alloy-tabstop="true" unselectable="on" class="tox-tbtn tox-tbtn--select" aria-expanded="false" style="user-select: none;"><span class="tox-icon tox-tbtn__icon-wrap"><svg width="24" height="24" focusable="false"><path fill-rule="nonzero" d="M19 4a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V6c0-1.1.9-2 2-2h14zM5 14v4h6v-4H5zm14 0h-6v4h6v-4zm0-6h-6v4h6V8zM5 12h6V8H5v4z"></path></svg></span><div class="tox-tbtn__select-chevron"><svg width="10" height="10" focusable="false"><path d="M8.7 2.2c.3-.3.8-.3 1 0 .4.4.4.9 0 1.2L5.7 7.8c-.3.3-.9.3-1.2 0L.2 3.4a.8.8 0 010-1.2c.3-.3.8-.3 1.1 0L5 6l3.7-3.8z" fill-rule="nonzero"></path></svg></div></button><button aria-label="Insert/edit media" title="Insert/edit media" type="button" tabindex="-1" class="tox-tbtn" aria-disabled="false" aria-pressed="false"><span class="tox-icon tox-tbtn__icon-wrap"><svg width="24" height="24" focusable="false"><path d="M4 3h16c.6 0 1 .4 1 1v16c0 .6-.4 1-1 1H4a1 1 0 01-1-1V4c0-.6.4-1 1-1zm1 2v14h14V5H5zm4.8 2.6l5.6 4a.5.5 0 010 .8l-5.6 4A.5.5 0 019 16V8a.5.5 0 01.8-.4z" fill-rule="nonzero"></path></svg></span></button><button aria-label="Undo" title="Undo" type="button" tabindex="-1" class="tox-tbtn tox-tbtn--disabled" aria-disabled="true"><span class="tox-icon tox-tbtn__icon-wrap"><svg width="24" height="24" focusable="false"><path d="M6.4 8H12c3.7 0 6.2 2 6.8 5.1.6 2.7-.4 5.6-2.3 6.8a1 1 0 01-1-1.8c1.1-.6 1.8-2.7 1.4-4.6-.5-2.1-2.1-3.5-4.9-3.5H6.4l3.3 3.3a1 1 0 11-1.4 1.4l-5-5a1 1 0 010-1.4l5-5a1 1 0 011.4 1.4L6.4 8z" fill-rule="nonzero"></path></svg></span></button><button aria-label="Redo" title="Redo" type="button" tabindex="-1" class="tox-tbtn tox-tbtn--disabled" aria-disabled="true"><span class="tox-icon tox-tbtn__icon-wrap"><svg width="24" height="24" focusable="false"><path d="M17.6 10H12c-2.8 0-4.4 1.4-4.9 3.5-.4 2 .3 4 1.4 4.6a1 1 0 11-1 1.8c-2-1.2-2.9-4.1-2.3-6.8.6-3 3-5.1 6.8-5.1h5.6l-3.3-3.3a1 1 0 111.4-1.4l5 5a1 1 0 010 1.4l-5 5a1 1 0 01-1.4-1.4l3.3-3.3z" fill-rule="nonzero"></path></svg></span></button></div></div></div><div class="tox-anchorbar"></div></div><div class="tox-sidebar-wrap"><div class="tox-edit-area"><iframe id="mce_0_ifr" frameborder="0" allowtransparency="true" title="Rich Text Area" class="tox-edit-area__iframe" src="./Falcon _ Dashboard &amp; Web App Template_files/saved_resource.html"></iframe></div><div role="complementary" class="tox-sidebar"><div data-alloy-tabstop="true" tabindex="-1" class="tox-sidebar__slider tox-sidebar--sliding-closed" style="width: 0px;"><div class="tox-sidebar__pane-container"></div></div></div></div></div><div aria-hidden="true" class="tox-throbber" style="display: none;"></div></div></div>
+                
+                							<form action="{% url 'dashboard:create-submission' job.id %}" method="post" enctype="multipart/form-data">
+                							
+                							
+                							{% csrf_token %}
+         
+       
+                  <h5 class="mb-0 p-x1 bg-light">Submission</h5>
+                  <div class="border border-top-0 border-200">
+                  <input class="form-control border-0 rounded-0 outline-none px-x1" id="email-to" type="file" aria-describedby="email-from" placeholder="From" value="mike@support.com"></div>
+                  <div class="border border-top-0 border-200">
+                  <input class="form-control border-0 rounded-0 outline-none px-x1" id="email-from" type="email" aria-describedby="email-to" placeholder="To" value="emma@watson.com">
+                  </div>
+                  <div class="border border-y-0 border-200">
+                  <input class="form-control border-0 rounded-0 outline-none px-x1" id="email-subject" type="text" aria-describedby="email-subject" placeholder="Subject">
+                  <textarea class="tinymce d-none" name="content" id="mce_0" aria-hidden="true" data-gramm="false" wt-ignore-input="true" style="display: none;"></textarea>
+                  <div role="application" class="tox tox-tinymce" aria-disabled="false" style="visibility: hidden; height: 50vh;">
+                  <div class="tox-editor-container"><div data-alloy-vertical-dir="toptobottom" class="tox-editor-header">                 
+                  
+                  
+                  
+                  </div><div class="tox-sidebar-wrap">  <div role="complementary" class="tox-sidebar"> </div></div></div>
+                  
+                  
+                  <div aria-hidden="true" class="tox-throbber" style="display: none;">  </div></div></div>
+                  
+                  
+                  
                   <div class="px-x1 py-3 bg-light">
                     <div class="d-inline-flex flex-column">
-                      <div class="border p-2 rounded-3 d-flex bg-white dark__bg-1000 fs--1 mb-2"><svg class="svg-inline--fa fa-image fa-w-16 fs-1" aria-hidden="true" focusable="false" data-prefix="far" data-icon="image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 336H54a6 6 0 0 1-6-6V118a6 6 0 0 1 6-6h404a6 6 0 0 1 6 6v276a6 6 0 0 1-6 6zM128 152c-22.091 0-40 17.909-40 40s17.909 40 40 40 40-17.909 40-40-17.909-40-40-40zM96 352h320v-80l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L192 304l-39.515-39.515c-4.686-4.686-12.284-4.686-16.971 0L96 304v48z"></path></svg><!-- <span class="fs-1 far fa-image"></span> Font Awesome fontawesome.com --><span class="ms-2 me-3">broken_tv_solve.jpg (873kb)</span><a class="text-300 ms-auto" href="https://prium.github.io/falcon/v3.14.0/app/support-desk/tickets-preview.html#!" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Detach" data-bs-original-title="Detach"><svg class="svg-inline--fa fa-times fa-w-11" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" data-fa-i2svg=""><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg><!-- <span class="fas fa-times"></span> Font Awesome fontawesome.com --></a></div>
-                      <div class="border p-2 rounded-3 d-flex bg-white dark__bg-1000 fs--1"><svg class="svg-inline--fa fa-file-archive fa-w-12 fs-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-archive" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zM128.4 336c-17.9 0-32.4 12.1-32.4 27 0 15 14.6 27 32.5 27s32.4-12.1 32.4-27-14.6-27-32.5-27zM224 136V0h-63.6v32h-32V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM95.9 32h32v32h-32zm32.3 384c-33.2 0-58-30.4-51.4-62.9L96.4 256v-32h32v-32h-32v-32h32v-32h-32V96h32V64h32v32h-32v32h32v32h-32v32h32v32h-32v32h22.1c5.7 0 10.7 4.1 11.8 9.7l17.3 87.7c6.4 32.4-18.4 62.6-51.4 62.6z"></path></svg><!-- <span class="fs-1 fas fa-file-archive"></span> Font Awesome fontawesome.com --><span class="ms-2 me-3">broken_tv_solve.zip (342kb)</span><a class="text-300 ms-auto" href="https://prium.github.io/falcon/v3.14.0/app/support-desk/tickets-preview.html#!" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Detach" data-bs-original-title="Detach"><svg class="svg-inline--fa fa-times fa-w-11" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" data-fa-i2svg=""><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg><!-- <span class="fas fa-times"></span> Font Awesome fontawesome.com --></a></div>
+                      <div class="border p-2 rounded-3 d-flex bg-white dark__bg-1000 fs--1 mb-2"><svg class="svg-inline--fa fa-image fa-w-16 fs-1" aria-hidden="true" focusable="false" data-prefix="far" data-icon="image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" ></path></svg><span class="ms-2 me-3">
+                      
+                      
+                      </span><a class="text-300 ms-auto" href="/file/file" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Detach" data-bs-original-title="Detach"><svg class="svg-inline--fa fa-times fa-w-11" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" role="img" ></path></svg></a></div>
+                      
+                      
+                      
+                      <div class="border p-2 rounded-3 d-flex bg-white dark__bg-1000 fs--1"><svg class="svg-inline--fa fa-file-archive fa-w-12 fs-1" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-archive" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor"></path></svg><!-- <span class="fs-1 fas fa-file-archive"></span> Font Awesome fontawesome.com --><span class="ms-2 me-3"></span><a class="text-300 ms-auto" href="https://prium.github.io/falcon/v3.14.0/app/support-desk/tickets-preview.html#!" data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Detach" data-bs-original-title="Detach"><svg class="svg-inline--fa fa-times fa-w-11" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" data-fa-i2svg=""><path fill="currentColor" ></path></svg></a></div>
                     </div>
                   </div>
+                  
+                  
+                  
                   <div class="d-flex align-items-center justify-content-between px-x1 py-3">
-                    <div class="d-flex align-items-center"><button class="btn btn-primary btn-sm px-4 me-2" type="submit">Send</button><input class="d-none" id="email-attachment" type="file"><label class="me-2 btn btn-light btn-sm mb-0 cursor-pointer" for="email-attachment" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Attach files" data-bs-original-title="Attach files"><svg class="svg-inline--fa fa-paperclip fa-w-14 fs-1" data-fa-transform="down-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paperclip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="" style="transform-origin: 0.4375em 0.625em;"><g transform="translate(224 256)"><g transform="translate(0, 64)  scale(1, 1)  rotate(0 0 0)"><path fill="currentColor" d="M43.246 466.142c-58.43-60.289-57.341-157.511 1.386-217.581L254.392 34c44.316-45.332 116.351-45.336 160.671 0 43.89 44.894 43.943 117.329 0 162.276L232.214 383.128c-29.855 30.537-78.633 30.111-107.982-.998-28.275-29.97-27.368-77.473 1.452-106.953l143.743-146.835c6.182-6.314 16.312-6.422 22.626-.241l22.861 22.379c6.315 6.182 6.422 16.312.241 22.626L171.427 319.927c-4.932 5.045-5.236 13.428-.648 18.292 4.372 4.634 11.245 4.711 15.688.165l182.849-186.851c19.613-20.062 19.613-52.725-.011-72.798-19.189-19.627-49.957-19.637-69.154 0L90.39 293.295c-34.763 35.56-35.299 93.12-1.191 128.313 34.01 35.093 88.985 35.137 123.058.286l172.06-175.999c6.177-6.319 16.307-6.433 22.626-.256l22.877 22.364c6.319 6.177 6.434 16.307.256 22.626l-172.06 175.998c-59.576 60.938-155.943 60.216-214.77-.485z" transform="translate(-224 -256)"></path></g></g></svg><!-- <span class="fas fa-paperclip fs-1" data-fa-transform="down-2"></span> Font Awesome fontawesome.com --></label><input class="d-none" id="email-image" type="file" accept="image/*"><label class="btn btn-light btn-sm mb-0 cursor-pointer" for="email-image" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Attach images" data-bs-original-title="Attach images"><svg class="svg-inline--fa fa-image fa-w-16 fs-1" data-fa-transform="down-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.625em;"><g transform="translate(256 256)"><g transform="translate(0, 64)  scale(1, 1)  rotate(0 0 0)"><path fill="currentColor" d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="fas fa-image fs-1" data-fa-transform="down-2"></span> Font Awesome fontawesome.com --></label></div>
+                                    
+                  
+                    <div class="d-flex align-items-center"><button class="btn btn-primary btn-sm px-4 me-2" type="submit"   type="submit">Send</button><input class="d-none" id="email-attachment" type="file"><label class="me-2 btn btn-light btn-sm mb-0 cursor-pointer" for="email-attachment" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Attach files" data-bs-original-title="Attach files"><svg class="svg-inline--fa fa-paperclip fa-w-14 fs-1" data-fa-transform="down-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="paperclip" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="" style="transform-origin: 0.4375em 0.625em;"><g transform="translate(224 256)"><g transform="translate(0, 64)  scale(1, 1)  rotate(0 0 0)"><path fill="currentColor" d="M43.246 466.142c-58.43-60.289-57.341-157.511 1.386-217.581L254.392 34c44.316-45.332 116.351-45.336 160.671 0 43.89 44.894 43.943 117.329 0 162.276L232.214 383.128c-29.855 30.537-78.633 30.111-107.982-.998-28.275-29.97-27.368-77.473 1.452-106.953l143.743-146.835c6.182-6.314 16.312-6.422 22.626-.241l22.861 22.379c6.315 6.182 6.422 16.312.241 22.626L171.427 319.927c-4.932 5.045-5.236 13.428-.648 18.292 4.372 4.634 11.245 4.711 15.688.165l182.849-186.851c19.613-20.062 19.613-52.725-.011-72.798-19.189-19.627-49.957-19.637-69.154 0L90.39 293.295c-34.763 35.56-35.299 93.12-1.191 128.313 34.01 35.093 88.985 35.137 123.058.286l172.06-175.999c6.177-6.319 16.307-6.433 22.626-.256l22.877 22.364c6.319 6.177 6.434 16.307.256 22.626l-172.06 175.998c-59.576 60.938-155.943 60.216-214.77-.485z" transform="translate(-224 -256)"></path></g></g></svg><!-- <span class="fas fa-paperclip fs-1" data-fa-transform="down-2"></span> Font Awesome fontawesome.com --></label><input class="d-none" id="email-image" type="file" accept="image/*"><label class="btn btn-light btn-sm mb-0 cursor-pointer" for="email-image" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Attach images" data-bs-original-title="Attach images"><svg class="svg-inline--fa fa-image fa-w-16 fs-1" data-fa-transform="down-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="image" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="" style="transform-origin: 0.5em 0.625em;"><g transform="translate(256 256)"><g transform="translate(0, 64)  scale(1, 1)  rotate(0 0 0)"><path fill="currentColor" d="M464 448H48c-26.51 0-48-21.49-48-48V112c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v288c0 26.51-21.49 48-48 48zM112 120c-30.928 0-56 25.072-56 56s25.072 56 56 56 56-25.072 56-56-25.072-56-56-56zM64 384h384V272l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L208 320l-55.515-55.515c-4.686-4.686-12.284-4.686-16.971 0L64 336v48z" transform="translate(-256 -256)"></path></g></g></svg><!-- <span class="fas fa-image fs-1" data-fa-transform="down-2"></span> Font Awesome fontawesome.com --></label>
+                    
+                    </div>
+                    
+              
+      
+                    
+                    
+                    
+        
+          </form>   
+                
+       
+                    
                     <div class="d-flex align-items-center">
                       <div class="dropdown font-sans-serif me-2 btn-reveal-trigger"><button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal dropdown-caret-none" id="email-options" type="button" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><svg class="svg-inline--fa fa-ellipsis-v fa-w-6" data-fa-transform="down-2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-v" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512" data-fa-i2svg="" style="transform-origin: 0.1875em 0.625em;"><g transform="translate(96 256)"><g transform="translate(0, 64)  scale(1, 1)  rotate(0 0 0)"><path fill="currentColor" d="M96 184c39.8 0 72 32.2 72 72s-32.2 72-72 72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72 72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0 352c0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72-72 32.2-72 72z" transform="translate(-96 -256)"></path></g></g></svg><!-- <span class="fas fa-ellipsis-v" data-fa-transform="down-2"></span> Font Awesome fontawesome.com --></button>
                         <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="email-options"><a class="dropdown-item" href="https://prium.github.io/falcon/v3.14.0/app/support-desk/tickets-preview.html#!">Print</a><a class="dropdown-item" href="https://prium.github.io/falcon/v3.14.0/app/support-desk/tickets-preview.html#!">Check spelling</a><a class="dropdown-item" href="https://prium.github.io/falcon/v3.14.0/app/support-desk/tickets-preview.html#!">Plain text mode</a>
                           <div class="dropdown-divider"></div><a class="dropdown-item" href="https://prium.github.io/falcon/v3.14.0/app/support-desk/tickets-preview.html#!">Archive</a>
                         </div>
+                        
                       </div><button class="btn btn-light btn-sm" type="button" data-bs-toggle="tooltip" data-bs-placement="top" data-dismiss="collapse" aria-label="Delete" data-bs-original-title="Delete"><svg class="svg-inline--fa fa-trash fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"></path></svg><!-- <span class="fas fa-trash"></span> Font Awesome fontawesome.com --></button>
                     </div>
+                    
                   </div>
+                  
                 </div>
-                <div class="card-footer bg-light" id="preview-footer"><button class="btn btn-falcon-default btn-sm fs--1" type="button" data-bs-toggle="collapse" data-bs-target="#previewMailForm" aria-expanded="false" aria-controls="previewMailForm"><svg class="svg-inline--fa fa-reply fa-w-16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="reply" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M8.309 189.836L184.313 37.851C199.719 24.546 224 35.347 224 56.015v80.053c160.629 1.839 288 34.032 288 186.258 0 61.441-39.581 122.309-83.333 154.132-13.653 9.931-33.111-2.533-28.077-18.631 45.344-145.012-21.507-183.51-176.59-185.742V360c0 20.7-24.3 31.453-39.687 18.164l-176.004-152c-11.071-9.562-11.086-26.753 0-36.328z"></path></svg><!-- <span class="fas fa-reply"></span> Font Awesome fontawesome.com --><span class="d-none d-sm-inline-block ms-1">Reply</span></button><button class="btn btn-falcon-default btn-sm fs--1 mx-2" type="button" data-bs-toggle="collapse" data-bs-target="#previewMailForm" aria-expanded="false" aria-controls="previewMailForm"><svg class="svg-inline--fa fa-location-arrow fa-w-16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="location-arrow" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M444.52 3.52L28.74 195.42c-47.97 22.39-31.98 92.75 19.19 92.75h175.91v175.91c0 51.17 70.36 67.17 92.75 19.19l191.9-415.78c15.99-38.39-25.59-79.97-63.97-63.97z"></path></svg><!-- <span class="fas fa-location-arrow"></span> Font Awesome fontawesome.com --><span class="d-none d-sm-inline-block ms-1">Forward</span></button><button class="btn btn-falcon-default btn-sm fs--1" type="button" data-bs-toggle="collapse" data-bs-target="#previewMailForm" aria-expanded="false" aria-controls="previewMailForm"><svg class="svg-inline--fa fa-file-alt fa-w-12" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm64 236c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-64c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-72v8c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm96-114.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"></path></svg><!-- <span class="fas fa-file-alt"></span> Font Awesome fontawesome.com --><span class="d-none d-sm-inline-block ms-1">Add Note</span></button></div>
+                
+                
+                
+                
+                
+                
+                <div class="card-footer bg-light" id="preview-footer">
+                
+                <button class="btn btn-falcon-default btn-sm fs--1" type="button" data-bs-toggle="collapse" data-bs-target="#previewMailForm" aria-expanded="false" aria-controls="previewMailForm"><svg class="svg-inline--fa fa-reply fa-w-16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="reply" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M8.309 189.836L184.313 37.851C199.719 24.546 224 35.347 224 56.015v80.053c160.629 1.839 288 34.032 288 186.258 0 61.441-39.581 122.309-83.333 154.132-13.653 9.931-33.111-2.533-28.077-18.631 45.344-145.012-21.507-183.51-176.59-185.742V360c0 20.7-24.3 31.453-39.687 18.164l-176.004-152c-11.071-9.562-11.086-26.753 0-36.328z"></path></svg><!-- <span class="fas fa-reply"></span> Font Awesome fontawesome.com --><span class="d-none d-sm-inline-block ms-1">Reply</span></button>
+                
+                <button class="btn btn-falcon-default btn-sm fs--1 mx-2" type="button" data-bs-toggle="collapse" data-bs-target="#previewMailForm" aria-expanded="false" aria-controls="previewMailForm"><svg class="svg-inline--fa fa-location-arrow fa-w-16" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="location-arrow" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M444.52 3.52L28.74 195.42c-47.97 22.39-31.98 92.75 19.19 92.75h175.91v175.91c0 51.17 70.36 67.17 92.75 19.19l191.9-415.78c15.99-38.39-25.59-79.97-63.97-63.97z"></path></svg><!-- <span class="fas fa-location-arrow"></span> Font Awesome fontawesome.com --><span class="d-none d-sm-inline-block ms-1">Forward</span></button>
+                
+                
+                <button class="btn btn-falcon-default btn-sm fs--1" type="button" data-bs-toggle="collapse" data-bs-target="#previewMailForm" aria-expanded="false" aria-controls="previewMailForm"><svg class="svg-inline--fa fa-file-alt fa-w-12" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm64 236c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-64c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-72v8c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm96-114.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"></path></svg><!-- <span class="fas fa-file-alt"></span> Font Awesome fontawesome.com --><span class="d-none d-sm-inline-block ms-1">Add Note</span></button>
+                </div>
+                            
+                            
+
+                
               </div>
+              
+              
             </div>
+            
+            
+            
+            
+            
+            
+            
+            
             <div class="col-xxl-3 col-xl-4">
               <div class="row g-3 position-sticky top-0">
               
@@ -263,16 +380,6 @@
               
               {% endif %}
               
-              
-
-              
-              
-              
-              
-              
-              
-              
-
                 
  
                 <div class="col-12">

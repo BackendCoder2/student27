@@ -6,6 +6,7 @@ class JobForm(forms.ModelForm):
         model = Job
         exclude = (     
         "id",
+        "order_id",
         "user",
         "assigned_to",
         "status",
@@ -24,3 +25,6 @@ class BidForm(forms.ModelForm):
         model = Bid
         exclude = ("user","bidder")        
 
+
+class DFileForm(forms.Form):
+    dfile = forms.FileField(label='Select a file')

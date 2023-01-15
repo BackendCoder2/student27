@@ -16,6 +16,7 @@ class JobAdmin(admin.ModelAdmin):
     list_display = (
         #"id",
        # "user",
+        "order_id",
         "employer",
         "assigned_to",
         "sub_category",
@@ -24,26 +25,31 @@ class JobAdmin(admin.ModelAdmin):
         "time_remaining",
         "status",
         "display",
+       # "biggest_id",
         "bids", 
+        "revise",
         "accepted",
         "rejected",
         "rejection_description",
         "rejected_work_accepted",
-        "paid"
+        "payment"
     )
 
     list_display_links = ("sub_category","title",)
     list_filter = ("sub_category__category__name","status","display")
-    search_fields = ("sub_category__category__name","sub_category__name",)
+    search_fields = ("order_id","employer__username","assigned_to__username","employer__phone_number","assigned_to__phone_number","sub_category__category__name","sub_category__name",)
     list_editable = (
         #"status",
         "display",
         "finished_at",
-       # "assigned_to",
+        #"order_id",
+        "assigned_to",#
         #"employer",
-       # "rejected",
-        #"rejection_description",
-        #"rejected_work_accepted"
+        "revise",
+        "accepted",#
+        "rejected",#
+        "rejection_description",#
+        "rejected_work_accepted"#
         
     )
     
@@ -97,7 +103,7 @@ class BidAdmin(admin.ModelAdmin):
 
     list_display_links = ("id","job")
     list_filter = ("id","job__title","job__employer","user__username","user__profile__rating","user__profile__jobs_in_revision","user__profile__job_in_progress")
-    search_fields = ("job__title","user__username")
+    search_fields = ("job__order_id","employer__username")
     list_editable = (
         "approve",
         "accept",   
@@ -134,7 +140,9 @@ class SubmissionAdmin(admin.ModelAdmin):
         "id",
         "job",
         "proof",
-        "dfile"
+        "dfile",
+        "document",
+        
     )
 
     list_display_links = ("id","job")
@@ -168,6 +176,7 @@ class RevInfoAdmin(admin.ModelAdmin):
         "title",
         "description",
         "dfile",
+        "document",
     )
 
     list_display_links = ("id",)

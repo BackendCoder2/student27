@@ -49,8 +49,15 @@ urlpatterns = [
     #buttons
     path('<int:job_id>/create-bid/', views.bid, name='bid'),
     path('<int:job_id>/delete-bid/', views.delete_bid, name='delete_bid'),
-    path('<int:job_id>/accept-bid/', views.accept_bid, name='accept_bid'),
+    path('<int:bid_id>/accept-bid/', views.accept_bid, name='accept-bid'),
+    path('<int:bid_id>/approve-bid/', views.approve_bid, name='approve-bid'),
+    path('job-list/<int:job_id>/bid-list/', views.bid_list_per_job, name='bid-list-per-job'),
     
+   
+    path('<int:job_id>/accept-job/', views.accept_job, name='accept-job'), #E
+    
+    path('<int:job_id>/create-submission/', views.create_submission, name='create-submission'), #E
+    path('job-list/<int:job_id>/bid-list/<int:sub_id>/upload_file/', views.upload_file, name='upload_file'), #E
    ]
    
 

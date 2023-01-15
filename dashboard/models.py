@@ -33,13 +33,7 @@ class SubCategory(TimeStamp):#(models.Model):
         db_table = "e_subcategories"
         verbose_name_plural = "Sub Categories"
 
-class DFile(TimeStamp):#(models.Model):
-    dfile = models.FileField(upload_to='media/documents/%Y/%m/%d/',blank=True, null=True)
-    description = models.CharField(help_text="Write Short File description here",max_length=255, blank=True, null=True)
-    def __str__(self):
-        return "FILE"+str(self.id)+':' +self.description         
-        
- 
+
         
                            
 class Job(UserFK,TimeStamp): 
@@ -58,12 +52,12 @@ class Job(UserFK,TimeStamp):
         (REVISION, 'in-revision'),
         (CLOSED, 'closed'),
     ]
-    
+    order_id = models.IntegerField(blank=True, null=True)
     sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE, blank=True, null=True)
     
     title = models.CharField(help_text="Write Short job tittle here",max_length=255, blank=True, null=True)
     description = models.TextField(help_text="Write Details job delivarables  here",blank=True, null=True)
-    dfile = models.ForeignKey(DFile,help_text="Upload files from your device", on_delete=models.CASCADE, blank=True, null=True)#
+    
     #dfile = models.FileField(blank=True, null=True)
     
     price = models.FloatField(help_text="Enter amount to pay per page-KES",blank=True, null=True)
@@ -85,7 +79,7 @@ class Job(UserFK,TimeStamp):
     rejection_description = models.TextField(help_text="FOR EMPLOYER.Write Details why you reject the work done by  tasker  here",blank=True, null=True)
     rejected_work_accepted = models.BooleanField(help_text="FOR TASKER,SUPPORT OR ADMIN.Admin to decide if the tasker refused to ACCEPT",default=False, blank=True)    
     ###   
-    paid = models.CharField(max_length=20, blank=True, null=True)
+    paid = models.BooleanField(default=False, blank=True,null=True)
     
     
     status = models.CharField(
@@ -110,7 +104,11 @@ class Job(UserFK,TimeStamp):
     )
     
     def __str__(self):
-        return "JOB-ID: "+str(self.pk)+" :"+self.title
+        return "JOB:Order-ID: "+str(self.order_id)+" :"
+        
+    class Meta:
+    
+        get_latest_by = ['id',]
 
     @property
     def time_remaining(self):        
@@ -143,14 +141,39 @@ class Job(UserFK,TimeStamp):
             return "Accepted"
         return "Rejected" 
         
+    @property
+    def payment(self):
+        if self.paid :               
+            return "Paid"
+        if self.paid is None:             
+            return "Pending"  
+        if self.paid is False:             
+            return "Not-Paid"  
+        
     @classmethod    
     def jobs(cls,job):
         return cls.objects.filter(bid__job=job)  
-                
-
-    def complete_order(self):
-        #TODO
-        pass
+        
+    @classmethod    
+    def max_id(cls):
+        return cls.objects.latest("id").id  
+        
+    @property
+    def biggest_id(self):
+        return self.max_id()
+        
+    def complete_order(self):   
+    
+        try:
+            employer_account=Account.objects.get(user=self.employer)
+            writter_account=Account.objects.get(user=self.assigned_to)
+            amount=self.tprice
+            employer_account.transfer_tokens(self, writter_account, amount)
+            self.paid=True
+        except:
+            pass
+        
+        
         #return "PAY-PAY"   
 
     def explain_n_raise_complain(self):
@@ -160,12 +183,15 @@ class Job(UserFK,TimeStamp):
                                 
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.employer=self.user       
+            self.employer=self.user
+          
+            self.order_id=10000+self.biggest_id+1
                     
-        if self.accepted and self.status in CC:
+        if self.accepted and self.status in CC and not self.paid:
+            
             self.complete_order()
             self.status="CL"
-            self.paid="Paid"
+            
 
         if self.revise and self.status =="RW":   
             print("IKOOO_RRRE")     
@@ -180,7 +206,7 @@ class Job(UserFK,TimeStamp):
                 return
             if self.rejected_work_accepted:
                 self.status="CL"
-                self.paid="Not-Paid"
+                self.paid=False
                 #self.explain_n_raise_complain()
             
         super().save(*args, **kwargs)   
@@ -191,14 +217,11 @@ class Job(UserFK,TimeStamp):
     #      ]  
         
         
-class RevInfo(TimeStamp):#(models.Model): 
-    title = models.CharField(help_text="Write Short Reevision title here",max_length=255, blank=True, null=True)
-    job = models.ForeignKey(Job,on_delete=models.CASCADE, blank=True, null=True)  
-    dfile= models.ForeignKey(DFile, on_delete=models.CASCADE, blank=True, null=True)#
-    description = models.TextField(help_text="FOR EMPLOYER.Write Details revision details  here",blank=True, null=True)
-    def __str__(self):
-        return "Rev:"+str(self.id)+':' +self.description             
+
+
+       
         
+         
 class Bid(UserFK,TimeStamp):#(models.Model):      
     job= models.ForeignKey(Job, on_delete=models.CASCADE, blank=True, null=True)
     bidder = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
@@ -228,11 +251,20 @@ class Bid(UserFK,TimeStamp):#(models.Model):
         
     @property         
     def user_job_completed(self):
-        return str(self.profile.rating) 
+        return str(self.profile.job_completed) 
               
     @property        
     def user_job_disputed(self):
         return str(self.profile.job_disputed)
+        
+    @property        
+    def user_job_active(self):
+        return self.user_job_in_progress+self.user_jobs_in_revision
+    @property
+    def accepted(self):
+        if self.accept :               
+            return "Accepted"
+        return "Not Yet Accepted"         
         
     class Meta:
         db_table = "e_bids"
@@ -253,17 +285,18 @@ class Bid(UserFK,TimeStamp):#(models.Model):
         #self.user=User.objects.get(id=self.bidder_id)    
 
         if self.approve and self.accept:# and self.job.assigned_to is None:
-            Job.objects.filter(id=self.job.id).update(assigned_to=self.user,display=False,status="PR")
+            Job.objects.filter(id=self.job.id).update(assigned_to=self.bidder,display=False,status="PR")
             
         super().save(*args, **kwargs)
         
         
 class Submission(UserFK,TimeStamp):
-
+    sender= models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     job = models.ForeignKey(Job, on_delete=models.CASCADE, blank=True, null=True)
-    proof = models.TextField()
-    dfile = models.ForeignKey(DFile, on_delete=models.CASCADE, blank=True, null=True)#
-    final = models.BooleanField(help_text="DRAFT/FINAL",default=False, blank=True)#by_bidder
+    proof = models.TextField()    
+    document = models.FileField(upload_to='media/documents/%Y/%m/%d/',blank=True, null=True)
+    final = models.BooleanField(help_text="Check for Final Submission",default=False, blank=True)#by_bidder
+    
 
         
     def __str__(self):
@@ -272,11 +305,35 @@ class Submission(UserFK,TimeStamp):
     class Meta:
         db_table = "e_submissions"
         
-    def save(self, *args, **kwargs):   
-    
+    def save(self, *args, **kwargs): 
+        if not self.pk:
+            self.sender=self.user     
         if self.final:#draft
         
             Job.objects.filter(id=self.job.id).update(status="RW")   
             
         super().save(*args, **kwargs)
+        
+        
+        
+class RevInfo(TimeStamp):#(models.Model): 
+    title = models.CharField(help_text="Write Short title here",max_length=255, blank=True, null=True)
+    job = models.ForeignKey(Job,on_delete=models.CASCADE, blank=True, null=True) 
+    document = models.FileField(upload_to='media/documents/%Y/%m/%d/',blank=True, null=True)
+    description = models.TextField(help_text="FOR EMPLOYER.Write Details revision details  here",blank=True, null=True)
+    def __str__(self):
+        return "Rev:"+str(self.id)+':' +self.description    
+                
+        
+class DFile(TimeStamp):#(models.Model):
+    title = models.CharField(help_text="Write Short  title here",max_length=255, blank=True, null=True)
+    job = models.ForeignKey(Job,help_text="Upload files from your device", on_delete=models.CASCADE, blank=True, null=True)#
+    submission = models.ForeignKey(Submission, on_delete=models.CASCADE, blank=True, null=True)#
+    rfile= models.ForeignKey(RevInfo, on_delete=models.CASCADE, blank=True, null=True)#
     
+    dfile = models.FileField(upload_to='media/documents/%Y/%m/%d/',blank=True, null=True)
+    description = models.CharField(help_text="Write Short File description here",max_length=255, blank=True, null=True)
+    def __str__(self):
+        return "FILE"+str(self.job.title)+':' +str(self.job.order_id)
+        
+

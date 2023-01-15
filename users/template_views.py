@@ -91,7 +91,7 @@ def profile(request):
         if user.update_count>=0:
             user.save()
 
-        return redirect("/user/profile")
+        return redirect("/users/profile")
   
     mssg=f"You have {request.user.update_count} slots remaining to update your profile"
     if request.user.update_count==0:
