@@ -152,12 +152,18 @@ class Job(UserFK,TimeStamp):
         
     @classmethod    
     def jobs(cls,job):
-        return cls.objects.filter(bid__job=job)  
+
+        try:
+            return cls.objects.filter(bid__job=job)  
+        except:
+            return 0    
         
     @classmethod    
     def max_id(cls):
-        return cls.objects.latest("id").id  
-        
+        try:
+            return cls.objects.latest("id").id  
+        except:
+            return 0
     @property
     def biggest_id(self):
         return self.max_id()
