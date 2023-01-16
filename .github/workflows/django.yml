@@ -97,10 +97,10 @@ jobs:
           cd ~/eltask/src 
           
           python manage.py makemigrations --noinput
-          python manage.py makemigrations users
-          python manage.py makemigrations home
-          python manage.py makemigrations dashboard
-          python manage.py makemigrations accounts
+          python manage.py makemigrations users --noinput
+          python manage.py makemigrations home --noinput
+          python manage.py makemigrations dashboard --noinput
+          python manage.py makemigrations accounts --noinput
           python manage.py makemigrations core
           python manage.py makemigrations ipn
           python manage.py makemigrations pro
