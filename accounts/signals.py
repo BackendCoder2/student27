@@ -23,7 +23,7 @@ User = get_user_model()
 @receiver(post_save, sender=User)
 def create_user_account(sender, instance, created, **kwargs):
     if created:
-        bank,created=CentralBank.objects.get_or_create(name="SpinCB")
+        bank,created=CentralBank.objects.get_or_create(name="CB")
         Account.objects.update_or_create(user=instance,cbank=bank)
 
 

@@ -15,3 +15,7 @@ class NegativeBalance(Exception):
 
 class NotEnoughBalance(Exception):
     pass    
+
+
+class NegativeTokens(Exception):
+    pass

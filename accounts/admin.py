@@ -35,6 +35,7 @@ class AccountSettingAdmin(admin.ModelAdmin):
         "auto_approve",
         "auto_approve_cash_trasfer",
         "withraw_factor",
+        "paypill",
         "created_at"
     )
     list_display_links = ("id",)
@@ -44,7 +45,7 @@ class AccountSettingAdmin(admin.ModelAdmin):
         "auto_approve",
         "auto_approve_cash_trasfer",
         "withraw_factor",
-       # "created_at"
+        "paypill"
     )
 
 
@@ -64,10 +65,10 @@ class AccountAdmin(admin.ModelAdmin):
         "withrawable_balance",
         "withrawable_balance_USD",
         "withrawable_balance_KES",
-       # "refer_balance",
-       # "ref1",
-        #"ref30",
-       # "trial_balance",
+        "refer_balance",
+        "ref1",
+        "ref30",
+        "trial_balance",
         "cum_deposit",
         "cum_withraw",
         "c_loss",
@@ -82,8 +83,8 @@ class AccountAdmin(admin.ModelAdmin):
         "tokens",
         "actual_balance",
         "withraw_power",
-       # "refer_balance",
-       # "trial_balance",
+        "refer_balance",
+        "trial_balance",
         "cum_deposit",
         "cum_withraw",
       #  "created_at",

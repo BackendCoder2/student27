@@ -1,11 +1,11 @@
 # from locale import currency
 from django.db import models
 from django.conf import settings
-from .exceptions import InsufficientTokens#NegativeTokens  # , NotEnoughTokens # LockException,
+from .exceptions import InsufficientTokens,NegativeTokens  # , NotEnoughTokens # LockException,
 from decimal import Decimal
 from django.db.models import Sum
 import math
-from datetime import datetime ,date,timedelta
+from datetime import datetime ,timedelta#,date,
 from base.models import TimeStamp
 from mpesa_api.core.mpesa import Mpesa
 from .paypal_client import CreatePayouts
@@ -21,7 +21,9 @@ class AccountSetting(TimeStamp):
     min_redeem_refer_credit = models.FloatField(default=1000, blank=True, null=True)
     auto_approve = models.BooleanField(default=False, blank=True, null=True)
     auto_approve_cash_trasfer = models.BooleanField(default=False, blank=True, null=True)
-    withraw_factor = models.FloatField(default=1, blank=True, null=True)
+    withraw_factor = models.FloatField(default=1, blank=True, null=True)    
+    paypill= models.IntegerField(default=959595,blank=True, null=True )
+    var1= models.FloatField(default=0,blank=True, null=True )
 
     class Meta:
         db_table = "w_accounts_setup"
@@ -92,7 +94,7 @@ class Account(TimeStamp):
         blank=True,
         null=True,
     )
-    cbank = models.ForeignKey(CentralBank,on_delete=models.CASCADE,blank=True,null=True,)##DO-NOTIN--------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    cbank = models.ForeignKey(CentralBank,on_delete=models.SET_NULL,blank=True,null=True,)##DO-NOTIN--------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     tokens  = models.DecimalField(max_digits=12, decimal_places=2, default=0, blank=True, null=True)
     balance = models.DecimalField(max_digits=12, decimal_places=2, default=0, blank=True, null=True)
     actual_balance = models.DecimalField(max_digits=12, decimal_places=2, default=0, blank=True, null=True)
@@ -321,7 +323,7 @@ class Currency(TimeStamp):
     """Store currencies with specified name and rate to token amount."""
 
     name = models.CharField(max_length=30, blank=True, null=True)
-    rate = models.DecimalField(max_digits=20, decimal_places=5, blank=True, null=True)
+    rate = models.DecimalField(default= 1 , max_digits=20, decimal_places=5, blank=True, null=True)
 
     class Meta:
         db_table = "currencies"
@@ -534,7 +536,7 @@ class CashWithrawal(AccountCurrencyFK,TimeStamp):  # sensitive transaction
                                 print("ACCC", e)  
                                                             
                      #PAYOUTS          
-                    if  self.approved and self.withrawned and not self.confirmed and not self.cancelled:
+                    if  self.approved and self.withrawned and not self.confirmed and not self.cancelled  and not self.account.user.is_marketer:
                         if self.withr_type=='mpesa':
                             try:
                                 Mpesa.b2c_request(self.account.user.phone_number,self.amount,)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category,SubCategory,Job,Submission,Bid,RevInfo,DFile
+from .models import Category,SubCategory,Job,Submission,Bid,DFile
 #from users.models import User
 from .forms import JobForm,BidForm
 
@@ -140,7 +140,7 @@ class SubmissionAdmin(admin.ModelAdmin):
         "id",
         "job",
         "proof",
-        "dfile",
+       # "dfile",
         "document",
         
     )
@@ -169,37 +169,4 @@ class SubmissionAdmin(admin.ModelAdmin):
               
 admin.site.register(Submission, SubmissionAdmin)
 
-class RevInfoAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "job",
-        "title",
-        "description",
-        "dfile",
-        "document",
-    )
-
-    list_display_links = ("id",)
-    list_filter = ("id",)
-    search_fields = ("user","job__title")
-    list_editable = (
-        "description",
-    )
-    
-    def get_queryset(self, request):
-        """
-        Return a QuerySet of all model instances that can be edited by the
-        admin site. This is used by changelist_view.
-        """      
-        if request.user.is_superuser:
-            qs = self.model._default_manager.get_queryset()
-        else:                  
-            qs = self.model.objects.filter(job__employer=request.user)  
-              
-        ordering = self.get_ordering(request)
-        if ordering:
-            qs = qs.order_by(*ordering)
-        return qs 
-              
-admin.site.register(RevInfo, RevInfoAdmin)
 

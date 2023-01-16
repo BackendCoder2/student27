@@ -299,7 +299,7 @@ class Bid(UserFK,TimeStamp):#(models.Model):
 class Submission(UserFK,TimeStamp):
     sender= models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     job = models.ForeignKey(Job, on_delete=models.CASCADE, blank=True, null=True)
-    proof = models.TextField()    
+    proof = models.TextField(blank=True, null=True)    
     document = models.FileField(upload_to='media/documents/%Y/%m/%d/',blank=True, null=True)
     final = models.BooleanField(help_text="Check for Final Submission",default=False, blank=True)#by_bidder
     
@@ -321,24 +321,13 @@ class Submission(UserFK,TimeStamp):
         super().save(*args, **kwargs)
         
         
-        
-class RevInfo(TimeStamp):#(models.Model): 
-    title = models.CharField(help_text="Write Short title here",max_length=255, blank=True, null=True)
-    job = models.ForeignKey(Job,on_delete=models.CASCADE, blank=True, null=True) 
-    document = models.FileField(upload_to='media/documents/%Y/%m/%d/',blank=True, null=True)
-    description = models.TextField(help_text="FOR EMPLOYER.Write Details revision details  here",blank=True, null=True)
-    def __str__(self):
-        return "Rev:"+str(self.id)+':' +self.description    
-                
-        
+
 class DFile(TimeStamp):#(models.Model):
-    title = models.CharField(help_text="Write Short  title here",max_length=255, blank=True, null=True)
+    title = models.CharField(help_text="Write Short  title here",default="file",max_length=255, blank=True, null=True)
     job = models.ForeignKey(Job,help_text="Upload files from your device", on_delete=models.CASCADE, blank=True, null=True)#
     submission = models.ForeignKey(Submission, on_delete=models.CASCADE, blank=True, null=True)#
-    rfile= models.ForeignKey(RevInfo, on_delete=models.CASCADE, blank=True, null=True)#
-    
     dfile = models.FileField(upload_to='media/documents/%Y/%m/%d/',blank=True, null=True)
     description = models.CharField(help_text="Write Short File description here",max_length=255, blank=True, null=True)
     def __str__(self):
-        return "FILE"
+        return "FILE"+str(self.title)
 

@@ -25,7 +25,10 @@ logger = logging.getLogger(__name__)
 
 @login_required(login_url="/user/login")
 def mpesa_deposit(request):
+    mssg1=f"Deposit to { request.user} account.Once you submit, you get a prompt in your phone to enter MPESA PIN to complete deposit on {request.user.phone_number}"
     mssg = ""
+    ss=True
+    sett,_=AccountSetting.objects.get_or_create(id=1)    
     if request.method == "POST":
         phone_number = request.user.phone_number
         amount = request.POST.get("amount")
@@ -38,9 +41,12 @@ def mpesa_deposit(request):
                 is_paybill=False,
             )           
             mssg=f"You should receive a prompt on your phone({phone_number}) shortly to enter MPESA PIN to complete deposit of KES {amount}."
+           # ss=True
         except Exception  as e:
             logger.exception(e)
-            mssg="There is a problem making this deposit.Try again if you dont get a prompt in your phone to enter MPESA PIN"
+            mssg=f"Deposit not successful!  DEPOSIT  MANUALLY using SAF TILL.NO: {sett.paypill} strictly  with this number:{phone_number} .You can update this number using  above  link.Your deposit will reflect in you account within 10 minutes."
+            ss=False
+            mssg1=f"Till.No :{sett.paypill}"
             pass           
             
         #return redirect("/accounts/mpesa/deposit")  
@@ -50,9 +56,11 @@ def mpesa_deposit(request):
     return render(
         request,
         "accounts/mp_deposit.html",
-        {"mssg": mssg,}
+        {"mssg1": mssg1,"mssg": mssg,'ss':ss}
     )
     
+
+
 
 @login_required(login_url="/user/login")
 def mpesa_withrawal(request):
@@ -84,6 +92,8 @@ def mpesa_withrawal(request):
         #{"form": form, "trans_logz": trans_logz,"uf": uf},
     )
     
+
+
 
 
 

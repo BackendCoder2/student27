@@ -1,9 +1,9 @@
 	
 					
-{% extends "elayouts/base2.html" %}
-{% load static %}
-{% load humanize %} 
 
+{% extends "elayouts/base2.html" %}
+<!-- Static assets -->
+{% load static %}
 
 {% block title %}Mpesa Withdrawal{% endblock %}
 
@@ -20,7 +20,7 @@
                     <div class="col-lg-6">
                         <div class="section-header text-center">
                             <h2 class="title">Mpesa Withdrawal</h2>
-                            <p>You can withdrawal upto KES {{user.accounts.balance}}.Your withdrawal will be send to {{user.phone_number}}</p>
+                            <p>You can withdrawal upto KES {{user.accounts.withrawable_balance}}.Your withdrawal will be send to {{user.phone_number}}</p>
                             <a href="{% url 'users:profile' %}" class="cmn-btn">Update Phone.No</a>
                         </div>
                     </div>
@@ -57,5 +57,46 @@
 
 {% endblock content %}
 	
+     
+ {% block footer %}
 
+    <!-- Footer Area Start -->
+    <footer class="footer-section">
+        <div class="container pt-120">
+          
+            <div class="footer-bottom-area pt-120">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="menu-item">
+                            <a href="/" class="logo">
+                                <img src="/static/winza/img/logo.png" alt="logo">
+                            </a>
+                            <ul class="footer-link">
+                                <li><a href="{% url 'home:contact' %}">Contact</a></li>
+                                <li><a href="/">Terms of Services</a></li>
+                                <li><a href="/">Privacy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="copyright">
+                            <div class="copy-area">
+                                <p> Copyright ©2022 <a href="https://github.com/gibeongideon">Winzangu</a>|All rights reserved<a href="https://github.com/gibeongideon" class="auth">®</a>
+                                </p>
+                            </div>
+                            <div class="social-link d-flex align-items-center">
+                                <a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a>
+                                <a href="javascript:void(0)"><i class="fab fa-twitter"></i></a>
+                                <a href="javascript:void(0)"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="javascript:void(0)"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Area End -->
+      
+    {% endblock footer %}
 	

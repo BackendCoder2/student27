@@ -28,3 +28,6 @@ class BidForm(forms.ModelForm):
 
 class DFileForm(forms.Form):
     dfile = forms.FileField(label='Select a file')
+    
+class DocumentForm(forms.Form):
+    document = forms.FileField(label='Select a file')
