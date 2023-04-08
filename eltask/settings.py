@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-12rqgs_jnznhncse+f_qb*x4jrvw)g%a26xbi74+kx77gmed=@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["146.190.120.67","localhost","127.0.0.1","ajirapanel.cf","www.ajirapanel.cf"]
+ALLOWED_HOSTS = ['157.230.17.135']
 
 
 # Application definition
