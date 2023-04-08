@@ -90,6 +90,8 @@ ASGI_APPLICATION = 'eltask.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+if DEBUG:
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -97,16 +99,18 @@ DATABASES = {
     }
 }
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'NAME': 'eltaskdb',
-#        'USER': 'ubuntu',
-#        'PASSWORD': 'passcode54321',
-#        'HOST': 'localhost',
-#        'PORT': '',
-#    }
-#}
+else:
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'blogDB',
+        'USER': 'blog_admin',
+        'PASSWORD': 'gide@47On',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
 
 
 #CACHES = {
